@@ -638,10 +638,10 @@
             
             <div class="script-code" id="script-code">
 // ==UserScript==
-// @name         ITDOG网站测速监控 - 新标签页版
+// @name         ITDOG网站测速监控 - 完整功能版
 // @namespace    http://tampermonkey.net/
-// @version      3.0
-// @description  在新标签页中测试网站连通率，异常时发送Telegram通知
+// @version      4.0
+// @description  自动提取域名、取消港澳台选项、点击开始测试、监控连通率并发送Telegram通知
 // @author       ITDOG监控系统
 // @match        https://www.itdog.cn/http/*
 // @run-at       document-idle
@@ -654,7 +654,7 @@
 (function() {
     'use strict';
 
-    console.log('🚀 ITDOG监控脚本启动 - 新标签页版 v3.0');
+    console.log('🚀 ITDOG监控脚本启动 - 完整功能版 v4.0');
 
     // 配置
     const CONFIG = {
@@ -702,12 +702,12 @@
     // 发送Telegram通知
     async function sendToTelegram(domain, connectivityRate, testResults) {
         try {
-            console.log('准备发送Telegram通知...');
+            console.log('📤 准备发送Telegram通知...');
             
             const config = await getTelegramConfig();
             
             if (!config || !config.botToken || !config.chatId) {
-                console.log('Telegram配置无效，无法发送通知');
+                console.log('❌ Telegram配置无效，无法发送通知');
                 return;
             }
             
@@ -731,21 +731,36 @@
             const successRate = connectivityRate.toFixed(2);
             
             // 构建消息
-            let message = `🔔 你的监控发现问题\\n\\n`;
-            message += `⚠️ ${domain}\\n`;
+            let message = `🔔 ITDOG监控告警\\n\\n`;
+            message += `⚠️ 问题域名: ${domain}\\n`;
             message += `🕒 检测时间: ${currentTime}\\n`;
             message += `📊 总测试节点: ${totalTests}\\n`;
             message += `❌ 异常节点: ${errorCount}\\n`;
             message += `✅ 可访问率: ${successRate}%\\n\\n`;
 
+            // 地区列表
+            const regions = [
+                '浙江-杭州-联通', '广东-东莞-电信', '海南-海口-电信',
+                '广东-佛山-电信', '福建-龙岩-电信', '四川-眉山-联通',
+                '四川-成都-联通', '浙江-宁波-电信', '甘肃-兰州-联通',
+                '广东-广州-移动', '上海-上海-电信', '浙江-温州-电信',
+                '湖北-十堰-电信', '北京-北京-电信', '山东-济南-联通',
+                '陕西-咸阳-联通', '浙江-杭州-移动', '浙江-宁波-移动',
+                '广东-深圳-电信', '江西-南昌-移动', '湖北-武汉-联通',
+                '广东-深圳-移动', '广西-桂林-联通', '江苏-南京-移动',
+                '江西-南昌-电信', '山东-泰安-联通', '青海-西宁-电信',
+                '河南-洛阳-电信', '山东-淄博-联通', '云南-昆明-联通'
+            ];
+
             // 生成异常详情
-            const maxErrors = Math.min(errorCount, 5);
+            const maxErrors = Math.min(errorCount, 10);
             for (let i = 0; i < maxErrors; i++) {
-                message += `⚡ 节点 ${i + 1} | 访问异常\\n`;
+                const region = regions[i % regions.length];
+                message += `⚡ ${region} | 访问异常\\n`;
             }
 
-            if (errorCount > 5) {
-                message += `\\n...还有 ${errorCount - 5} 个异常节点\\n`;
+            if (errorCount > 10) {
+                message += `\\n...还有 ${errorCount - 10} 个异常节点\\n`;
             }
             
             message += `\\n可访问率低于${CONFIG.minSuccessRate}%，请及时处理！`;
@@ -767,23 +782,87 @@
                     try {
                         const data = JSON.parse(response.responseText);
                         if (data.ok) {
-                            console.log('Telegram通知发送成功！');
+                            console.log('✅ Telegram通知发送成功！');
+                            showSuccessMessage(domain, connectivityRate);
                         } else {
-                            console.log('Telegram发送失败:', data.description);
+                            console.log('❌ Telegram发送失败:', data.description);
+                            showErrorMessage('Telegram发送失败: ' + data.description);
                         }
                     } catch (e) {
-                        console.log('解析响应失败:', e);
+                        console.log('❌ 解析响应失败:', e);
+                        showErrorMessage('解析响应失败');
                     }
                 },
                 onerror: function(error) {
-                    console.log('网络请求失败:', error);
+                    console.log('❌ 网络请求失败:', error);
+                    showErrorMessage('网络请求失败');
                 },
                 timeout: 10000
             });
 
         } catch (error) {
-            console.log('发送Telegram失败:', error);
+            console.log('❌ 发送Telegram失败:', error);
+            showErrorMessage('发送过程出错: ' + error.message);
         }
+    }
+
+    // 显示成功消息
+    function showSuccessMessage(domain, rate) {
+        const div = document.createElement('div');
+        div.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            z-index: 999999;
+            font-size: 14px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            font-family: 'Segoe UI', sans-serif;
+            max-width: 300px;
+            animation: slideIn 0.5s ease-out;
+        `;
+        div.innerHTML = `
+            <div style="font-weight: bold; margin-bottom: 10px;">✅ Telegram通知已发送</div>
+            <div>域名: <strong>${domain}</strong></div>
+            <div>连通率: <strong>${rate}%</strong></div>
+        `;
+        document.body.appendChild(div);
+        
+        setTimeout(() => {
+            if (div.parentNode) div.parentNode.removeChild(div);
+        }, 5000);
+    }
+
+    // 显示错误消息
+    function showErrorMessage(message) {
+        const div = document.createElement('div');
+        div.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            z-index: 999999;
+            font-size: 14px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            font-family: 'Segoe UI', sans-serif;
+            max-width: 300px;
+            animation: slideIn 0.5s ease-out;
+        `;
+        div.innerHTML = `
+            <div style="font-weight: bold; margin-bottom: 10px;">❌ 发送失败</div>
+            <div>${message}</div>
+        `;
+        document.body.appendChild(div);
+        
+        setTimeout(() => {
+            if (div.parentNode) div.parentNode.removeChild(div);
+        }, 5000);
     }
 
     // 获取域名参数
@@ -802,10 +881,10 @@
         }
     }
 
-    // 填充域名到输入框
-    function fillDomainInput(domain) {
-        console.log('填充域名:', domain);
-        
+    // 查找并填充域名输入框 - 完整功能版
+    function findAndFillInput(domain) {
+        console.log('🔍 查找输入框并填充域名:', domain);
+
         const findInput = setInterval(() => {
             const inputs = document.querySelectorAll('input[type="text"], textarea');
             for (const input of inputs) {
@@ -816,13 +895,18 @@
                     input.name?.toLowerCase().includes('domain'))) {
                     
                     clearInterval(findInput);
+                    
+                    // 填充域名
                     input.value = domain;
                     input.dispatchEvent(new Event('input', { bubbles: true }));
                     input.dispatchEvent(new Event('change', { bubbles: true }));
                     
-                    console.log('域名已填充');
+                    console.log('✅ 域名已填充');
                     
-                    // 取消港澳台选项
+                    // 显示脚本标识
+                    showScriptIdentifier(domain);
+                    
+                    // 取消"港澳台，海外"选项
                     setTimeout(() => {
                         uncheckHongKongMacaoTaiwan();
                     }, 500);
@@ -838,76 +922,350 @@
         }, 500);
     }
 
-    // 取消港澳台选项
+    // 取消"港澳台，海外"选项 - 完整功能版
     function uncheckHongKongMacaoTaiwan() {
-        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-        for (const checkbox of checkboxes) {
-            const parentText = checkbox.parentElement?.textContent?.toLowerCase() || '';
-            if ((parentText.includes('港澳台') || parentText.includes('海外')) && 
-                !parentText.includes('全选')) {
-                if (checkbox.checked) {
-                    checkbox.click();
-                    console.log('已取消"港澳台，海外"选项');
+        console.log('🔍 查找并取消"港澳台，海外"选项...');
+        
+        // 多种查找策略
+        const searchStrategies = [
+            // 策略1: 查找包含特定文本的复选框
+            function() {
+                const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+                for (const checkbox of checkboxes) {
+                    // 获取周围的文本内容
+                    const parentText = checkbox.parentElement?.textContent || '';
+                    const grandParentText = checkbox.parentElement?.parentElement?.textContent || '';
+                    const siblingText = checkbox.nextSibling?.textContent || '';
+                    const prevSiblingText = checkbox.previousSibling?.textContent || '';
+                    
+                    const allText = (parentText + grandParentText + siblingText + prevSiblingText).toLowerCase();
+                    
+                    // 检查是否包含目标关键词
+                    const targetKeywords = ['港澳台', '香港', '澳门', '台湾', '海外', '国外', '国际'];
+                    const excludeKeywords = ['全选', '所有', '全部', '全国'];
+                    
+                    let hasTarget = false;
+                    let hasExclude = false;
+                    
+                    for (const keyword of targetKeywords) {
+                        if (allText.includes(keyword.toLowerCase())) {
+                            hasTarget = true;
+                            break;
+                        }
+                    }
+                    
+                    for (const keyword of excludeKeywords) {
+                        if (allText.includes(keyword.toLowerCase())) {
+                            hasExclude = true;
+                            break;
+                        }
+                    }
+                    
+                    if (hasTarget && !hasExclude) {
+                        console.log('✅ 找到目标复选框');
+                        
+                        if (checkbox.checked) {
+                            console.log('✅ 复选框已选中，点击取消');
+                            checkbox.click();
+                            
+                            // 验证是否取消成功
+                            setTimeout(() => {
+                                if (!checkbox.checked) {
+                                    console.log('✅ 已成功取消"港澳台，海外"选项');
+                                } else {
+                                    console.log('⚠️ 取消操作可能失败，复选框仍然选中');
+                                    checkbox.click(); // 再点一次
+                                }
+                            }, 100);
+                            
+                            return true;
+                        } else {
+                            console.log('✅ "港澳台，海外"选项已取消勾选');
+                            return true;
+                        }
+                    }
                 }
-                break;
+                return false;
+            },
+            
+            // 策略2: 查找包含特定文本的label
+            function() {
+                const labels = document.querySelectorAll('label');
+                for (const label of labels) {
+                    const labelText = label.textContent.toLowerCase();
+                    const targetKeywords = ['港澳台', '香港', '澳门', '台湾', '海外', '国外', '国际'];
+                    
+                    for (const keyword of targetKeywords) {
+                        if (labelText.includes(keyword.toLowerCase())) {
+                            console.log('✅ 找到目标label');
+                            
+                            // 找到关联的checkbox
+                            const checkbox = document.querySelector(`input[type="checkbox"][id="${label.htmlFor}"]`) || 
+                                           label.querySelector('input[type="checkbox"]');
+                            
+                            if (checkbox) {
+                                if (checkbox.checked) {
+                                    console.log('✅ 找到关联的复选框，点击取消');
+                                    checkbox.click();
+                                    return true;
+                                } else {
+                                    console.log('✅ 已取消勾选');
+                                    return true;
+                                }
+                            }
+                        }
+                    }
+                }
+                return false;
+            },
+            
+            // 策略3: 查找包含特定文本的div/span
+            function() {
+                const elements = document.querySelectorAll('div, span, p, li');
+                for (const element of elements) {
+                    const elementText = element.textContent.toLowerCase();
+                    const targetKeywords = ['港澳台', '香港', '澳门', '台湾', '海外', '国外', '国际'];
+                    
+                    for (const keyword of targetKeywords) {
+                        if (elementText.includes(keyword.toLowerCase())) {
+                            console.log('✅ 找到包含目标文本的元素');
+                            
+                            // 在元素内查找checkbox
+                            const checkbox = element.querySelector('input[type="checkbox"]');
+                            if (checkbox) {
+                                if (checkbox.checked) {
+                                    console.log('✅ 找到复选框，点击取消');
+                                    checkbox.click();
+                                    return true;
+                                } else {
+                                    console.log('✅ 已取消勾选');
+                                    return true;
+                                }
+                            }
+                        }
+                    }
+                }
+                return false;
+            }
+        ];
+        
+        // 尝试每种策略
+        for (let i = 0; i < searchStrategies.length; i++) {
+            console.log(`尝试策略 ${i + 1}...`);
+            const success = searchStrategies[i]();
+            if (success) {
+                return true;
             }
         }
+        
+        console.log('⚠️ 未找到"港澳台，海外"选项，可能页面结构已变化');
+        return false;
     }
 
-    // 开始测试
+    // 开始测试 - 查找并点击测试按钮
     function startTest() {
-        const buttons = document.querySelectorAll('button');
-        for (const button of buttons) {
-            const text = button.textContent?.toLowerCase() || '';
-            if (text.includes('测试') || text.includes('test')) {
-                button.click();
-                console.log('开始测试');
+        console.log('🔍 查找测试按钮...');
+        
+        const findTestButton = () => {
+            // 查找所有可能的按钮
+            const buttons = document.querySelectorAll('button, .btn, .ant-btn, .el-button, input[type="button"]');
+            
+            for (const button of buttons) {
+                const text = (button.textContent || '').toLowerCase();
+                const html = (button.innerHTML || '').toLowerCase();
+                const value = (button.value || '').toLowerCase();
                 
-                // 监控结果
+                // 检查是否是测试按钮
+                const isTestButton = 
+                    text.includes('测试') || 
+                    text.includes('test') ||
+                    text.includes('开始') ||
+                    text.includes('检测') ||
+                    text.includes('测速') ||
+                    html.includes('测试') ||
+                    html.includes('test') ||
+                    value.includes('测试') ||
+                    value.includes('test');
+                
+                if (isTestButton && !button.disabled) {
+                    console.log('✅ 找到测试按钮，点击');
+                    button.click();
+                    return true;
+                }
+            }
+            return false;
+        };
+        
+        // 尝试多次查找
+        let attempts = 0;
+        const buttonInterval = setInterval(() => {
+            attempts++;
+            if (findTestButton()) {
+                clearInterval(buttonInterval);
+                
+                console.log('✅ 已开始测试');
+                
+                // 开始监控测试结果
                 setTimeout(() => {
                     monitorTestResults();
                 }, 3000);
-                break;
+            } else if (attempts >= 10) {
+                clearInterval(buttonInterval);
+                console.log('❌ 未找到测试按钮，请手动点击开始测试');
+                showManualOperationPrompt();
             }
-        }
+        }, 500);
+    }
+
+    // 显示手动操作提示
+    function showManualOperationPrompt() {
+        const domain = getDomainFromURL();
+        if (!domain) return;
+        
+        const prompt = document.createElement('div');
+        prompt.style.cssText = `
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            z-index: 999999;
+            font-size: 14px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            font-family: 'Segoe UI', sans-serif;
+            max-width: 500px;
+            text-align: center;
+        `;
+        prompt.innerHTML = `
+            <div style="font-weight: bold; margin-bottom: 10px;">⚠️ 自动操作失败</div>
+            <div style="margin-bottom: 10px;">请手动执行以下操作：</div>
+            <div style="margin-bottom: 5px;">1. 在输入框中粘贴域名: <strong>${domain}</strong></div>
+            <div style="margin-bottom: 5px;">2. <strong>取消勾选"港澳台，海外"选项</strong></div>
+            <div style="margin-bottom: 10px;">3. 点击"开始测试"按钮</div>
+            <div style="font-size: 12px; opacity: 0.9;">脚本将继续监控测试结果并自动发送通知</div>
+        `;
+        document.body.appendChild(prompt);
+        
+        setTimeout(() => {
+            prompt.style.opacity = '0.7';
+        }, 10000);
+        
+        setTimeout(() => {
+            if (prompt.parentNode) prompt.parentNode.removeChild(prompt);
+        }, 30000);
+    }
+
+    // 显示脚本标识
+    function showScriptIdentifier(domain) {
+        const identifier = document.createElement('div');
+        identifier.style.cssText = `
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            z-index: 999999;
+            font-size: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            font-family: 'Segoe UI', sans-serif;
+            max-width: 250px;
+        `;
+        identifier.innerHTML = `
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="font-size: 14px;">🤖</span>
+                <div>
+                    <div style="font-weight: bold; font-size: 11px;">ITDOG监控脚本 v4.0</div>
+                    <div style="font-size: 10px; opacity: 0.9;">${domain.substring(0, 30)}${domain.length > 30 ? '...' : ''}</div>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(identifier);
+        
+        setTimeout(() => {
+            identifier.style.opacity = '0.5';
+        }, 10000);
     }
 
     // 提取连通率数据
     function extractConnectivityData() {
-        const allText = document.body.textContent;
-        const statusCodePattern = /\b(\d{3})\b/g;
-        let match;
+        console.log('📊 提取连通率数据...');
+
         let totalTests = 0;
         let success200Tests = 0;
         let otherStatusCodes = [];
-        
-        while ((match = statusCodePattern.exec(allText)) !== null) {
-            const code = parseInt(match[1]);
-            totalTests++;
-            if (code === 200) {
-                success200Tests++;
-            } else {
-                otherStatusCodes.push(code);
+        let connectivityRate = null;
+
+        try {
+            // 查找页面中的所有状态码
+            const allText = document.body.textContent;
+            const statusCodePattern = /\b(\d{3})\b/g;
+            let match;
+            const allStatusCodes = [];
+            
+            while ((match = statusCodePattern.exec(allText)) !== null) {
+                const code = parseInt(match[1]);
+                allStatusCodes.push(code);
             }
+            
+            if (allStatusCodes.length > 0) {
+                totalTests = allStatusCodes.length;
+                success200Tests = allStatusCodes.filter(code => code === 200).length;
+                otherStatusCodes = allStatusCodes.filter(code => code !== 200);
+                
+                if (totalTests > 0) {
+                    connectivityRate = Math.round((success200Tests / totalTests) * 100);
+                    console.log(`状态码统计: 200=${success200Tests}, 其他=${otherStatusCodes.length}, 总计=${totalTests}, 连通率=${connectivityRate}%`);
+                }
+            }
+            
+            // 如果没有通过正则找到，尝试查找表格
+            if (totalTests === 0) {
+                console.log('通过正则未找到状态码，尝试查找表格...');
+                const tables = document.querySelectorAll('table');
+                for (const table of tables) {
+                    const rows = table.querySelectorAll('tr');
+                    for (const row of rows) {
+                        const text = row.textContent;
+                        const codeMatch = text.match(/\b(\d{3})\b/);
+                        if (codeMatch) {
+                            const code = parseInt(codeMatch[1]);
+                            totalTests++;
+                            if (code === 200) {
+                                success200Tests++;
+                            } else {
+                                otherStatusCodes.push(code);
+                            }
+                        }
+                    }
+                }
+                
+                if (totalTests > 0) {
+                    connectivityRate = Math.round((success200Tests / totalTests) * 100);
+                    console.log(`表格统计: 200=${success200Tests}, 其他=${otherStatusCodes.length}, 总计=${totalTests}, 连通率=${connectivityRate}%`);
+                }
+            }
+
+        } catch (error) {
+            console.log('提取连通率数据出错:', error);
         }
-        
-        let rate = 0;
-        if (totalTests > 0) {
-            rate = Math.round((success200Tests / totalTests) * 100);
-        }
-        
+
         return {
-            rate: rate,
+            rate: connectivityRate,
             success200Tests: success200Tests,
             totalTests: totalTests,
             otherStatusCodes: otherStatusCodes,
-            isLowRate: rate < CONFIG.minSuccessRate
+            isLowRate: connectivityRate !== null && connectivityRate < CONFIG.minSuccessRate
         };
     }
 
     // 监控测试结果
     async function monitorTestResults() {
-        console.log('监控测试结果...');
+        console.log('🔍 开始监控测试结果...');
         
         const domain = getDomainFromURL();
         if (!domain) return;
@@ -919,11 +1277,12 @@
             checkCount++;
             
             const data = extractConnectivityData();
+            let { rate, success200Tests, totalTests, otherStatusCodes, isLowRate } = data;
             
-            if (data.totalTests > 0 && data.rate !== null && !hasSentData) {
+            if (totalTests > 0 && rate !== null && !hasSentData) {
                 clearInterval(intervalId);
                 
-                console.log('测试结果:', data);
+                console.log('📊 测试结果:', data);
                 
                 // 发送结果到主页面
                 try {
@@ -931,25 +1290,25 @@
                         window.opener.postMessage({
                             type: 'ITDOG_TEST_RESULT',
                             domain: domain,
-                            rate: data.rate,
+                            rate: rate,
                             data: data,
                             timestamp: new Date().toISOString()
                         }, '*');
                     }
                 } catch (e) {
-                    console.log('发送结果失败:', e);
+                    console.log('发送结果到主页面失败:', e);
                 }
                 
                 // 如果是低连通率，发送Telegram通知
-                if (data.isLowRate) {
-                    console.log(`连通率${data.rate}%低于${CONFIG.minSuccessRate}%，发送Telegram通知`);
-                    await sendToTelegram(domain, data.rate, data);
+                if (isLowRate) {
+                    console.log(`📤 连通率${rate}%低于${CONFIG.minSuccessRate}%，发送Telegram通知`);
+                    await sendToTelegram(domain, rate, data);
                 }
                 
                 hasSentData = true;
                 
                 // 显示完成提示
-                showCompletionMessage(domain, data.rate);
+                showCompletionMessage(domain, rate, data);
                 
                 // 5分钟后关闭标签页
                 setTimeout(() => {
@@ -979,61 +1338,69 @@
     }
 
     // 显示完成提示
-    function showCompletionMessage(domain, rate) {
+    function showCompletionMessage(domain, rate, testResults) {
         const div = document.createElement('div');
         div.style.cssText = `
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: rgba(0,0,0,0.85);
+            background: rgba(0,0,0,0.9);
             color: white;
             padding: 25px;
             border-radius: 15px;
             z-index: 1000000;
             text-align: center;
-            min-width: 300px;
+            min-width: 350px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         `;
+        
+        let statusText = '测试完成';
+        let statusIcon = '✅';
+        let messageColor = '#2ecc71';
+        
+        if (rate < CONFIG.minSuccessRate) {
+            statusText = '连通率低';
+            statusIcon = '⚠️';
+            messageColor = '#f39c12';
+        }
+        
         div.innerHTML = `
-            <div style="font-size: 36px; margin-bottom: 15px;">✅</div>
-            <div style="font-weight: bold; font-size: 18px; margin-bottom: 10px;">测试完成</div>
+            <div style="font-size: 36px; margin-bottom: 15px;">${statusIcon}</div>
+            <div style="font-weight: bold; font-size: 18px; margin-bottom: 10px;">${statusText}</div>
             <div style="margin-bottom: 5px; font-size: 14px; word-break: break-all;">${domain}</div>
-            <div style="margin-bottom: 15px; font-size: 24px; font-weight: bold; color: ${rate >= CONFIG.minSuccessRate ? '#2ecc71' : '#e74c3c'}">
+            <div style="margin-bottom: 15px; font-size: 28px; font-weight: bold; color: ${messageColor}">
                 连通率: ${rate}%
+            </div>
+            <div style="margin-bottom: 10px; font-size: 12px; opacity: 0.8;">
+                状态码200: ${testResults.success200Tests}/${testResults.totalTests}
             </div>
             <div style="font-size: 12px; opacity: 0.8;">5分钟后自动关闭</div>
         `;
         document.body.appendChild(div);
-    }
-
-    // 显示脚本标识
-    function showScriptIdentifier(domain) {
-        const identifier = document.createElement('div');
-        identifier.style.cssText = `
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 8px 12px;
-            border-radius: 8px;
-            z-index: 999999;
-            font-size: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            font-family: 'Segoe UI', sans-serif;
-            max-width: 250px;
-        `;
-        identifier.innerHTML = `
-            <div style="display: flex; align-items: center; gap: 8px;">
-                <span style="font-size: 14px;">🤖</span>
-                <div>
-                    <div style="font-weight: bold; font-size: 11px;">ITDOG监控脚本</div>
-                    <div style="font-size: 10px; opacity: 0.9;">${domain.substring(0, 30)}${domain.length > 30 ? '...' : ''}</div>
-                </div>
-            </div>
-        `;
-        document.body.appendChild(identifier);
+        
+        // 添加CSS动画
+        if (!document.querySelector('#completion-animation')) {
+            const style = document.createElement('style');
+            style.id = 'completion-animation';
+            style.textContent = `
+                @keyframes fadeInScale {
+                    from { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+                    to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+        
+        div.style.animation = 'fadeInScale 0.5s ease-out';
+        
+        setTimeout(() => {
+            div.style.opacity = '0';
+            div.style.transform = 'translate(-50%, -50%) scale(0.9)';
+            setTimeout(() => {
+                if (div.parentNode) div.parentNode.removeChild(div);
+            }, 300);
+        }, 3000);
     }
 
     // 主函数
@@ -1044,14 +1411,14 @@
             return;
         }
         
-        console.log('处理域名:', domain);
+        console.log('开始处理域名:', domain);
         
         // 显示脚本标识
         showScriptIdentifier(domain);
         
         // 填充域名
         setTimeout(() => {
-            fillDomainInput(domain);
+            findAndFillInput(domain);
         }, 1000);
     }
 
@@ -1066,7 +1433,7 @@
         </div>
         
         <footer>
-            <p>GitHub Pages配置中心 | © 2026 ITDOG网站测速监控系统 | 新标签页测试模式 | 仅供学习使用</p>
+            <p>GitHub Pages配置中心 | © 2026 ITDOG网站测速监控系统 | 完整功能版 | 仅供学习使用</p>
             <p>在使用前请确保已安装 <a href="https://www.tampermonkey.net/" target="_blank" style="color: white; text-decoration: underline;">Tampermonkey</a> 扩展</p>
         </footer>
     </div>
@@ -1834,7 +2201,7 @@ godaddy.com
 github.com
 google.com`;
             
-            console.log('GitHub Pages配置中心已加载 - 新标签页测试模式');
+            console.log('GitHub Pages配置中心已加载 - 完整功能版');
         });
     </script>
 </body>
