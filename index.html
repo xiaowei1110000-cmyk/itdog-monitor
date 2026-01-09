@@ -1991,9 +1991,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 checkTestCompletion();
                 
-                // 继续打开下一个批次
+                // 继续打开下一个批次（修复：只处理未完成的域名）
                 if (currentIndex < domainArray.length && activeTabs.size < CONFIG.batchSize) {
-                    setTimeout(openNextBatch, CONFIG.testDelay);
+                    setTimeout(() => openNextBatch(), CONFIG.testDelay);
                 }
             }
         }
@@ -2074,7 +2074,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
-        // 计算当前可以打开的标签页数量
+        // 计算当前可以打开的标签页数量（修复：确保不超过配置的批量大小）
         const availableSlots = Math.max(0, CONFIG.batchSize - activeTabs.size);
         if (availableSlots <= 0) {
             // 没有可用槽位，等待一段时间再试
@@ -2082,21 +2082,31 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
+        // 计算本次批次大小（修复：确保不会一次性打开所有标签页）
         const batchCount = Math.min(availableSlots, domainArray.length - currentIndex);
-        addLog(`📂 打开批次 ${Math.floor(currentIndex / CONFIG.batchSize) + 1}，共 ${batchCount} 个域名`, 'info');
+        const batchStart = currentIndex;
+        const batchEnd = Math.min(currentIndex + batchCount, domainArray.length);
         
-        for (let i = 0; i < batchCount; i++) {
-            const domainIndex = currentIndex + i;
+        addLog(`📂 打开批次 ${Math.floor(batchStart / CONFIG.batchSize) + 1}，共 ${batchCount} 个域名`, 'info');
+        
+        // 打开当前批次
+        for (let i = batchStart; i < batchEnd; i++) {
+            const domainIndex = i;
             const domain = domainArray[domainIndex];
             
             updateDomainStatus(domainIndex, 'testing', 0);
             
+            // 使用延迟打开每个标签页
             setTimeout(() => {
                 openITDOGTab(domain, domainIndex);
-            }, i * 1000);
+                // 增加当前索引
+                currentIndex++;
+            }, (i - batchStart) * 1000); // 每个标签页间隔1秒打开
         }
         
-        currentIndex += batchCount;
+        // 不立即增加currentIndex，等待标签页打开后再增加
+        
+        // 更新进度显示
         updateProgress();
         
         // 如果还有域名未处理，安排下一批次（延迟打开）
@@ -2125,6 +2135,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 addLog(`🌐 标签页已打开: ${originalDomain}`, 'info');
                 
+                // 更新活跃标签页计数
+                elements.activeCount.textContent = activeTabs.size;
+                
                 // 设置标签页状态检查
                 setTimeout(() => {
                     checkTabStatus(index);
@@ -2134,11 +2147,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 addLog(`❌ 无法打开标签页: ${originalDomain} (可能被浏览器阻止)`, 'error');
                 updateDomainStatus(index, 'error', 0);
                 activeTabs.delete(index);
+                elements.activeCount.textContent = activeTabs.size;
             }
         } catch (error) {
             addLog(`❌ 打开标签页出错: ${error.message}`, 'error');
             updateDomainStatus(index, 'error', 0);
             activeTabs.delete(index);
+            elements.activeCount.textContent = activeTabs.size;
         }
     }
 
@@ -2149,25 +2164,28 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
             if (tabInfo.tab.closed) {
                 activeTabs.delete(index);
+                elements.activeCount.textContent = activeTabs.size;
                 // 标签页关闭后，检查是否可以打开新的
                 if (isTesting && !isPaused && currentIndex < domainArray.length) {
-                    setTimeout(openNextBatch, 1000);
+                    setTimeout(() => openNextBatch(), 1000);
                 }
             } else {
                 if (Date.now() - tabInfo.openedAt > 180000) {
                     addLog(`⏰ 标签页超时: ${tabInfo.domain}，强制关闭`, 'warning');
                     tabInfo.tab.close();
                     activeTabs.delete(index);
+                    elements.activeCount.textContent = activeTabs.size;
                     updateDomainStatus(index, 'timeout', 0);
                     
                     // 超时后，检查是否可以打开新的
                     if (isTesting && !isPaused && currentIndex < domainArray.length) {
-                        setTimeout(openNextBatch, 1000);
+                        setTimeout(() => openNextBatch(), 1000);
                     }
                 }
             }
         } catch (e) {
             activeTabs.delete(index);
+            elements.activeCount.textContent = activeTabs.size;
         }
     }
 
@@ -2283,6 +2301,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         
         activeTabs.clear();
+        elements.activeCount.textContent = '0';
         
         addLog('⏹️ 测试已停止', 'warning');
         showStatus('测试已停止', 'info');
@@ -2417,7 +2436,7 @@ akamai.com`;
         // 获取主要问题识别
         const mainIssues = identifyMainIssues(results);
         
-        // 构建消息 - 重点升级"异常节点"部分
+        // 构建消息 - 已删除重复的建议操作部分
         const message = `🚨 *ITDOG监控系统 v8.1 - 网站告警*\n\n` +
             `🔴 *告警级别:* 严重\n` +
             `🌐 *问题域名:* \`${domain}\`\n` +
@@ -2431,8 +2450,6 @@ akamai.com`;
             `${operatorAnalysis}\n` +
             `🎯 *主要问题识别*\n` +
             `${mainIssues}\n` +
-            `📋 *异常状态码分布*\n` +
-            `${getStatusCodeDistribution(results.otherStatusCodes || [])}\n` +
             `⚠️ *告警说明:* 网站连通率低于${CONFIG.connectivityThreshold}%，请立即检查！\n\n` +
             `🔧 *建议操作*\n` +
             `${getRecommendations(mainIssues)}\n\n` +
@@ -2592,23 +2609,23 @@ akamai.com`;
         let recommendations = '';
         
         if (mainIssues.includes('移动网络')) {
-            recommendations += `1. 检查移动网络线路\n`;
-            recommendations += `2. 联系移动运营商客服\n`;
+            recommendations += `• 检查移动网络线路\n`;
+            recommendations += `• 联系移动运营商客服\n`;
         }
         if (mainIssues.includes('联通网络')) {
-            recommendations += `1. 检查联通网络线路\n`;
-            recommendations += `2. 联系联通运营商客服\n`;
+            recommendations += `• 检查联通网络线路\n`;
+            recommendations += `• 联系联通运营商客服\n`;
         }
         if (mainIssues.includes('电信网络')) {
-            recommendations += `1. 检查电信网络线路\n`;
-            recommendations += `2. 联系电信运营商客服\n`;
+            recommendations += `• 检查电信网络线路\n`;
+            recommendations += `• 联系电信运营商客服\n`;
         }
         
         if (!recommendations) {
-            recommendations = `1. 检查服务器状态\n`;
-            recommendations += `2. 检查DNS解析\n`;
-            recommendations += `3. 检查防火墙设置\n`;
-            recommendations += `4. 联系服务提供商\n`;
+            recommendations = `• 检查服务器状态\n`;
+            recommendations += `• 检查DNS解析\n`;
+            recommendations += `• 检查防火墙设置\n`;
+            recommendations += `• 联系服务提供商\n`;
         }
         
         return recommendations;
@@ -2618,24 +2635,6 @@ akamai.com`;
         const filled = Math.round(percentage / 10);
         const empty = 10 - filled;
         return `[${'█'.repeat(filled)}${'░'.repeat(empty)}]`;
-    }
-
-    function getStatusCodeDistribution(statusCodes) {
-        if (!statusCodes || statusCodes.length === 0) {
-            return '暂无异常状态码数据\n';
-        }
-        
-        const countMap = {};
-        statusCodes.forEach(code => {
-            countMap[code] = (countMap[code] || 0) + 1;
-        });
-        
-        let distribution = '';
-        Object.entries(countMap).forEach(([code, count]) => {
-            distribution += `├ ${code}: ${count}个\n`;
-        });
-        
-        return distribution || '暂无异常状态码数据\n';
     }
 
     // ================ Telegram消息发送 ================
