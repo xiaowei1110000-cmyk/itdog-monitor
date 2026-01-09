@@ -83,7 +83,7 @@
             font-size: 1.1rem;
         }
         
-        textarea, input {
+        textarea, input, select {
             width: 100%;
             padding: 15px;
             border: 2px solid #e9ecef;
@@ -97,7 +97,7 @@
             resize: vertical;
         }
         
-        textarea:focus, input:focus {
+        textarea:focus, input:focus, select:focus {
             outline: none;
             border-color: #667eea;
             box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
@@ -162,6 +162,11 @@
         
         .btn-secondary:hover {
             background: #e9ecef;
+        }
+        
+        .btn-info {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
         }
         
         .btn-icon {
@@ -479,6 +484,66 @@
             text-transform: uppercase;
             letter-spacing: 1px;
         }
+        
+        /* 地区选择器 */
+        .region-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .region-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .region-option input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+        }
+        
+        .region-option label {
+            font-weight: normal;
+            margin: 0;
+            font-size: 0.95rem;
+            cursor: pointer;
+        }
+        
+        .advanced-settings {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border: 2px solid #e9ecef;
+        }
+        
+        .advanced-settings h5 {
+            color: #495057;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 15px 0;
+        }
+        
+        .checkbox-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .checkbox-option input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -566,12 +631,61 @@
                 </div>
             </div>
             
+            <!-- 地区选择器 -->
+            <div class="input-group">
+                <label>测试地区选择（可选）</label>
+                <div class="region-selector">
+                    <div class="region-option">
+                        <input type="checkbox" id="region-mainland" checked>
+                        <label for="region-mainland">中国大陆</label>
+                    </div>
+                    <div class="region-option">
+                        <input type="checkbox" id="region-tw" checked>
+                        <label for="region-tw">中国台湾</label>
+                    </div>
+                    <div class="region-option">
+                        <input type="checkbox" id="region-hk" checked>
+                        <label for="region-hk">中国香港</label>
+                    </div>
+                    <div class="region-option">
+                        <input type="checkbox" id="region-mo" checked>
+                        <label for="region-mo">中国澳门</label>
+                    </div>
+                    <div class="region-option">
+                        <input type="checkbox" id="region-overseas">
+                        <label for="region-overseas">海外地区</label>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 高级设置 -->
+            <div class="advanced-settings">
+                <h5><i class="fas fa-cog"></i> 高级设置</h5>
+                <div class="checkbox-group">
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="auto-fill-domains" checked>
+                        <label for="auto-fill-domains">自动填充示例域名</label>
+                    </div>
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="wait-for-page-load" checked>
+                        <label for="wait-for-page-load">等待页面完全加载</label>
+                    </div>
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="auto-retry" checked>
+                        <label for="auto-retry">自动重试失败测试</label>
+                    </div>
+                </div>
+            </div>
+            
             <div class="buttons">
                 <button class="btn btn-success" id="start-test-btn">
                     <i class="fas fa-rocket btn-icon"></i> 开始批量测试
                 </button>
                 <button class="btn btn-secondary" id="clear-domains-btn">
                     <i class="fas fa-redo btn-icon"></i> 清空列表
+                </button>
+                <button class="btn btn-info" id="load-default-domains-btn">
+                    <i class="fas fa-download btn-icon"></i> 加载默认域名
                 </button>
                 <button class="btn btn-warning" id="test-selected-btn">
                     <i class="fas fa-bolt btn-icon"></i> 测试选中域名
@@ -644,7 +758,7 @@
         </div>
         
         <footer>
-            <p>ITDOG网站测速监控系统 v6.0 | © 2026 GitHub Pages配置中心 | 专业网站监控解决方案</p>
+            <p>ITDOG网站测速监控系统 v6.5 | © 2026 GitHub Pages配置中心 | 专业网站监控解决方案</p>
             <p>在使用前请确保已安装 <a href="https://www.tampermonkey.net/" target="_blank" style="color: white; text-decoration: underline;">Tampermonkey</a> 扩展</p>
         </footer>
     </div>
@@ -666,6 +780,7 @@
                 domains: document.getElementById('domains'),
                 startTestBtn: document.getElementById('start-test-btn'),
                 clearDomainsBtn: document.getElementById('clear-domains-btn'),
+                loadDefaultDomainsBtn: document.getElementById('load-default-domains-btn'),
                 testSelectedBtn: document.getElementById('test-selected-btn'),
                 domainList: document.getElementById('domain-list'),
                 domainsContainer: document.getElementById('domains-container'),
@@ -685,7 +800,17 @@
                 todayTests: document.getElementById('today-tests'),
                 errorSites: document.getElementById('error-sites'),
                 successSites: document.getElementById('success-sites'),
-                sentNotifications: document.getElementById('sent-notifications')
+                sentNotifications: document.getElementById('sent-notifications'),
+                // 地区选择器
+                regionMainland: document.getElementById('region-mainland'),
+                regionTW: document.getElementById('region-tw'),
+                regionHK: document.getElementById('region-hk'),
+                regionMO: document.getElementById('region-mo'),
+                regionOverseas: document.getElementById('region-overseas'),
+                // 高级设置
+                autoFillDomains: document.getElementById('auto-fill-domains'),
+                waitForPageLoad: document.getElementById('wait-for-page-load'),
+                autoRetry: document.getElementById('auto-retry')
             };
 
             // 状态变量
@@ -698,6 +823,7 @@
             let activeTabs = new Map(); // 使用Map存储打开的标签页
             let batchSize = 2; // 同时打开的标签页数量
             let testDelay = 3000; // 标签页间打开延迟
+            let retryCount = 0; // 重试次数
             
             // 统计变量
             let stats = {
@@ -707,6 +833,24 @@
                 sentNotifications: 0,
                 lastReset: new Date().toDateString()
             };
+
+            // 默认域名列表
+            const defaultDomains = [
+                'alibabacloud.com',
+                'dynadot.com',
+                'itdog.cn',
+                'baidu.com',
+                'google.com',
+                'github.com',
+                'cloudflare.com',
+                'akamai.com',
+                'tencent.com',
+                'aliyun.com',
+                'huaweicloud.com',
+                'aws.amazon.com',
+                'azure.com',
+                'oracle.com'
+            ];
 
             // 加载配置和状态
             function loadConfig() {
@@ -726,6 +870,26 @@
                         elements.domains.value = domainsConfig;
                     }
                     
+                    // 加载地区设置
+                    const regionConfig = localStorage.getItem('region_config');
+                    if (regionConfig) {
+                        const regions = JSON.parse(regionConfig);
+                        elements.regionMainland.checked = regions.mainland || true;
+                        elements.regionTW.checked = regions.tw || true;
+                        elements.regionHK.checked = regions.hk || true;
+                        elements.regionMO.checked = regions.mo || true;
+                        elements.regionOverseas.checked = regions.overseas || false;
+                    }
+                    
+                    // 加载高级设置
+                    const advancedConfig = localStorage.getItem('advanced_config');
+                    if (advancedConfig) {
+                        const advanced = JSON.parse(advancedConfig);
+                        elements.autoFillDomains.checked = advanced.autoFillDomains !== false;
+                        elements.waitForPageLoad.checked = advanced.waitForPageLoad !== false;
+                        elements.autoRetry.checked = advanced.autoRetry !== false;
+                    }
+                    
                     // 加载统计信息
                     const statsConfig = localStorage.getItem('monitor_stats');
                     if (statsConfig) {
@@ -742,6 +906,12 @@
                     
                     // 加载通知历史
                     loadNotificationHistory();
+                    
+                    // 自动填充域名
+                    if (elements.autoFillDomains.checked && (!domainsConfig || domainsConfig.trim() === '')) {
+                        elements.domains.value = defaultDomains.join('\n');
+                        saveDomains();
+                    }
                     
                 } catch (error) {
                     console.error('加载配置失败:', error);
@@ -785,6 +955,35 @@
                 }
             }
 
+            // 保存地区设置
+            function saveRegionSettings() {
+                const regionConfig = {
+                    mainland: elements.regionMainland.checked,
+                    tw: elements.regionTW.checked,
+                    hk: elements.regionHK.checked,
+                    mo: elements.regionMO.checked,
+                    overseas: elements.regionOverseas.checked
+                };
+                
+                localStorage.setItem('region_config', JSON.stringify(regionConfig));
+            }
+
+            // 保存高级设置
+            function saveAdvancedSettings() {
+                const advancedConfig = {
+                    autoFillDomains: elements.autoFillDomains.checked,
+                    waitForPageLoad: elements.waitForPageLoad.checked,
+                    autoRetry: elements.autoRetry.checked
+                };
+                
+                localStorage.setItem('advanced_config', JSON.stringify(advancedConfig));
+            }
+
+            // 保存域名列表
+            function saveDomains() {
+                localStorage.setItem('domains_config', elements.domains.value);
+            }
+
             // 测试配置
             function testConfig() {
                 if (!telegramConfig) {
@@ -811,7 +1010,7 @@
                 const testMessage = `📱 *ITDOG监控系统 - 连接测试*\n\n` +
                     `✅ *测试状态:* 连接成功\n` +
                     `🕐 *测试时间:* ${currentTime}\n` +
-                    `📊 *系统版本:* v6.0\n` +
+                    `📊 *系统版本:* v6.5\n` +
                     `🔧 *配置状态:* 已验证\n\n` +
                     `系统已准备就绪，可以开始网站监控任务。`;
                 
@@ -903,6 +1102,14 @@
                 }
             }
 
+            // 加载默认域名
+            function loadDefaultDomains() {
+                elements.domains.value = defaultDomains.join('\n');
+                saveDomains();
+                showStatus('已加载默认域名列表', 'success');
+                addLog('已加载默认域名列表', 'info');
+            }
+
             // 开始批量测试
             function startBatchTest() {
                 const domains = elements.domains.value.trim();
@@ -916,8 +1123,10 @@
                     return;
                 }
                 
-                // 保存域名列表
-                localStorage.setItem('domains_config', domains);
+                // 保存域名列表和设置
+                saveDomains();
+                saveRegionSettings();
+                saveAdvancedSettings();
                 
                 // 解析域名列表
                 domainArray = domains.split('\n')
@@ -935,7 +1144,12 @@
                 domainStatus = {};
                 
                 domainArray.forEach((domain, index) => {
-                    domainStatus[index] = { status: 'pending', rate: 0 };
+                    domainStatus[index] = { 
+                        status: 'pending', 
+                        rate: 0,
+                        retries: 0,
+                        maxRetries: elements.autoRetry.checked ? 2 : 0
+                    };
                     
                     const item = document.createElement('div');
                     item.className = 'domain-item';
@@ -954,6 +1168,7 @@
                 currentIndex = 0;
                 isTesting = true;
                 isPaused = false;
+                retryCount = 0;
                 activeTabs.clear();
                 
                 elements.testedCount.textContent = '0';
@@ -1007,7 +1222,23 @@
             // 打开ITDOG标签页
             function openITDOGTab(domain, index) {
                 try {
-                    const url = `https://www.itdog.cn/http/?domain=${encodeURIComponent(domain)}`;
+                    // 构建带参数的URL
+                    const params = new URLSearchParams();
+                    params.append('domain', domain);
+                    
+                    // 添加地区参数
+                    const regions = [];
+                    if (elements.regionMainland.checked) regions.push('mainland');
+                    if (elements.regionTW.checked) regions.push('tw');
+                    if (elements.regionHK.checked) regions.push('hk');
+                    if (elements.regionMO.checked) regions.push('mo');
+                    if (elements.regionOverseas.checked) regions.push('overseas');
+                    
+                    if (regions.length > 0) {
+                        params.append('regions', regions.join(','));
+                    }
+                    
+                    const url = `https://www.itdog.cn/http/?${params.toString()}`;
                     
                     // 打开新标签页
                     const tab = window.open(url, `itdog_tab_${index}`);
@@ -1017,7 +1248,8 @@
                             tab: tab,
                             domain: domain,
                             openedAt: Date.now(),
-                            status: 'opened'
+                            status: 'opened',
+                            checked: false
                         });
                         
                         addLog(`标签页已打开: ${domain}`, 'info');
@@ -1025,15 +1257,30 @@
                         // 设置超时检查
                         setTimeout(() => {
                             checkTabStatus(index);
-                        }, 120000); // 2分钟超时
+                        }, 180000); // 3分钟超时
                         
                     } else {
                         addLog(`❌ 无法打开标签页: ${domain} (可能被浏览器阻止)`, 'error');
-                        updateDomainStatus(index, 'error', 0);
-                        activeTabs.delete(index);
+                        handleTestFailure(index, 'tab_blocked');
                     }
                 } catch (error) {
                     addLog(`❌ 打开标签页出错: ${error.message}`, 'error');
+                    handleTestFailure(index, 'open_error');
+                }
+            }
+
+            // 处理测试失败
+            function handleTestFailure(index, reason) {
+                const status = domainStatus[index];
+                if (status.retries < status.maxRetries) {
+                    status.retries++;
+                    addLog(`🔄 第${status.retries}次重试: ${domainArray[index]}`, 'info');
+                    
+                    // 等待后重试
+                    setTimeout(() => {
+                        openITDOGTab(domainArray[index], index);
+                    }, 5000);
+                } else {
                     updateDomainStatus(index, 'error', 0);
                     activeTabs.delete(index);
                 }
@@ -1047,24 +1294,35 @@
                 try {
                     if (tabInfo.tab.closed) {
                         activeTabs.delete(index);
+                        if (domainStatus[index] && domainStatus[index].status === 'testing') {
+                            handleTestFailure(index, 'tab_closed');
+                        }
                     } else {
-                        // 如果标签页还在，但超过3分钟，强制关闭
-                        if (Date.now() - tabInfo.openedAt > 180000) {
+                        // 如果标签页还在，但超过4分钟，强制关闭
+                        if (Date.now() - tabInfo.openedAt > 240000) {
                             addLog(`⏰ 标签页超时: ${tabInfo.domain}，强制关闭`, 'warning');
-                            tabInfo.tab.close();
+                            try {
+                                tabInfo.tab.close();
+                            } catch (e) {}
                             activeTabs.delete(index);
-                            updateDomainStatus(index, 'timeout', 0);
+                            handleTestFailure(index, 'timeout');
                         }
                     }
                 } catch (e) {
                     // 跨域访问错误，可能标签页已关闭
                     activeTabs.delete(index);
+                    if (domainStatus[index] && domainStatus[index].status === 'testing') {
+                        handleTestFailure(index, 'tab_closed');
+                    }
                 }
             }
 
             // 更新域名状态
             function updateDomainStatus(index, status, rate) {
-                domainStatus[index] = { status, rate };
+                if (!domainStatus[index]) return;
+                
+                domainStatus[index].status = status;
+                domainStatus[index].rate = rate;
                 
                 const statusElement = document.getElementById(`status-${index}`);
                 if (statusElement) {
@@ -1073,10 +1331,14 @@
                 }
                 
                 // 更新统计
-                if (status === 'error' || status === 'lowrate') {
-                    stats.errorSites++;
+                if (status === 'error' || status === 'lowrate' || status === 'timeout') {
+                    if (domainStatus[index].status !== 'error' && domainStatus[index].status !== 'lowrate' && domainStatus[index].status !== 'timeout') {
+                        stats.errorSites++;
+                    }
                 } else if (status === 'success') {
-                    stats.successSites++;
+                    if (domainStatus[index].status !== 'success') {
+                        stats.successSites++;
+                    }
                 }
                 
                 updateStatsDisplay();
@@ -1091,6 +1353,7 @@
                     case 'lowrate': return `异常 ${rate}%`;
                     case 'error': return '测试失败';
                     case 'timeout': return '超时';
+                    case 'retrying': return `重试中...`;
                     default: return '未知';
                 }
             }
@@ -1098,7 +1361,8 @@
             // 获取状态类名
             function getStatusClass(status) {
                 switch(status) {
-                    case 'testing': return 'status-testing';
+                    case 'testing': 
+                    case 'retrying': return 'status-testing';
                     case 'success': return 'status-success';
                     case 'lowrate': return 'status-warning';
                     case 'error': 
@@ -1137,7 +1401,13 @@
                 
                 if (completed && activeTabs.size === 0) {
                     isTesting = false;
-                    addLog('✅ 所有域名测试完成', 'success');
+                    
+                    // 计算统计
+                    const successCount = Object.values(domainStatus).filter(s => s.status === 'success').length;
+                    const lowrateCount = Object.values(domainStatus).filter(s => s.status === 'lowrate').length;
+                    const errorCount = Object.values(domainStatus).filter(s => s.status === 'error' || s.status === 'timeout').length;
+                    
+                    addLog(`✅ 所有域名测试完成 - 成功: ${successCount}, 低连通率: ${lowrateCount}, 失败: ${errorCount}`, 'success');
                     showStatus('批量测试完成', 'success');
                     
                     // 保存统计
@@ -1186,7 +1456,7 @@
                 
                 // 更新未完成的域名状态
                 for (let i = 0; i < domainArray.length; i++) {
-                    if (domainStatus[i].status === 'pending' || domainStatus[i].status === 'testing') {
+                    if (domainStatus[i] && (domainStatus[i].status === 'pending' || domainStatus[i].status === 'testing')) {
                         updateDomainStatus(i, 'error', 0);
                     }
                 }
@@ -1241,10 +1511,10 @@
                     `🌐 *问题域名:* \`${domain}\`\n` +
                     `🕐 *检测时间:* ${currentTime}\n\n` +
                     `📊 *测试结果详情*\n` +
-                    `├ 总测试节点: ${results.totalTests}\n` +
-                    `├ 正常节点(200): ${results.success200Tests}\n` +
-                    `├ 异常节点: ${results.totalTests - results.success200Tests}\n` +
-                    `└ 连通率: *${results.connectivityRate}%*\n\n` +
+                    `├ 总测试节点: ${results.totalTests || 0}\n` +
+                    `├ 正常节点(200): ${results.success200Tests || 0}\n` +
+                    `├ 异常节点: ${(results.totalTests || 0) - (results.success200Tests || 0)}\n` +
+                    `└ 连通率: *${results.connectivityRate || 0}%*\n\n` +
                     `📋 *异常状态码分布*\n` +
                     `${getStatusCodeDistribution(results.otherStatusCodes)}\n` +
                     `⚠️ *告警说明:* 网站连通率低于90%，请立即检查！\n\n` +
@@ -1276,7 +1546,7 @@
             // 获取状态码分布
             function getStatusCodeDistribution(statusCodes) {
                 if (!statusCodes || statusCodes.length === 0) {
-                    return '暂无异常状态码数据';
+                    return '暂无异常状态码数据\n';
                 }
                 
                 const countMap = {};
@@ -1285,8 +1555,12 @@
                 });
                 
                 let distribution = '';
-                Object.entries(countMap).forEach(([code, count]) => {
-                    distribution += `├ ${code}: ${count}个\n`;
+                Object.entries(countMap).forEach(([code, count], index) => {
+                    if (index === Object.keys(countMap).length - 1) {
+                        distribution += `└ ${code}: ${count}个\n`;
+                    } else {
+                        distribution += `├ ${code}: ${count}个\n`;
+                    }
                 });
                 
                 return distribution;
@@ -1472,7 +1746,18 @@
                         }
                     }
                     
-                    if (domainIndex !== -1) {
+                    if (domainIndex !== -1 && domainStatus[domainIndex]) {
+                        // 检查标签页是否已处理过
+                        const tabInfo = activeTabs.get(domainIndex);
+                        if (tabInfo && tabInfo.checked) {
+                            return; // 已经处理过，避免重复处理
+                        }
+                        
+                        // 标记为已处理
+                        if (tabInfo) {
+                            tabInfo.checked = true;
+                        }
+                        
                         // 更新域名状态
                         const status = isLowRate ? 'lowrate' : 'success';
                         updateDomainStatus(domainIndex, status, rate);
@@ -1512,33 +1797,36 @@
             elements.startTestBtn.addEventListener('click', startBatchTest);
             elements.clearDomainsBtn.addEventListener('click', () => {
                 elements.domains.value = '';
-                localStorage.removeItem('domains_config');
+                saveDomains();
                 showStatus('域名列表已清空', 'info');
                 addLog('域名列表已清空', 'info');
             });
+            elements.loadDefaultDomainsBtn.addEventListener('click', loadDefaultDomains);
             elements.testSelectedBtn.addEventListener('click', startBatchTest);
             elements.pauseBtn.addEventListener('click', pauseTest);
             elements.stopBtn.addEventListener('click', stopTest);
-
-            // 设置示例域名
-            elements.domains.value = `alibabacloud.com
-dynadot.com
-itdog.cn
-baidu.com
-google.com
-github.com
-cloudflare.com
-akamai.com`;
+            
+            // 地区设置更改监听
+            elements.regionMainland.addEventListener('change', saveRegionSettings);
+            elements.regionTW.addEventListener('change', saveRegionSettings);
+            elements.regionHK.addEventListener('change', saveRegionSettings);
+            elements.regionMO.addEventListener('change', saveRegionSettings);
+            elements.regionOverseas.addEventListener('change', saveRegionSettings);
+            
+            // 高级设置更改监听
+            elements.autoFillDomains.addEventListener('change', saveAdvancedSettings);
+            elements.waitForPageLoad.addEventListener('change', saveAdvancedSettings);
+            elements.autoRetry.addEventListener('change', saveAdvancedSettings);
 
             // 初始化
             loadConfig();
             checkDailyReset();
             
             // 添加欢迎日志
-            addLog('ITDOG监控系统已启动 v6.0', 'success');
+            addLog('ITDOG监控系统已启动 v6.5', 'success');
             addLog('请先配置Telegram信息，然后开始批量测试', 'info');
             
-            console.log('ITDOG监控系统已加载 - 完整功能版 v6.0');
+            console.log('ITDOG监控系统已加载 - 完整功能版 v6.5');
         });
     </script>
 </body>
