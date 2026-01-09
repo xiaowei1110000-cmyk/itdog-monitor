@@ -21,10 +21,6 @@
             --info-gradient: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
             --dark-gradient: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
             --telegram-gradient: linear-gradient(135deg, #0088cc 0%, #006699 100%);
-            /* 新增运营商颜色 */
-            --mobile-color: #4CAF50;
-            --unicom-color: #FF9800;
-            --telecom-color: #2196F3;
             
             --primary-color: #667eea;
             --secondary-color: #764ba2;
@@ -141,136 +137,7 @@
             }
         }
         
-        /* ===== 新增：节点分析面板 ===== */
-        .node-analysis-panel {
-            background: white;
-            border-radius: var(--radius-lg);
-            padding: 25px;
-            margin-bottom: 25px;
-            box-shadow: var(--shadow-md);
-            border: 1px solid var(--border-color);
-            display: none;
-        }
-        
-        .node-analysis-panel h4 {
-            color: var(--info-color);
-            margin-bottom: 20px;
-            font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: 600;
-        }
-        
-        .node-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-        
-        .node-stat-card {
-            background: white;
-            padding: 20px;
-            border-radius: var(--radius-md);
-            text-align: center;
-            box-shadow: var(--shadow-sm);
-            border-top: 5px solid;
-            transition: var(--transition-normal);
-        }
-        
-        .node-stat-card:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-md);
-        }
-        
-        .node-stat-card.mobile {
-            border-top-color: var(--mobile-color);
-            background: linear-gradient(135deg, rgba(76, 175, 80, 0.05) 0%, rgba(76, 175, 80, 0.1) 100%);
-        }
-        
-        .node-stat-card.unicom {
-            border-top-color: var(--unicom-color);
-            background: linear-gradient(135deg, rgba(255, 152, 0, 0.05) 0%, rgba(255, 152, 0, 0.1) 100%);
-        }
-        
-        .node-stat-card.telecom {
-            border-top-color: var(--telecom-color);
-            background: linear-gradient(135deg, rgba(33, 150, 243, 0.05) 0%, rgba(33, 150, 243, 0.1) 100%);
-        }
-        
-        .node-stat-title {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            margin-bottom: 10px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-        
-        .node-stat-content {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 15px;
-        }
-        
-        .node-stat-item {
-            text-align: center;
-        }
-        
-        .node-stat-value {
-            font-size: 1.6rem;
-            font-weight: 800;
-            color: var(--text-primary);
-        }
-        
-        .node-stat-label {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            margin-top: 5px;
-        }
-        
-        .node-details {
-            margin-top: 20px;
-            padding: 15px;
-            background: #f8f9fa;
-            border-radius: var(--radius-md);
-            display: none;
-        }
-        
-        .node-details h5 {
-            color: var(--text-primary);
-            margin-bottom: 15px;
-            font-size: 1rem;
-        }
-        
-        .node-detail-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid var(--border-color);
-        }
-        
-        .node-detail-item:last-child {
-            border-bottom: none;
-        }
-        
-        .node-detail-name {
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-        
-        .node-detail-stats {
-            display: flex;
-            gap: 15px;
-        }
-        
-        /* ===== 原有的样式保持不变 ===== */
-        
-        /* Telegram配置 - 登录表单样式 ===== */
+        /* ===== Telegram配置 - 登录表单样式 ===== */
         .telegram-config {
             background: white;
             border-radius: var(--radius-lg);
@@ -1009,10 +876,6 @@
                 position: static;
             }
             
-            .node-stats {
-                grid-template-columns: 1fr;
-            }
-            
             .buttons {
                 flex-direction: column;
             }
@@ -1136,82 +999,7 @@
                     <p>2. 配置定时测试参数或直接开始批量测试</p>
                     <p>3. 在下方输入要监控的网站地址，每行一个</p>
                     <p>4. 系统会自动打开ITDOG页面进行测试，连通率低于阈值时发送通知</p>
-                    <p>5. <strong>新增功能：</strong> 支持移动、联通、电信节点异常分析</p>
-                    <p>6. 建议安装Tampermonkey扩展以获得最佳体验</p>
-                </div>
-                
-                <!-- 新增：节点分析面板 -->
-                <div class="node-analysis-panel" id="node-analysis-panel">
-                    <h4><i class="fas fa-network-wired"></i> 多运营商节点异常分析</h4>
-                    
-                    <div class="node-stats">
-                        <div class="node-stat-card mobile">
-                            <div class="node-stat-title">
-                                <i class="fas fa-signal"></i> 移动节点
-                            </div>
-                            <div class="node-stat-content">
-                                <div class="node-stat-item">
-                                    <div class="node-stat-value" id="mobile-total">0</div>
-                                    <div class="node-stat-label">总节点</div>
-                                </div>
-                                <div class="node-stat-item">
-                                    <div class="node-stat-value" id="mobile-error">0</div>
-                                    <div class="node-stat-label">异常</div>
-                                </div>
-                                <div class="node-stat-item">
-                                    <div class="node-stat-value" id="mobile-rate">0%</div>
-                                    <div class="node-stat-label">连通率</div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="node-stat-card unicom">
-                            <div class="node-stat-title">
-                                <i class="fas fa-broadcast-tower"></i> 联通节点
-                            </div>
-                            <div class="node-stat-content">
-                                <div class="node-stat-item">
-                                    <div class="node-stat-value" id="unicom-total">0</div>
-                                    <div class="node-stat-label">总节点</div>
-                                </div>
-                                <div class="node-stat-item">
-                                    <div class="node-stat-value" id="unicom-error">0</div>
-                                    <div class="node-stat-label">异常</div>
-                                </div>
-                                <div class="node-stat-item">
-                                    <div class="node-stat-value" id="unicom-rate">0%</div>
-                                    <div class="node-stat-label">连通率</div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="node-stat-card telecom">
-                            <div class="node-stat-title">
-                                <i class="fas fa-satellite-dish"></i> 电信节点
-                            </div>
-                            <div class="node-stat-content">
-                                <div class="node-stat-item">
-                                    <div class="node-stat-value" id="telecom-total">0</div>
-                                    <div class="node-stat-label">总节点</div>
-                                </div>
-                                <div class="node-stat-item">
-                                    <div class="node-stat-value" id="telecom-error">0</div>
-                                    <div class="node-stat-label">异常</div>
-                                </div>
-                                <div class="node-stat-item">
-                                    <div class="node-stat-value" id="telecom-rate">0%</div>
-                                    <div class="node-stat-label">连通率</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="node-details" id="node-details">
-                        <h5><i class="fas fa-chart-bar"></i> 节点详细分析</h5>
-                        <div id="node-details-content">
-                            <!-- 节点详情将通过JS动态生成 -->
-                        </div>
-                    </div>
+                    <p>5. 建议安装Tampermonkey扩展以获得最佳体验</p>
                 </div>
                 
                 <!-- 定时测试配置 -->
@@ -1254,9 +1042,6 @@
                         </button>
                         <button class="btn btn-secondary" id="test-now-btn">
                             <i class="fas fa-bolt"></i> 立即测试
-                        </button>
-                        <button class="btn btn-info" id="show-node-analysis-btn" style="display: none;">
-                            <i class="fas fa-chart-bar"></i> 节点分析
                         </button>
                     </div>
                     
@@ -1432,40 +1217,27 @@
 
     <script>
         // ============================================
-        // ITDOG监控系统 v8.0 - 增加节点分析功能
+        // ITDOG监控系统 v8.0 - 修复重复通知和定时器问题
         // ============================================
         document.addEventListener('DOMContentLoaded', function() {
-            // 元素引用 - 新增节点分析元素
+            // 元素引用
             const elements = {
-                // 节点分析元素
-                nodeAnalysisPanel: document.getElementById('node-analysis-panel'),
-                nodeDetails: document.getElementById('node-details'),
-                nodeDetailsContent: document.getElementById('node-details-content'),
-                showNodeAnalysisBtn: document.getElementById('show-node-analysis-btn'),
-                
-                // 运营商节点统计元素
-                mobileTotal: document.getElementById('mobile-total'),
-                mobileError: document.getElementById('mobile-error'),
-                mobileRate: document.getElementById('mobile-rate'),
-                unicomTotal: document.getElementById('unicom-total'),
-                unicomError: document.getElementById('unicom-error'),
-                unicomRate: document.getElementById('unicom-rate'),
-                telecomTotal: document.getElementById('telecom-total'),
-                telecomError: document.getElementById('telecom-error'),
-                telecomRate: document.getElementById('telecom-rate'),
-                
-                // 原有的元素引用保持不变
+                // Telegram配置元素
                 botToken: document.getElementById('bot-token'),
                 chatId: document.getElementById('chat-id'),
                 saveConfigBtn: document.getElementById('save-config-btn'),
                 testConfigBtn: document.getElementById('test-config-btn'),
                 configStatus: document.getElementById('config-status'),
+                
+                // 设置面板元素
                 settingsToggle: document.getElementById('settings-toggle'),
                 settingsPanel: document.getElementById('settings-panel'),
                 connectivityThreshold: document.getElementById('connectivity-threshold'),
                 batchSizeInput: document.getElementById('batch-size'),
                 testDelayInput: document.getElementById('test-delay'),
                 saveSettingsBtn: document.getElementById('save-settings-btn'),
+                
+                // 定时器配置元素
                 timerInterval: document.getElementById('timer-interval'),
                 timerStartTime: document.getElementById('timer-start-time'),
                 timerEndTime: document.getElementById('timer-end-time'),
@@ -1480,6 +1252,8 @@
                 timerControlStart: document.getElementById('timer-control-start'),
                 timerControlStop: document.getElementById('timer-control-stop'),
                 timerControlReset: document.getElementById('timer-control-reset'),
+                
+                // 批量测试元素
                 domains: document.getElementById('domains'),
                 startTestBtn: document.getElementById('start-test-btn'),
                 clearDomainsBtn: document.getElementById('clear-domains-btn'),
@@ -1496,22 +1270,18 @@
                 errorCount: document.getElementById('error-count'),
                 progressText: document.getElementById('progress-text'),
                 progressBar: document.getElementById('progress-bar'),
+                
+                // 监控日志元素
                 monitorLog: document.getElementById('monitor-log'),
+                
+                // 统计元素
                 todayTests: document.getElementById('today-tests'),
                 errorSites: document.getElementById('error-sites'),
                 successSites: document.getElementById('success-sites'),
                 sentNotifications: document.getElementById('sent-notifications')
             };
 
-            // 状态变量 - 新增节点分析数据
-            let nodeAnalysisData = {
-                mobile: { total: 0, success: 0, error: 0, rate: 0, details: [] },
-                unicom: { total: 0, success: 0, error: 0, rate: 0, details: [] },
-                telecom: { total: 0, success: 0, error: 0, rate: 0, details: [] },
-                other: { total: 0, success: 0, error: 0, rate: 0, details: [] }
-            };
-            
-            // 原有的状态变量保持不变
+            // 状态变量
             let telegramConfig = null;
             let domainArray = [];
             let domainStatus = {};
@@ -1520,15 +1290,15 @@
             let isPaused = false;
             let activeTabs = new Map();
             
-            // 配置变量保持不变
+            // 配置变量
             let CONFIG = {
                 connectivityThreshold: 90,
                 batchSize: 6,
                 testDelay: 3000
             };
             
-            // 定时器相关变量保持不变
-            let timerIntervalMs = 120 * 60 * 1000;
+            // 定时器相关变量 - 修复的关键
+            let timerIntervalMs = 120 * 60 * 1000; // 默认120分钟
             let timerActive = false;
             let timerPaused = false;
             let nextTestTime = null;
@@ -1541,7 +1311,7 @@
             let elapsedSeconds = 0;
             let lastTestTime = null;
             
-            // 统计变量保持不变
+            // 统计变量
             let stats = {
                 todayTests: 0,
                 errorSites: 0,
@@ -1554,213 +1324,6 @@
             let sentNotificationsCache = new Set();
             let lastNotificationTime = {};
             
-            // =============== 新增节点分析函数 ===============
-            
-            // 初始化节点分析
-            function initNodeAnalysis() {
-                resetNodeAnalysis();
-                
-                // 添加节点分析按钮事件
-                elements.showNodeAnalysisBtn.addEventListener('click', function() {
-                    if (elements.nodeAnalysisPanel.style.display === 'none') {
-                        elements.nodeAnalysisPanel.style.display = 'block';
-                        addLog('📊 节点分析面板已显示', 'info');
-                    } else {
-                        elements.nodeAnalysisPanel.style.display = 'none';
-                        addLog('📊 节点分析面板已隐藏', 'info');
-                    }
-                });
-            }
-            
-            // 重置节点分析数据
-            function resetNodeAnalysis() {
-                nodeAnalysisData = {
-                    mobile: { total: 0, success: 0, error: 0, rate: 0, details: [] },
-                    unicom: { total: 0, success: 0, error: 0, rate: 0, details: [] },
-                    telecom: { total: 0, success: 0, error: 0, rate: 0, details: [] },
-                    other: { total: 0, success: 0, error: 0, rate: 0, details: [] }
-                };
-                updateNodeAnalysisDisplay();
-            }
-            
-            // 分析节点数据
-            function analyzeNodeData(itdogData) {
-                if (!itdogData) {
-                    console.warn('ITDOG数据为空，无法进行节点分析');
-                    return;
-                }
-                
-                // 重置分析数据
-                resetNodeAnalysis();
-                
-                const success200Tests = itdogData.success200Tests || 0;
-                const totalTests = itdogData.totalTests || 0;
-                const connectivityRate = itdogData.connectivityRate || 0;
-                
-                if (totalTests === 0) {
-                    console.warn('没有测试节点数据');
-                    return;
-                }
-                
-                // 模拟节点数据 - 根据连通率来分配各运营商的节点表现
-                // 假设节点分布：移动35%，联通30%，电信25%，其他10%
-                const nodeDistribution = {
-                    mobile: 0.35,  // 35%
-                    unicom: 0.30,  // 30%
-                    telecom: 0.25, // 25%
-                    other: 0.10    // 10%
-                };
-                
-                // 计算各运营商的节点数
-                Object.keys(nodeDistribution).forEach(type => {
-                    const nodeCount = Math.floor(totalTests * nodeDistribution[type]);
-                    const successCount = Math.floor(nodeCount * (connectivityRate / 100));
-                    const errorCount = nodeCount - successCount;
-                    const rate = Math.round((successCount / nodeCount) * 100);
-                    
-                    nodeAnalysisData[type].total = nodeCount;
-                    nodeAnalysisData[type].success = successCount;
-                    nodeAnalysisData[type].error = errorCount;
-                    nodeAnalysisData[type].rate = rate;
-                    
-                    // 生成节点详情（模拟）
-                    if (type === 'mobile') {
-                        nodeAnalysisData.mobile.details = [
-                            { name: '北京移动', success: Math.floor(successCount * 0.3), error: Math.floor(errorCount * 0.3) },
-                            { name: '上海移动', success: Math.floor(successCount * 0.25), error: Math.floor(errorCount * 0.25) },
-                            { name: '广州移动', success: Math.floor(successCount * 0.2), error: Math.floor(errorCount * 0.2) },
-                            { name: '其他移动', success: successCount - Math.floor(successCount * 0.75), error: errorCount - Math.floor(errorCount * 0.75) }
-                        ];
-                    } else if (type === 'unicom') {
-                        nodeAnalysisData.unicom.details = [
-                            { name: '北京联通', success: Math.floor(successCount * 0.3), error: Math.floor(errorCount * 0.3) },
-                            { name: '上海联通', success: Math.floor(successCount * 0.25), error: Math.floor(errorCount * 0.25) },
-                            { name: '广州联通', success: Math.floor(successCount * 0.2), error: Math.floor(errorCount * 0.2) },
-                            { name: '其他联通', success: successCount - Math.floor(successCount * 0.75), error: errorCount - Math.floor(errorCount * 0.75) }
-                        ];
-                    } else if (type === 'telecom') {
-                        nodeAnalysisData.telecom.details = [
-                            { name: '北京电信', success: Math.floor(successCount * 0.3), error: Math.floor(errorCount * 0.3) },
-                            { name: '上海电信', success: Math.floor(successCount * 0.25), error: Math.floor(errorCount * 0.25) },
-                            { name: '广州电信', success: Math.floor(successCount * 0.2), error: Math.floor(errorCount * 0.2) },
-                            { name: '其他电信', success: successCount - Math.floor(successCount * 0.75), error: errorCount - Math.floor(errorCount * 0.75) }
-                        ];
-                    }
-                });
-                
-                updateNodeAnalysisDisplay();
-                
-                // 显示节点分析面板
-                elements.nodeAnalysisPanel.style.display = 'block';
-                elements.showNodeAnalysisBtn.style.display = 'flex';
-                addLog('📊 节点分析数据已更新', 'info');
-            }
-            
-            // 更新节点分析显示
-            function updateNodeAnalysisDisplay() {
-                // 更新运营商统计
-                elements.mobileTotal.textContent = nodeAnalysisData.mobile.total;
-                elements.mobileError.textContent = nodeAnalysisData.mobile.error;
-                elements.mobileRate.textContent = nodeAnalysisData.mobile.rate + '%';
-                
-                elements.unicomTotal.textContent = nodeAnalysisData.unicom.total;
-                elements.unicomError.textContent = nodeAnalysisData.unicom.error;
-                elements.unicomRate.textContent = nodeAnalysisData.unicom.rate + '%';
-                
-                elements.telecomTotal.textContent = nodeAnalysisData.telecom.total;
-                elements.telecomError.textContent = nodeAnalysisData.telecom.error;
-                elements.telecomRate.textContent = nodeAnalysisData.telecom.rate + '%';
-                
-                // 更新节点详情
-                updateNodeDetails();
-            }
-            
-            // 更新节点详情
-            function updateNodeDetails() {
-                elements.nodeDetailsContent.innerHTML = '';
-                
-                // 显示移动节点详情
-                if (nodeAnalysisData.mobile.details && nodeAnalysisData.mobile.details.length > 0) {
-                    const mobileSection = document.createElement('div');
-                    mobileSection.innerHTML = '<div style="margin: 15px 0 10px 0; font-weight: 600; color: var(--mobile-color);"><i class="fas fa-signal"></i> 移动节点详情</div>';
-                    elements.nodeDetailsContent.appendChild(mobileSection);
-                    
-                    nodeAnalysisData.mobile.details.forEach(detail => {
-                        const total = detail.success + detail.error;
-                        const errorRate = total > 0 ? Math.round((detail.error / total) * 100) : 0;
-                        
-                        const detailItem = document.createElement('div');
-                        detailItem.className = 'node-detail-item';
-                        detailItem.innerHTML = `
-                            <div class="node-detail-name">${detail.name}</div>
-                            <div class="node-detail-stats">
-                                <span>正常: ${detail.success}</span>
-                                <span>异常: ${detail.error}</span>
-                                <span>异常率: ${errorRate}%</span>
-                            </div>
-                        `;
-                        elements.nodeDetailsContent.appendChild(detailItem);
-                    });
-                }
-                
-                // 显示联通节点详情
-                if (nodeAnalysisData.unicom.details && nodeAnalysisData.unicom.details.length > 0) {
-                    const unicomSection = document.createElement('div');
-                    unicomSection.innerHTML = '<div style="margin: 15px 0 10px 0; font-weight: 600; color: var(--unicom-color);"><i class="fas fa-broadcast-tower"></i> 联通节点详情</div>';
-                    elements.nodeDetailsContent.appendChild(unicomSection);
-                    
-                    nodeAnalysisData.unicom.details.forEach(detail => {
-                        const total = detail.success + detail.error;
-                        const errorRate = total > 0 ? Math.round((detail.error / total) * 100) : 0;
-                        
-                        const detailItem = document.createElement('div');
-                        detailItem.className = 'node-detail-item';
-                        detailItem.innerHTML = `
-                            <div class="node-detail-name">${detail.name}</div>
-                            <div class="node-detail-stats">
-                                <span>正常: ${detail.success}</span>
-                                <span>异常: ${detail.error}</span>
-                                <span>异常率: ${errorRate}%</span>
-                            </div>
-                        `;
-                        elements.nodeDetailsContent.appendChild(detailItem);
-                    });
-                }
-                
-                // 显示电信节点详情
-                if (nodeAnalysisData.telecom.details && nodeAnalysisData.telecom.details.length > 0) {
-                    const telecomSection = document.createElement('div');
-                    telecomSection.innerHTML = '<div style="margin: 15px 0 10px 0; font-weight: 600; color: var(--telecom-color);"><i class="fas fa-satellite-dish"></i> 电信节点详情</div>';
-                    elements.nodeDetailsContent.appendChild(telecomSection);
-                    
-                    nodeAnalysisData.telecom.details.forEach(detail => {
-                        const total = detail.success + detail.error;
-                        const errorRate = total > 0 ? Math.round((detail.error / total) * 100) : 0;
-                        
-                        const detailItem = document.createElement('div');
-                        detailItem.className = 'node-detail-item';
-                        detailItem.innerHTML = `
-                            <div class="node-detail-name">${detail.name}</div>
-                            <div class="node-detail-stats">
-                                <span>正常: ${detail.success}</span>
-                                <span>异常: ${detail.error}</span>
-                                <span>异常率: ${errorRate}%</span>
-                            </div>
-                        `;
-                        elements.nodeDetailsContent.appendChild(detailItem);
-                    });
-                }
-                
-                // 如果有节点详情，显示详情区域
-                if (nodeAnalysisData.mobile.details.length > 0 || 
-                    nodeAnalysisData.unicom.details.length > 0 || 
-                    nodeAnalysisData.telecom.details.length > 0) {
-                    elements.nodeDetails.style.display = 'block';
-                }
-            }
-            
-            // =============== 原有的函数保持不变 ===============
-            
             // 初始化
             function init() {
                 loadConfig();
@@ -1768,13 +1331,11 @@
                 loadTimerConfig();
                 checkDailyReset();
                 setupEventListeners();
-                initNodeAnalysis(); // 新增：初始化节点分析
                 
                 // 添加欢迎日志
-                addLog('🎉 ITDOG监控系统 v8.0 已启动（增强节点分析版）', 'success');
+                addLog('🎉 ITDOG监控系统 v8.0 已启动', 'success');
                 addLog(`⚙️ 连通率阈值: ${CONFIG.connectivityThreshold}%`, 'info');
                 addLog(`⚙️ 批量打开数量: ${CONFIG.batchSize}`, 'info');
-                addLog('📊 新增：多运营商节点异常分析功能', 'info');
                 addLog('💡 请在右侧配置Telegram通知信息', 'info');
                 
                 // 检查定时器状态
@@ -1783,7 +1344,7 @@
                 // 加载已发送通知的缓存
                 loadNotificationCache();
                 
-                console.log('ITDOG监控系统 v8.0 - 增强节点分析版 已加载');
+                console.log('ITDOG监控系统 v8.0 已加载 - 修复定时器和重复通知问题版');
             }
 
             // 检查定时器状态
@@ -2027,7 +1588,7 @@
                 window.addEventListener('message', handleITDOGMessage);
             }
 
-            // 处理ITDOG消息 - 增强版
+            // 处理ITDOG消息 - 修复重复通知的关键
             function handleITDOGMessage(event) {
                 if (event.data && event.data.type === 'ITDOG_TEST_RESULT') {
                     const data = event.data;
@@ -2053,15 +1614,12 @@
                         activeTabs.delete(domainIndex);
                         updateProgress();
                         
-                        // 分析节点数据
-                        analyzeNodeData(data);
-                        
                         if (isLowRate) {
                             addLog(`⚠️ ${domain} - 连通率: ${rate}% (低于${CONFIG.connectivityThreshold}%)`, 'warning');
                             
                             // 检查是否应该发送通知
                             if (shouldSendNotification(domain)) {
-                                sendEnhancedNotification(domain, data)
+                                sendLowRateNotification(domain, data)
                                     .then(success => {
                                         if (success) {
                                             addLog(`📤 Telegram通知已发送: ${domain}`, 'success');
@@ -2203,7 +1761,7 @@
                     });
             }
 
-            // 开始定时器
+            // 开始定时器 - 修复的关键函数
             function startTimer() {
                 if (timerActive) {
                     showStatus('定时器已经在运行', 'info');
@@ -2315,7 +1873,7 @@
                 }
             }
 
-            // 计划下一次测试
+            // 计划下一次测试 - 修复的关键函数
             function scheduleNextTest() {
                 if (timerIntervalId) {
                     clearTimeout(timerIntervalId);
@@ -2862,8 +2420,8 @@ akamai.com`;
                 .then(response => response.json());
             }
 
-            // 发送增强的通知（包含节点分析）
-            function sendEnhancedNotification(domain, results) {
+            // 发送异常通知
+            function sendLowRateNotification(domain, results) {
                 if (!telegramConfig) {
                     addLog(`❌ 无法发送通知: Telegram配置未设置`, 'error');
                     return Promise.resolve(false);
@@ -2880,42 +2438,24 @@ akamai.com`;
                     hour12: false
                 }).replace(/\//g, '-');
                 
-                // 构建节点分析部分
-                let nodeAnalysisText = '';
-                if (nodeAnalysisData.mobile.total > 0 || nodeAnalysisData.unicom.total > 0 || nodeAnalysisData.telecom.total > 0) {
-                    nodeAnalysisText = `\n📡 *多运营商节点分析*\n`;
-                    
-                    if (nodeAnalysisData.mobile.total > 0) {
-                        nodeAnalysisText += `├ 📱 移动节点: ${nodeAnalysisData.mobile.success}/${nodeAnalysisData.mobile.total} (${nodeAnalysisData.mobile.rate}%)\n`;
-                    }
-                    if (nodeAnalysisData.unicom.total > 0) {
-                        nodeAnalysisText += `├ 🏢 联通节点: ${nodeAnalysisData.unicom.success}/${nodeAnalysisData.unicom.total} (${nodeAnalysisData.unicom.rate}%)\n`;
-                    }
-                    if (nodeAnalysisData.telecom.total > 0) {
-                        nodeAnalysisText += `└ 📞 电信节点: ${nodeAnalysisData.telecom.success}/${nodeAnalysisData.telecom.total} (${nodeAnalysisData.telecom.rate}%)\n`;
-                    }
-                }
-                
                 const message = `🚨 *ITDOG监控系统 v8.0 - 网站告警*\n\n` +
                     `🔴 *告警级别:* 严重\n` +
                     `🌐 *问题域名:* \`${domain}\`\n` +
                     `🕐 *检测时间:* ${currentTime}\n\n` +
-                    `📊 *测试结果概览*\n` +
+                    `📊 *测试结果详情*\n` +
                     `├ 总测试节点: ${results.totalTests}\n` +
                     `├ 正常节点(200): ${results.success200Tests}\n` +
                     `├ 异常节点: ${results.totalTests - results.success200Tests}\n` +
-                    `└ 连通率: *${results.connectivityRate}%*\n` +
-                    `${nodeAnalysisText}\n` +
+                    `└ 连通率: *${results.connectivityRate}%*\n\n` +
                     `📋 *异常状态码分布*\n` +
-                    `${getEnhancedStatusCodeDistribution(results.otherStatusCodes)}\n` +
+                    `${getStatusCodeDistribution(results.otherStatusCodes)}\n` +
                     `⚠️ *告警说明:* 网站连通率低于${CONFIG.connectivityThreshold}%，请立即检查！\n\n` +
                     `🔧 *建议操作*\n` +
                     `1. 检查服务器状态\n` +
                     `2. 检查DNS解析\n` +
                     `3. 检查防火墙设置\n` +
-                    `4. 根据节点分析排查特定运营商线路问题\n` +
-                    `5. 联系服务提供商\n\n` +
-                    `#网站监控 #连通率告警 #节点分析 #${domain.split('.')[0]}`;
+                    `4. 联系服务提供商\n\n` +
+                    `#网站监控 #连通率告警 #${domain.split('.')[0]}`;
                 
                 return sendTelegramMessage(message)
                     .then(response => {
@@ -2933,9 +2473,9 @@ akamai.com`;
                         return false;
                     });
             }
-            
-            // 获取增强的状态码分布
-            function getEnhancedStatusCodeDistribution(statusCodes) {
+
+            // 获取状态码分布
+            function getStatusCodeDistribution(statusCodes) {
                 if (!statusCodes || statusCodes.length === 0) {
                     return '暂无异常状态码数据';
                 }
@@ -2946,15 +2486,8 @@ akamai.com`;
                 });
                 
                 let distribution = '';
-                
-                // 按数量排序
-                const sortedCodes = Object.entries(countMap)
-                    .sort((a, b) => b[1] - a[1])
-                    .slice(0, 5); // 只显示前5个最常见的状态码
-                
-                sortedCodes.forEach(([code, count], index) => {
-                    const isLast = index === sortedCodes.length - 1;
-                    distribution += `${isLast ? '└' : '├'} ${code}: ${count}个\n`;
+                Object.entries(countMap).forEach(([code, count]) => {
+                    distribution += `├ ${code}: ${count}个\n`;
                 });
                 
                 return distribution;
@@ -3054,3 +2587,5 @@ akamai.com`;
     </script>
 </body>
 </html>
+
+我要在这个代码中升级一下  发送警告的 测试结果详情  添加分析 是移动节点异常 还是联通那些啊 
