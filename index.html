@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ITDOG网站测速监控系统 - GitHub配置中心</title>
+    <title>ITDOG网站测速监控系统 v8.0 - GitHub配置中心</title>
     <style>
         * {
             margin: 0;
@@ -23,7 +23,7 @@
         
         .container {
             width: 100%;
-            max-width: 1400px;
+            max-width: 1600px;
             background-color: rgba(255, 255, 255, 0.95);
             border-radius: 20px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
@@ -83,7 +83,7 @@
             font-size: 1.1rem;
         }
         
-        textarea, input {
+        textarea, input, select {
             width: 100%;
             padding: 15px;
             border: 2px solid #e9ecef;
@@ -97,7 +97,7 @@
             resize: vertical;
         }
         
-        textarea:focus, input:focus {
+        textarea:focus, input:focus, select:focus {
             outline: none;
             border-color: #667eea;
             box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
@@ -154,6 +154,16 @@
             color: white;
         }
         
+        .btn-info {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+        }
+        
+        .btn-info:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(52, 152, 219, 0.3);
+        }
+        
         .btn-secondary {
             background: #f8f9fa;
             color: #495057;
@@ -198,6 +208,17 @@
         
         .input-group input {
             font-family: monospace;
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .input-row .input-group {
+            flex: 1;
+            margin-bottom: 0;
         }
         
         .status-message {
@@ -410,6 +431,72 @@
             color: #333;
         }
         
+        .timer-status {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            display: none;
+        }
+        
+        .timer-active {
+            background: #d4edda;
+            border-color: #c3e6cb;
+        }
+        
+        .timer-stopped {
+            background: #f8d7da;
+            border-color: #f5c6cb;
+        }
+        
+        .timer-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .timer-label {
+            font-weight: bold;
+            color: #495057;
+        }
+        
+        .timer-value {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #2c3e50;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        .timer-controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .timer-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        
+        .timer-start {
+            background: #28a745;
+            color: white;
+        }
+        
+        .timer-stop {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .timer-reset {
+            background: #6c757d;
+            color: white;
+        }
+        
         footer {
             margin-top: 50px;
             text-align: center;
@@ -434,6 +521,11 @@
             
             .btn {
                 width: 100%;
+            }
+            
+            .input-row {
+                flex-direction: column;
+                gap: 10px;
             }
         }
         
@@ -486,7 +578,7 @@
 <body>
     <div class="container">
         <header>
-            <h1><i class="fas fa-tachometer-alt"></i> ITDOG网站测速监控系统</h1>
+            <h1><i class="fas fa-tachometer-alt"></i> ITDOG网站测速监控系统 v8.0</h1>
             <p class="subtitle">GitHub Pages配置中心 | Telegram异常通知 | 专业监控解决方案</p>
         </header>
         
@@ -494,8 +586,9 @@
             <h4><i class="fas fa-info-circle"></i> 系统说明</h4>
             <p>1. 本系统通过Tampermonkey脚本自动监控网站连通率，基于状态码200判断</p>
             <p>2. 当连通率低于90%时，自动发送专业的Telegram通知</p>
-            <p>3. 支持批量测试和定时测试功能</p>
+            <p>3. 支持批量测试、定时测试和完整URL支持</p>
             <p>4. 必须先配置Telegram信息才能使用通知功能</p>
+            <p>5. v8.0新增：定时测试功能、完整URL支持、二级域名跳转</p>
         </div>
         
         <!-- Telegram配置 -->
@@ -530,6 +623,71 @@
             <div id="config-status" class="status-message"></div>
         </div>
         
+        <!-- 定时测试配置 -->
+        <div class="config-section">
+            <h4><i class="fas fa-clock"></i> 定时测试配置</h4>
+            
+            <div class="input-row">
+                <div class="input-group">
+                    <label for="timer-interval">测试间隔（分钟）</label>
+                    <input type="number" id="timer-interval" min="5" max="1440" value="30" placeholder="输入测试间隔分钟数">
+                </div>
+                
+                <div class="input-group">
+                    <label for="timer-start-time">每日开始时间</label>
+                    <input type="time" id="timer-start-time" value="08:00">
+                </div>
+                
+                <div class="input-group">
+                    <label for="timer-end-time">每日结束时间</label>
+                    <input type="time" id="timer-end-time" value="22:00">
+                </div>
+            </div>
+            
+            <div class="input-group">
+                <label for="timer-mode">定时模式</label>
+                <select id="timer-mode">
+                    <option value="continuous">连续模式（间隔时间循环测试）</option>
+                    <option value="daily">每日单次（在开始时间测试一次）</option>
+                    <option value="workday">工作日模式（周一至周五测试）</option>
+                    <option value="weekend">周末模式（周六至周日测试）</option>
+                </select>
+            </div>
+            
+            <div class="buttons">
+                <button class="btn btn-info" id="start-timer-btn">
+                    <i class="fas fa-play-circle btn-icon"></i> 启动定时测试
+                </button>
+                <button class="btn btn-warning" id="stop-timer-btn">
+                    <i class="fas fa-stop-circle btn-icon"></i> 停止定时测试
+                </button>
+                <button class="btn btn-secondary" id="test-now-btn">
+                    <i class="fas fa-bolt btn-icon"></i> 立即测试一次
+                </button>
+            </div>
+            
+            <!-- 定时器状态显示 -->
+            <div class="timer-status" id="timer-status">
+                <div class="timer-info">
+                    <div class="timer-label">定时器状态：</div>
+                    <div class="timer-value" id="timer-state">未运行</div>
+                </div>
+                <div class="timer-info">
+                    <div class="timer-label">下次测试：</div>
+                    <div class="timer-value" id="next-test-time">--:--</div>
+                </div>
+                <div class="timer-info">
+                    <div class="timer-label">已运行：</div>
+                    <div class="timer-value" id="elapsed-time">00:00:00</div>
+                </div>
+                <div class="timer-controls">
+                    <button class="timer-btn timer-start" id="timer-control-start">开始</button>
+                    <button class="timer-btn timer-stop" id="timer-control-stop">暂停</button>
+                    <button class="timer-btn timer-reset" id="timer-control-reset">重置</button>
+                </div>
+            </div>
+        </div>
+        
         <!-- 统计面板 -->
         <div class="stats-panel" id="stats-panel">
             <div class="stat-card">
@@ -555,14 +713,16 @@
             <h4><i class="fas fa-globe"></i> 批量网站测试</h4>
             
             <div class="input-group">
-                <label for="domains">要测试的网站地址（每行一个，无需添加http://）</label>
-                <textarea id="domains" placeholder="example.com&#10;google.com&#10;github.com"></textarea>
+                <label for="domains">要测试的网站地址（每行一个，支持完整URL：http://example.com, https://sub.example.com/path）</label>
+                <textarea id="domains" placeholder="https://example.com&#10;http://sub.example.com&#10;example.com/path/to/page"></textarea>
                 <div class="example">
-                    <strong>示例格式：</strong><br>
-                    alibabacloud.com<br>
-                    dynadot.com<br>
+                    <strong>v8.0新功能：支持完整URL！示例格式：</strong><br>
+                    https://alibabacloud.com<br>
+                    http://dynadot.com<br>
                     itdog.cn<br>
-                    baidu.com
+                    baidu.com/api/v1<br>
+                    https://sub.example.com:8080/path<br>
+                    example.com?query=param
                 </div>
             </div>
             
@@ -575,6 +735,9 @@
                 </button>
                 <button class="btn btn-warning" id="test-selected-btn">
                     <i class="fas fa-bolt btn-icon"></i> 测试选中域名
+                </button>
+                <button class="btn btn-info" id="load-example-btn">
+                    <i class="fas fa-download btn-icon"></i> 加载示例
                 </button>
             </div>
             
@@ -622,6 +785,9 @@
                     <button class="btn btn-secondary" id="stop-btn">
                         <i class="fas fa-stop btn-icon"></i> 停止全部
                     </button>
+                    <button class="btn btn-info" id="export-results-btn">
+                        <i class="fas fa-file-export btn-icon"></i> 导出结果
+                    </button>
                 </div>
             </div>
         </div>
@@ -644,18 +810,19 @@
         </div>
         
         <footer>
-            <p>ITDOG网站测速监控系统 v6.0 | © 2026 GitHub Pages配置中心 | 专业网站监控解决方案</p>
+            <p>ITDOG网站测速监控系统 v8.0 | © 2026 GitHub Pages配置中心 | 专业网站监控解决方案</p>
             <p>在使用前请确保已安装 <a href="https://www.tampermonkey.net/" target="_blank" style="color: white; text-decoration: underline;">Tampermonkey</a> 扩展</p>
         </footer>
     </div>
 
     <script>
         // ============================================
-        // ITDOG监控系统 - 主页面JavaScript代码
+        // ITDOG监控系统 v8.0 - 主页面JavaScript代码
         // ============================================
         document.addEventListener('DOMContentLoaded', function() {
             // 元素引用
             const elements = {
+                // Telegram配置元素
                 botToken: document.getElementById('bot-token'),
                 chatId: document.getElementById('chat-id'),
                 saveConfigBtn: document.getElementById('save-config-btn'),
@@ -663,24 +830,49 @@
                 getChatIdBtn: document.getElementById('get-chat-id-btn'),
                 clearConfigBtn: document.getElementById('clear-config-btn'),
                 configStatus: document.getElementById('config-status'),
+                
+                // 定时测试元素
+                timerInterval: document.getElementById('timer-interval'),
+                timerStartTime: document.getElementById('timer-start-time'),
+                timerEndTime: document.getElementById('timer-end-time'),
+                timerMode: document.getElementById('timer-mode'),
+                startTimerBtn: document.getElementById('start-timer-btn'),
+                stopTimerBtn: document.getElementById('stop-timer-btn'),
+                testNowBtn: document.getElementById('test-now-btn'),
+                timerStatus: document.getElementById('timer-status'),
+                timerState: document.getElementById('timer-state'),
+                nextTestTime: document.getElementById('next-test-time'),
+                elapsedTime: document.getElementById('elapsed-time'),
+                timerControlStart: document.getElementById('timer-control-start'),
+                timerControlStop: document.getElementById('timer-control-stop'),
+                timerControlReset: document.getElementById('timer-control-reset'),
+                
+                // 批量测试元素
                 domains: document.getElementById('domains'),
                 startTestBtn: document.getElementById('start-test-btn'),
                 clearDomainsBtn: document.getElementById('clear-domains-btn'),
                 testSelectedBtn: document.getElementById('test-selected-btn'),
+                loadExampleBtn: document.getElementById('load-example-btn'),
                 domainList: document.getElementById('domain-list'),
                 domainsContainer: document.getElementById('domains-container'),
                 testControls: document.getElementById('test-controls'),
-                monitorLog: document.getElementById('monitor-log'),
                 pauseBtn: document.getElementById('pause-btn'),
                 stopBtn: document.getElementById('stop-btn'),
+                exportResultsBtn: document.getElementById('export-results-btn'),
                 testedCount: document.getElementById('tested-count'),
                 activeCount: document.getElementById('active-count'),
                 pendingCount: document.getElementById('pending-count'),
                 errorCount: document.getElementById('error-count'),
                 progressText: document.getElementById('progress-text'),
                 progressBar: document.getElementById('progress-bar'),
+                
+                // 监控日志元素
+                monitorLog: document.getElementById('monitor-log'),
+                
+                // 通知历史元素
                 notificationHistory: document.getElementById('notification-history'),
                 notificationsContainer: document.getElementById('notifications-container'),
+                
                 // 统计元素
                 todayTests: document.getElementById('today-tests'),
                 errorSites: document.getElementById('error-sites'),
@@ -695,9 +887,22 @@
             let currentIndex = 0;
             let isTesting = false;
             let isPaused = false;
-            let activeTabs = new Map(); // 使用Map存储打开的标签页
-            let batchSize = 2; // 同时打开的标签页数量
-            let testDelay = 3000; // 标签页间打开延迟
+            let activeTabs = new Map();
+            let batchSize = 2;
+            let testDelay = 3000;
+            
+            // 定时器相关变量
+            let timerInterval = 30 * 60 * 1000; // 30分钟默认
+            let timerActive = false;
+            let timerPaused = false;
+            let nextTestTime = null;
+            let timerStartTime = null;
+            let timerEndTime = null;
+            let timerMode = 'continuous';
+            let timerIntervalId = null;
+            let elapsedTimerId = null;
+            let startTime = null;
+            let elapsedSeconds = 0;
             
             // 统计变量
             let stats = {
@@ -708,7 +913,23 @@
                 lastReset: new Date().toDateString()
             };
 
-            // 加载配置和状态
+            // 初始化
+            function init() {
+                loadConfig();
+                loadTimerConfig();
+                loadNotificationHistory();
+                checkDailyReset();
+                setupEventListeners();
+                
+                // 添加欢迎日志
+                addLog('ITDOG监控系统 v8.0 已启动', 'success');
+                addLog('新增功能：定时测试、完整URL支持、二级域名跳转', 'info');
+                addLog('请先配置Telegram信息，然后开始测试', 'info');
+                
+                console.log('ITDOG监控系统 v8.0 已加载 - 完整功能版');
+            }
+
+            // 加载配置
             function loadConfig() {
                 try {
                     // 加载Telegram配置
@@ -730,22 +951,181 @@
                     const statsConfig = localStorage.getItem('monitor_stats');
                     if (statsConfig) {
                         const savedStats = JSON.parse(statsConfig);
-                        // 如果是同一天，恢复统计
                         if (savedStats.lastReset === new Date().toDateString()) {
                             stats = savedStats;
                             updateStatsDisplay();
                         } else {
-                            // 新的一天，重置统计
                             resetDailyStats();
                         }
                     }
                     
-                    // 加载通知历史
-                    loadNotificationHistory();
-                    
                 } catch (error) {
                     console.error('加载配置失败:', error);
                     showStatus('加载配置失败，请检查浏览器存储', 'error');
+                }
+            }
+
+            // 加载定时器配置
+            function loadTimerConfig() {
+                try {
+                    const timerConfigStr = localStorage.getItem('timer_config');
+                    if (timerConfigStr) {
+                        const config = JSON.parse(timerConfigStr);
+                        elements.timerInterval.value = config.interval || 30;
+                        elements.timerStartTime.value = config.startTime || '08:00';
+                        elements.timerEndTime.value = config.endTime || '22:00';
+                        elements.timerMode.value = config.mode || 'continuous';
+                        
+                        timerInterval = (config.interval || 30) * 60 * 1000;
+                        timerStartTime = config.startTime || '08:00';
+                        timerEndTime = config.endTime || '22:00';
+                        timerMode = config.mode || 'continuous';
+                        
+                        // 检查是否有活动的定时器
+                        const timerActiveStr = localStorage.getItem('timer_active');
+                        if (timerActiveStr === 'true') {
+                            startTimer();
+                        }
+                    }
+                } catch (error) {
+                    console.error('加载定时器配置失败:', error);
+                }
+            }
+
+            // 保存定时器配置
+            function saveTimerConfig() {
+                try {
+                    const config = {
+                        interval: parseInt(elements.timerInterval.value) || 30,
+                        startTime: elements.timerStartTime.value,
+                        endTime: elements.timerEndTime.value,
+                        mode: elements.timerMode.value
+                    };
+                    
+                    localStorage.setItem('timer_config', JSON.stringify(config));
+                    
+                    timerInterval = config.interval * 60 * 1000;
+                    timerStartTime = config.startTime;
+                    timerEndTime = config.endTime;
+                    timerMode = config.mode;
+                    
+                    if (timerActive) {
+                        restartTimer();
+                    }
+                } catch (error) {
+                    console.error('保存定时器配置失败:', error);
+                }
+            }
+
+            // 设置事件监听器
+            function setupEventListeners() {
+                // Telegram配置事件
+                elements.saveConfigBtn.addEventListener('click', saveConfig);
+                elements.testConfigBtn.addEventListener('click', testConfig);
+                elements.getChatIdBtn.addEventListener('click', getChatId);
+                elements.clearConfigBtn.addEventListener('click', clearConfig);
+                
+                // 定时器配置事件
+                elements.timerInterval.addEventListener('change', saveTimerConfig);
+                elements.timerStartTime.addEventListener('change', saveTimerConfig);
+                elements.timerEndTime.addEventListener('change', saveTimerConfig);
+                elements.timerMode.addEventListener('change', saveTimerConfig);
+                
+                elements.startTimerBtn.addEventListener('click', startTimer);
+                elements.stopTimerBtn.addEventListener('click', stopTimer);
+                elements.testNowBtn.addEventListener('click', () => {
+                    if (!telegramConfig) {
+                        showStatus('请先配置Telegram信息', 'error');
+                        return;
+                    }
+                    startBatchTest();
+                });
+                
+                elements.timerControlStart.addEventListener('click', () => {
+                    if (timerActive && timerPaused) {
+                        resumeTimer();
+                    } else if (!timerActive) {
+                        startTimer();
+                    }
+                });
+                
+                elements.timerControlStop.addEventListener('click', () => {
+                    if (timerActive && !timerPaused) {
+                        pauseTimer();
+                    }
+                });
+                
+                elements.timerControlReset.addEventListener('click', resetTimer);
+                
+                // 批量测试事件
+                elements.startTestBtn.addEventListener('click', startBatchTest);
+                elements.clearDomainsBtn.addEventListener('click', () => {
+                    elements.domains.value = '';
+                    localStorage.removeItem('domains_config');
+                    showStatus('域名列表已清空', 'info');
+                    addLog('域名列表已清空', 'info');
+                });
+                
+                elements.testSelectedBtn.addEventListener('click', startBatchTest);
+                elements.loadExampleBtn.addEventListener('click', loadExampleDomains);
+                elements.pauseBtn.addEventListener('click', pauseTest);
+                elements.stopBtn.addEventListener('click', stopTest);
+                elements.exportResultsBtn.addEventListener('click', exportResults);
+                
+                // 监听来自ITDOG页面的消息
+                window.addEventListener('message', handleITDOGMessage);
+                
+                // 设置示例域名
+                elements.domains.value = `https://alibabacloud.com
+http://dynadot.com
+itdog.cn
+baidu.com
+google.com
+github.com
+cloudflare.com
+akamai.com`;
+            }
+
+            // 处理ITDOG消息
+            function handleITDOGMessage(event) {
+                if (event.data && event.data.type === 'ITDOG_TEST_RESULT') {
+                    const data = event.data;
+                    const domain = data.domain;
+                    const rate = data.connectivityRate || 0;
+                    const isLowRate = data.isLowRate;
+                    
+                    let domainIndex = -1;
+                    for (let i = 0; i < domainArray.length; i++) {
+                        const originalDomain = domainArray[i];
+                        // 检查原始域名是否匹配，支持完整URL
+                        if (originalDomain === domain || 
+                            domain.includes(originalDomain.replace(/^https?:\/\//, '')) ||
+                            originalDomain.replace(/^https?:\/\//, '').includes(domain)) {
+                            domainIndex = i;
+                            break;
+                        }
+                    }
+                    
+                    if (domainIndex !== -1) {
+                        const status = isLowRate ? 'lowrate' : 'success';
+                        updateDomainStatus(domainIndex, status, rate);
+                        activeTabs.delete(domainIndex);
+                        updateProgress();
+                        
+                        if (isLowRate) {
+                            addLog(`⚠️ ${domain} - 连通率: ${rate}% (低于90%)`, 'warning');
+                            sendLowRateNotification(domain, data)
+                                .then(success => {
+                                    if (success) {
+                                        addLog(`📤 Telegram通知已发送: ${domain}`, 'success');
+                                    }
+                                });
+                        } else {
+                            addLog(`✅ ${domain} - 连通率: ${rate}%`, 'success');
+                        }
+                        
+                        checkTestCompletion();
+                    }
                 }
             }
 
@@ -778,7 +1158,7 @@
                     
                     localStorage.setItem('telegram_config', JSON.stringify(telegramConfig));
                     showStatus('Telegram配置保存成功', 'success');
-                    addLog('配置已保存', 'info');
+                    addLog('Telegram配置已保存', 'info');
                 } catch (error) {
                     showStatus('保存失败: ' + error.message, 'error');
                     addLog('保存配置失败: ' + error.message, 'error');
@@ -808,10 +1188,10 @@
                     hour12: false
                 }).replace(/\//g, '-');
                 
-                const testMessage = `📱 *ITDOG监控系统 - 连接测试*\n\n` +
+                const testMessage = `📱 *ITDOG监控系统 v8.0 - 连接测试*\n\n` +
                     `✅ *测试状态:* 连接成功\n` +
                     `🕐 *测试时间:* ${currentTime}\n` +
-                    `📊 *系统版本:* v6.0\n` +
+                    `📊 *系统版本:* v8.0\n` +
                     `🔧 *配置状态:* 已验证\n\n` +
                     `系统已准备就绪，可以开始网站监控任务。`;
                 
@@ -903,6 +1283,237 @@
                 }
             }
 
+            // 开始定时器
+            function startTimer() {
+                if (timerActive) {
+                    showStatus('定时器已经在运行', 'info');
+                    return;
+                }
+                
+                saveTimerConfig();
+                timerActive = true;
+                timerPaused = false;
+                startTime = Date.now();
+                elapsedSeconds = 0;
+                
+                localStorage.setItem('timer_active', 'true');
+                
+                elements.timerStatus.style.display = 'block';
+                elements.timerStatus.className = 'timer-status timer-active';
+                elements.timerState.textContent = '运行中';
+                
+                updateTimerDisplay();
+                scheduleNextTest();
+                startElapsedTimer();
+                
+                addLog('定时测试已启动', 'success');
+                showStatus('定时测试已启动', 'success');
+            }
+
+            // 停止定时器
+            function stopTimer() {
+                if (!timerActive) {
+                    showStatus('定时器未运行', 'info');
+                    return;
+                }
+                
+                timerActive = false;
+                timerPaused = false;
+                
+                localStorage.setItem('timer_active', 'false');
+                
+                if (timerIntervalId) {
+                    clearTimeout(timerIntervalId);
+                    timerIntervalId = null;
+                }
+                
+                if (elapsedTimerId) {
+                    clearInterval(elapsedTimerId);
+                    elapsedTimerId = null;
+                }
+                
+                elements.timerStatus.className = 'timer-status timer-stopped';
+                elements.timerState.textContent = '已停止';
+                elements.nextTestTime.textContent = '--:--';
+                
+                addLog('定时测试已停止', 'warning');
+                showStatus('定时测试已停止', 'info');
+            }
+
+            // 暂停定时器
+            function pauseTimer() {
+                if (!timerActive || timerPaused) return;
+                
+                timerPaused = true;
+                
+                if (timerIntervalId) {
+                    clearTimeout(timerIntervalId);
+                    timerIntervalId = null;
+                }
+                
+                if (elapsedTimerId) {
+                    clearInterval(elapsedTimerId);
+                    elapsedTimerId = null;
+                }
+                
+                elements.timerState.textContent = '已暂停';
+                elements.timerStatus.className = 'timer-status';
+                
+                addLog('定时测试已暂停', 'warning');
+            }
+
+            // 恢复定时器
+            function resumeTimer() {
+                if (!timerActive || !timerPaused) return;
+                
+                timerPaused = false;
+                startTime = Date.now() - (elapsedSeconds * 1000);
+                
+                elements.timerState.textContent = '运行中';
+                elements.timerStatus.className = 'timer-status timer-active';
+                
+                scheduleNextTest();
+                startElapsedTimer();
+                
+                addLog('定时测试已恢复', 'success');
+            }
+
+            // 重置定时器
+            function resetTimer() {
+                stopTimer();
+                startTimer();
+            }
+
+            // 重启定时器
+            function restartTimer() {
+                if (timerActive) {
+                    stopTimer();
+                    startTimer();
+                }
+            }
+
+            // 计划下一次测试
+            function scheduleNextTest() {
+                if (timerIntervalId) {
+                    clearTimeout(timerIntervalId);
+                }
+                
+                if (!timerActive || timerPaused) return;
+                
+                const now = new Date();
+                const currentHour = now.getHours();
+                const currentMinute = now.getMinutes();
+                const currentTimeInMinutes = currentHour * 60 + currentMinute;
+                
+                const [startHour, startMinute] = timerStartTime.split(':').map(Number);
+                const [endHour, endMinute] = timerEndTime.split(':').map(Number);
+                const startTimeInMinutes = startHour * 60 + startMinute;
+                const endTimeInMinutes = endHour * 60 + endMinute;
+                
+                // 检查是否在工作时间内
+                let shouldRunNow = false;
+                
+                if (timerMode === 'daily') {
+                    // 每日单次模式
+                    shouldRunNow = currentTimeInMinutes >= startTimeInMinutes && 
+                                   currentTimeInMinutes < startTimeInMinutes + 5;
+                    nextTestTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 
+                                           startHour, startMinute);
+                    if (nextTestTime < now) {
+                        nextTestTime.setDate(nextTestTime.getDate() + 1);
+                    }
+                    timerIntervalId = setTimeout(() => {
+                        if (timerActive && !timerPaused) {
+                            startBatchTest();
+                            scheduleNextTest();
+                        }
+                    }, nextTestTime.getTime() - now.getTime());
+                    
+                } else if (timerMode === 'workday') {
+                    // 工作日模式
+                    const dayOfWeek = now.getDay(); // 0=周日, 1=周一, ..., 6=周六
+                    shouldRunNow = dayOfWeek >= 1 && dayOfWeek <= 5 && 
+                                  currentTimeInMinutes >= startTimeInMinutes && 
+                                  currentTimeInMinutes <= endTimeInMinutes;
+                    const intervalMs = timerInterval;
+                    nextTestTime = new Date(now.getTime() + intervalMs);
+                    
+                } else if (timerMode === 'weekend') {
+                    // 周末模式
+                    const dayOfWeek = now.getDay();
+                    shouldRunNow = (dayOfWeek === 0 || dayOfWeek === 6) && 
+                                  currentTimeInMinutes >= startTimeInMinutes && 
+                                  currentTimeInMinutes <= endTimeInMinutes;
+                    const intervalMs = timerInterval;
+                    nextTestTime = new Date(now.getTime() + intervalMs);
+                    
+                } else {
+                    // 连续模式
+                    shouldRunNow = currentTimeInMinutes >= startTimeInMinutes && 
+                                  currentTimeInMinutes <= endTimeInMinutes;
+                    const intervalMs = timerInterval;
+                    nextTestTime = new Date(now.getTime() + intervalMs);
+                }
+                
+                // 如果应该立即运行
+                if (shouldRunNow) {
+                    const randomDelay = Math.floor(Math.random() * 30000); // 0-30秒随机延迟
+                    timerIntervalId = setTimeout(() => {
+                        if (timerActive && !timerPaused) {
+                            startBatchTest();
+                            scheduleNextTest();
+                        }
+                    }, randomDelay);
+                } else {
+                    // 安排到开始时间
+                    const nextStart = new Date(now);
+                    nextStart.setHours(startHour, startMinute, 0, 0);
+                    if (nextStart < now) {
+                        nextStart.setDate(nextStart.getDate() + 1);
+                    }
+                    
+                    timerIntervalId = setTimeout(() => {
+                        if (timerActive && !timerPaused) {
+                            startBatchTest();
+                            scheduleNextTest();
+                        }
+                    }, nextStart.getTime() - now.getTime());
+                    
+                    nextTestTime = nextStart;
+                }
+                
+                updateTimerDisplay();
+            }
+
+            // 启动耗时计时器
+            function startElapsedTimer() {
+                if (elapsedTimerId) {
+                    clearInterval(elapsedTimerId);
+                }
+                
+                elapsedTimerId = setInterval(() => {
+                    if (timerActive && !timerPaused) {
+                        elapsedSeconds++;
+                        updateTimerDisplay();
+                    }
+                }, 1000);
+            }
+
+            // 更新定时器显示
+            function updateTimerDisplay() {
+                if (nextTestTime) {
+                    const hours = nextTestTime.getHours().toString().padStart(2, '0');
+                    const minutes = nextTestTime.getMinutes().toString().padStart(2, '0');
+                    elements.nextTestTime.textContent = `${hours}:${minutes}`;
+                }
+                
+                const hours = Math.floor(elapsedSeconds / 3600);
+                const minutes = Math.floor((elapsedSeconds % 3600) / 60);
+                const seconds = elapsedSeconds % 60;
+                elements.elapsedTime.textContent = 
+                    `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }
+
             // 开始批量测试
             function startBatchTest() {
                 const domains = elements.domains.value.trim();
@@ -919,14 +1530,10 @@
                 // 保存域名列表
                 localStorage.setItem('domains_config', domains);
                 
-                // 解析域名列表
+                // 解析域名列表 - 保留完整的URL
                 domainArray = domains.split('\n')
                     .map(domain => domain.trim())
-                    .filter(domain => domain.length > 0)
-                    .map(domain => {
-                        // 移除http://或https://前缀
-                        return domain.replace(/^https?:\/\//, '');
-                    });
+                    .filter(domain => domain.length > 0);
                 
                 if (domainArray.length === 0) return;
                 
@@ -1004,10 +1611,31 @@
                 }
             }
 
-            // 打开ITDOG标签页
-            function openITDOGTab(domain, index) {
+            // 打开ITDOG标签页 - 修改为保留完整URL
+            function openITDOGTab(originalDomain, index) {
                 try {
-                    const url = `https://www.itdog.cn/http/?domain=${encodeURIComponent(domain)}`;
+                    // 提取域名部分用于ITDOG查询
+                    let domainForQuery = originalDomain;
+                    
+                    // 如果包含协议，提取主机名
+                    if (originalDomain.includes('://')) {
+                        try {
+                            const url = new URL(originalDomain);
+                            domainForQuery = url.hostname;
+                        } catch (e) {
+                            // 如果不是有效的URL，尝试提取域名
+                            const match = originalDomain.match(/^(?:https?:\/\/)?([^\/:]+)/);
+                            if (match) {
+                                domainForQuery = match[1];
+                            }
+                        }
+                    } else {
+                        // 如果没有协议，直接使用（可能是路径）
+                        domainForQuery = originalDomain.split('/')[0];
+                    }
+                    
+                    // 构建ITDOG URL - 传递原始域名作为参数
+                    const url = `https://www.itdog.cn/http/?domain=${encodeURIComponent(domainForQuery)}&original=${encodeURIComponent(originalDomain)}`;
                     
                     // 打开新标签页
                     const tab = window.open(url, `itdog_tab_${index}`);
@@ -1015,20 +1643,20 @@
                     if (tab) {
                         activeTabs.set(index, {
                             tab: tab,
-                            domain: domain,
+                            domain: originalDomain,
                             openedAt: Date.now(),
                             status: 'opened'
                         });
                         
-                        addLog(`标签页已打开: ${domain}`, 'info');
+                        addLog(`标签页已打开: ${originalDomain}`, 'info');
                         
                         // 设置超时检查
                         setTimeout(() => {
                             checkTabStatus(index);
-                        }, 120000); // 2分钟超时
+                        }, 120000);
                         
                     } else {
-                        addLog(`❌ 无法打开标签页: ${domain} (可能被浏览器阻止)`, 'error');
+                        addLog(`❌ 无法打开标签页: ${originalDomain} (可能被浏览器阻止)`, 'error');
                         updateDomainStatus(index, 'error', 0);
                         activeTabs.delete(index);
                     }
@@ -1048,7 +1676,6 @@
                     if (tabInfo.tab.closed) {
                         activeTabs.delete(index);
                     } else {
-                        // 如果标签页还在，但超过3分钟，强制关闭
                         if (Date.now() - tabInfo.openedAt > 180000) {
                             addLog(`⏰ 标签页超时: ${tabInfo.domain}，强制关闭`, 'warning');
                             tabInfo.tab.close();
@@ -1057,7 +1684,6 @@
                         }
                     }
                 } catch (e) {
-                    // 跨域访问错误，可能标签页已关闭
                     activeTabs.delete(index);
                 }
             }
@@ -1072,7 +1698,6 @@
                     statusElement.className = `domain-status ${getStatusClass(status)}`;
                 }
                 
-                // 更新统计
                 if (status === 'error' || status === 'lowrate') {
                     stats.errorSites++;
                 } else if (status === 'success') {
@@ -1140,8 +1765,12 @@
                     addLog('✅ 所有域名测试完成', 'success');
                     showStatus('批量测试完成', 'success');
                     
-                    // 保存统计
                     saveStats();
+                    
+                    // 如果是定时测试，记录日志
+                    if (timerActive) {
+                        addLog('定时测试轮次完成', 'info');
+                    }
                 }
             }
 
@@ -1168,7 +1797,6 @@
                 isTesting = false;
                 isPaused = false;
                 
-                // 关闭所有打开的标签页
                 activeTabs.forEach((tabInfo, index) => {
                     try {
                         if (tabInfo.tab && !tabInfo.tab.closed) {
@@ -1184,7 +1812,6 @@
                 addLog('测试已停止', 'warning');
                 showStatus('测试已停止', 'info');
                 
-                // 更新未完成的域名状态
                 for (let i = 0; i < domainArray.length; i++) {
                     if (domainStatus[i].status === 'pending' || domainStatus[i].status === 'testing') {
                         updateDomainStatus(i, 'error', 0);
@@ -1192,6 +1819,58 @@
                 }
                 
                 updateProgress();
+            }
+
+            // 加载示例域名
+            function loadExampleDomains() {
+                const exampleDomains = `https://alibabacloud.com
+http://dynadot.com
+itdog.cn
+baidu.com
+google.com
+github.com
+cloudflare.com
+akamai.com
+https://sub.example.com
+example.com/path/to/page
+api.example.com/v1/status
+https://shop.example.com:8080
+blog.example.com/articles/2024`;
+
+                elements.domains.value = exampleDomains;
+                showStatus('已加载示例域名列表', 'success');
+                addLog('加载示例域名列表', 'info');
+            }
+
+            // 导出结果
+            function exportResults() {
+                if (domainArray.length === 0) {
+                    showStatus('没有测试结果可导出', 'error');
+                    return;
+                }
+                
+                let csvContent = "域名,状态,连通率%,测试时间\n";
+                
+                domainArray.forEach((domain, index) => {
+                    const status = domainStatus[index];
+                    const statusText = getStatusText(status.status, status.rate);
+                    const now = new Date().toLocaleString('zh-CN');
+                    csvContent += `"${domain}","${statusText}","${status.rate}","${now}"\n`;
+                });
+                
+                const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+                const link = document.createElement("a");
+                const url = URL.createObjectURL(blob);
+                
+                link.setAttribute("href", url);
+                link.setAttribute("download", `itdog_test_results_${new Date().toISOString().slice(0,10)}.csv`);
+                link.style.visibility = 'hidden';
+                
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                addLog('测试结果已导出为CSV文件', 'success');
             }
 
             // 发送Telegram消息
@@ -1235,8 +1914,7 @@
                     hour12: false
                 }).replace(/\//g, '-');
                 
-                // 构建专业的通知消息
-                const message = `🚨 *网站监控告警通知*\n\n` +
+                const message = `🚨 *ITDOG监控系统 v8.0 - 网站告警*\n\n` +
                     `🔴 *告警级别:* 严重\n` +
                     `🌐 *问题域名:* \`${domain}\`\n` +
                     `🕐 *检测时间:* ${currentTime}\n\n` +
@@ -1302,7 +1980,6 @@
                     timestamp: Date.now()
                 };
                 
-                // 获取现有历史记录
                 let history = [];
                 try {
                     const historyStr = localStorage.getItem('notification_history');
@@ -1313,18 +1990,14 @@
                     console.error('读取通知历史失败:', e);
                 }
                 
-                // 添加到历史记录
                 history.unshift(notification);
                 
-                // 限制历史记录数量
-                if (history.length > 50) {
-                    history = history.slice(0, 50);
+                if (history.length > 100) {
+                    history = history.slice(0, 100);
                 }
                 
-                // 保存历史记录
                 localStorage.setItem('notification_history', JSON.stringify(history));
                 
-                // 显示通知历史
                 displayNotificationHistory();
             }
 
@@ -1444,101 +2117,16 @@
                 elements.monitorLog.appendChild(logEntry);
                 elements.monitorLog.scrollTop = elements.monitorLog.scrollHeight;
                 
-                // 保持日志数量不超过200条
                 const logEntries = elements.monitorLog.querySelectorAll('.log-entry');
-                if (logEntries.length > 200) {
-                    for (let i = 0; i < logEntries.length - 200; i++) {
+                if (logEntries.length > 500) {
+                    for (let i = 0; i < logEntries.length - 500; i++) {
                         logEntries[i].remove();
                     }
                 }
             }
 
-            // 监听来自ITDOG页面的消息
-            window.addEventListener('message', function(event) {
-                console.log('收到消息:', event.data);
-                
-                if (event.data && event.data.type === 'ITDOG_TEST_RESULT') {
-                    const data = event.data;
-                    const domain = data.domain;
-                    const rate = data.connectivityRate || 0;
-                    const isLowRate = data.isLowRate;
-                    
-                    // 查找域名索引
-                    let domainIndex = -1;
-                    for (let i = 0; i < domainArray.length; i++) {
-                        if (domainArray[i] === domain || domain.includes(domainArray[i])) {
-                            domainIndex = i;
-                            break;
-                        }
-                    }
-                    
-                    if (domainIndex !== -1) {
-                        // 更新域名状态
-                        const status = isLowRate ? 'lowrate' : 'success';
-                        updateDomainStatus(domainIndex, status, rate);
-                        
-                        // 从活跃标签页中移除
-                        activeTabs.delete(domainIndex);
-                        
-                        // 更新进度
-                        updateProgress();
-                        
-                        // 记录日志
-                        if (isLowRate) {
-                            addLog(`⚠️ ${domain} - 连通率: ${rate}% (低于90%)`, 'warning');
-                            
-                            // 发送Telegram通知
-                            sendLowRateNotification(domain, data)
-                                .then(success => {
-                                    if (success) {
-                                        addLog(`📤 Telegram通知已发送: ${domain}`, 'success');
-                                    }
-                                });
-                        } else {
-                            addLog(`✅ ${domain} - 连通率: ${rate}%`, 'success');
-                        }
-                        
-                        // 检查测试是否完成
-                        checkTestCompletion();
-                    }
-                }
-            });
-
-            // 事件监听
-            elements.saveConfigBtn.addEventListener('click', saveConfig);
-            elements.testConfigBtn.addEventListener('click', testConfig);
-            elements.getChatIdBtn.addEventListener('click', getChatId);
-            elements.clearConfigBtn.addEventListener('click', clearConfig);
-            elements.startTestBtn.addEventListener('click', startBatchTest);
-            elements.clearDomainsBtn.addEventListener('click', () => {
-                elements.domains.value = '';
-                localStorage.removeItem('domains_config');
-                showStatus('域名列表已清空', 'info');
-                addLog('域名列表已清空', 'info');
-            });
-            elements.testSelectedBtn.addEventListener('click', startBatchTest);
-            elements.pauseBtn.addEventListener('click', pauseTest);
-            elements.stopBtn.addEventListener('click', stopTest);
-
-            // 设置示例域名
-            elements.domains.value = `alibabacloud.com
-dynadot.com
-itdog.cn
-baidu.com
-google.com
-github.com
-cloudflare.com
-akamai.com`;
-
-            // 初始化
-            loadConfig();
-            checkDailyReset();
-            
-            // 添加欢迎日志
-            addLog('ITDOG监控系统已启动 v6.0', 'success');
-            addLog('请先配置Telegram信息，然后开始批量测试', 'info');
-            
-            console.log('ITDOG监控系统已加载 - 完整功能版 v6.0');
+            // 初始化应用
+            init();
         });
     </script>
 </body>
