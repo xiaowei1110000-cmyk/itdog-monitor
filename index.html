@@ -31,6 +31,44 @@
             margin-top: 30px;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+        }
+        
+        /* Telegram配置 - 右上角 */
+        .telegram-config {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            width: 350px;
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            border-left: 5px solid #28a745;
+            padding: 20px;
+            border-radius: 12px;
+            z-index: 100;
+        }
+        
+        .telegram-config h4 {
+            color: #28a745;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .telegram-config .input-group {
+            margin-bottom: 15px;
+        }
+        
+        .telegram-config .buttons {
+            margin-top: 20px;
+            gap: 10px;
+        }
+        
+        .telegram-config .btn {
+            min-width: 140px;
+            padding: 10px 15px;
+            font-size: 0.9rem;
         }
         
         header {
@@ -38,6 +76,9 @@
             margin-bottom: 40px;
             padding-bottom: 20px;
             border-bottom: 2px solid #f0f0f0;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
         }
         
         h1 {
@@ -60,6 +101,9 @@
             padding: 20px;
             margin: 25px 0;
             border-radius: 12px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
         }
         
         .instructions h4 {
@@ -184,6 +228,9 @@
             padding: 25px;
             margin: 25px 0;
             border-radius: 12px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
         }
         
         .config-section h4 {
@@ -497,6 +544,70 @@
             color: white;
         }
         
+        .settings-panel {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            z-index: 1000;
+            min-width: 250px;
+        }
+        
+        .settings-panel h4 {
+            color: #3498db;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .settings-panel .input-group {
+            margin-bottom: 15px;
+        }
+        
+        .settings-panel .input-group label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .settings-panel input {
+            padding: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .settings-panel .btn {
+            width: 100%;
+            padding: 10px;
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+        
+        .settings-toggle {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #3498db;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1001;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+        
+        .settings-toggle:hover {
+            background: #2980b9;
+        }
+        
         footer {
             margin-top: 50px;
             text-align: center;
@@ -504,6 +615,18 @@
             font-size: 0.9rem;
             padding: 20px;
             width: 100%;
+        }
+        
+        @media (max-width: 1200px) {
+            .telegram-config {
+                position: static;
+                width: 100%;
+                margin: 20px 0;
+            }
+            
+            .container {
+                padding-top: 80px;
+            }
         }
         
         @media (max-width: 768px) {
@@ -526,6 +649,12 @@
             .input-row {
                 flex-direction: column;
                 gap: 10px;
+            }
+            
+            .settings-panel {
+                left: 10px;
+                right: 10px;
+                width: auto;
             }
         }
         
@@ -576,7 +705,60 @@
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- 设置按钮 -->
+    <div class="settings-toggle" id="settings-toggle">
+        <i class="fas fa-cog"></i>
+    </div>
+    
+    <!-- 设置面板 -->
+    <div class="settings-panel" id="settings-panel" style="display: none;">
+        <h4><i class="fas fa-sliders-h"></i> 系统设置</h4>
+        
+        <div class="input-group">
+            <label for="connectivity-threshold">连通率阈值 (%)</label>
+            <input type="number" id="connectivity-threshold" min="1" max="100" value="90" placeholder="低于此值时发送通知">
+        </div>
+        
+        <div class="input-group">
+            <label for="batch-size">批量打开数量 (1-6)</label>
+            <input type="number" id="batch-size" min="1" max="6" value="6" placeholder="同时打开的标签页数量">
+        </div>
+        
+        <div class="input-group">
+            <label for="test-delay">测试延迟 (毫秒)</label>
+            <input type="number" id="test-delay" min="1000" max="10000" value="3000" placeholder="标签页间打开延迟">
+        </div>
+        
+        <button class="btn btn-success" id="save-settings-btn">
+            <i class="fas fa-save btn-icon"></i> 保存设置
+        </button>
+    </div>
+    
     <div class="container">
+        <!-- Telegram配置 - 右上角 -->
+        <div class="telegram-config">
+            <h4><i class="fab fa-telegram"></i> Telegram通知配置</h4>
+            
+            <div class="input-group">
+                <input type="password" id="bot-token" placeholder="Bot Token">
+            </div>
+            
+            <div class="input-group">
+                <input type="text" id="chat-id" placeholder="Chat ID">
+            </div>
+            
+            <div class="buttons">
+                <button class="btn btn-telegram" id="save-config-btn">
+                    <i class="fas fa-save"></i> 保存
+                </button>
+                <button class="btn btn-secondary" id="test-config-btn">
+                    <i class="fas fa-paper-plane"></i> 测试
+                </button>
+            </div>
+            
+            <div id="config-status" class="status-message"></div>
+        </div>
+        
         <header>
             <h1><i class="fas fa-tachometer-alt"></i> ITDOG网站测速监控系统 v8.0</h1>
             <p class="subtitle">GitHub Pages配置中心 | Telegram异常通知 | 专业监控解决方案</p>
@@ -585,42 +767,10 @@
         <div class="instructions">
             <h4><i class="fas fa-info-circle"></i> 系统说明</h4>
             <p>1. 本系统通过Tampermonkey脚本自动监控网站连通率，基于状态码200判断</p>
-            <p>2. 当连通率低于90%时，自动发送专业的Telegram通知</p>
+            <p>2. 当连通率低于设定阈值时，自动发送专业的Telegram通知</p>
             <p>3. 支持批量测试、定时测试和完整URL支持</p>
             <p>4. 必须先配置Telegram信息才能使用通知功能</p>
             <p>5. v8.0新增：定时测试功能、完整URL支持、二级域名跳转</p>
-        </div>
-        
-        <!-- Telegram配置 -->
-        <div class="config-section">
-            <h4><i class="fab fa-telegram"></i> Telegram通知配置</h4>
-            
-            <div class="input-group">
-                <label for="bot-token">Telegram Bot Token</label>
-                <input type="password" id="bot-token" placeholder="输入Bot Token (格式: 1234567890:ABCdefGHIjklMNOpqrsTUVwxyz)">
-            </div>
-            
-            <div class="input-group">
-                <label for="chat-id">Telegram Chat ID</label>
-                <input type="text" id="chat-id" placeholder="输入Chat ID (在@userinfobot中获取)">
-            </div>
-            
-            <div class="buttons">
-                <button class="btn btn-telegram" id="save-config-btn">
-                    <i class="fas fa-save btn-icon"></i> 保存配置
-                </button>
-                <button class="btn btn-warning" id="test-config-btn">
-                    <i class="fas fa-paper-plane btn-icon"></i> 测试通知
-                </button>
-                <button class="btn btn-telegram" id="get-chat-id-btn">
-                    <i class="fas fa-id-card btn-icon"></i> 获取Chat ID
-                </button>
-                <button class="btn btn-secondary" id="clear-config-btn">
-                    <i class="fas fa-trash btn-icon"></i> 清除配置
-                </button>
-            </div>
-            
-            <div id="config-status" class="status-message"></div>
         </div>
         
         <!-- 定时测试配置 -->
@@ -713,17 +863,8 @@
             <h4><i class="fas fa-globe"></i> 批量网站测试</h4>
             
             <div class="input-group">
-                <label for="domains">要测试的网站地址（每行一个，支持完整URL：http://example.com, https://sub.example.com/path）</label>
+                <label for="domains">要测试的网站地址（每行一个，支持完整URL）</label>
                 <textarea id="domains" placeholder="https://example.com&#10;http://sub.example.com&#10;example.com/path/to/page"></textarea>
-                <div class="example">
-                    <strong>v8.0新功能：支持完整URL！示例格式：</strong><br>
-                    https://alibabacloud.com<br>
-                    http://dynadot.com<br>
-                    itdog.cn<br>
-                    baidu.com/api/v1<br>
-                    https://sub.example.com:8080/path<br>
-                    example.com?query=param
-                </div>
             </div>
             
             <div class="buttons">
@@ -732,9 +873,6 @@
                 </button>
                 <button class="btn btn-secondary" id="clear-domains-btn">
                     <i class="fas fa-redo btn-icon"></i> 清空列表
-                </button>
-                <button class="btn btn-warning" id="test-selected-btn">
-                    <i class="fas fa-bolt btn-icon"></i> 测试选中域名
                 </button>
                 <button class="btn btn-info" id="load-example-btn">
                     <i class="fas fa-download btn-icon"></i> 加载示例
@@ -827,11 +965,17 @@
                 chatId: document.getElementById('chat-id'),
                 saveConfigBtn: document.getElementById('save-config-btn'),
                 testConfigBtn: document.getElementById('test-config-btn'),
-                getChatIdBtn: document.getElementById('get-chat-id-btn'),
-                clearConfigBtn: document.getElementById('clear-config-btn'),
                 configStatus: document.getElementById('config-status'),
                 
-                // 定时测试元素
+                // 设置面板元素
+                settingsToggle: document.getElementById('settings-toggle'),
+                settingsPanel: document.getElementById('settings-panel'),
+                connectivityThreshold: document.getElementById('connectivity-threshold'),
+                batchSizeInput: document.getElementById('batch-size'),
+                testDelayInput: document.getElementById('test-delay'),
+                saveSettingsBtn: document.getElementById('save-settings-btn'),
+                
+                // 定时器配置元素
                 timerInterval: document.getElementById('timer-interval'),
                 timerStartTime: document.getElementById('timer-start-time'),
                 timerEndTime: document.getElementById('timer-end-time'),
@@ -851,7 +995,6 @@
                 domains: document.getElementById('domains'),
                 startTestBtn: document.getElementById('start-test-btn'),
                 clearDomainsBtn: document.getElementById('clear-domains-btn'),
-                testSelectedBtn: document.getElementById('test-selected-btn'),
                 loadExampleBtn: document.getElementById('load-example-btn'),
                 domainList: document.getElementById('domain-list'),
                 domainsContainer: document.getElementById('domains-container'),
@@ -888,11 +1031,16 @@
             let isTesting = false;
             let isPaused = false;
             let activeTabs = new Map();
-            let batchSize = 2;
-            let testDelay = 3000;
+            
+            // 配置变量
+            let CONFIG = {
+                connectivityThreshold: 90,
+                batchSize: 6,
+                testDelay: 3000
+            };
             
             // 定时器相关变量
-            let timerInterval = 30 * 60 * 1000; // 30分钟默认
+            let timerInterval = 30 * 60 * 1000;
             let timerActive = false;
             let timerPaused = false;
             let nextTestTime = null;
@@ -916,6 +1064,7 @@
             // 初始化
             function init() {
                 loadConfig();
+                loadSettings();
                 loadTimerConfig();
                 loadNotificationHistory();
                 checkDailyReset();
@@ -923,7 +1072,8 @@
                 
                 // 添加欢迎日志
                 addLog('ITDOG监控系统 v8.0 已启动', 'success');
-                addLog('新增功能：定时测试、完整URL支持、二级域名跳转', 'info');
+                addLog(`连通率阈值: ${CONFIG.connectivityThreshold}%`, 'info');
+                addLog(`批量打开数量: ${CONFIG.batchSize}`, 'info');
                 addLog('请先配置Telegram信息，然后开始测试', 'info');
                 
                 console.log('ITDOG监控系统 v8.0 已加载 - 完整功能版');
@@ -938,7 +1088,6 @@
                         telegramConfig = JSON.parse(configStr);
                         elements.botToken.value = telegramConfig.botToken || '';
                         elements.chatId.value = telegramConfig.chatId || '';
-                        showStatus('已加载保存的配置', 'success');
                     }
                     
                     // 加载域名列表
@@ -961,7 +1110,51 @@
                     
                 } catch (error) {
                     console.error('加载配置失败:', error);
-                    showStatus('加载配置失败，请检查浏览器存储', 'error');
+                }
+            }
+
+            // 加载设置
+            function loadSettings() {
+                try {
+                    const settingsStr = localStorage.getItem('system_settings');
+                    if (settingsStr) {
+                        const settings = JSON.parse(settingsStr);
+                        CONFIG.connectivityThreshold = settings.connectivityThreshold || 90;
+                        CONFIG.batchSize = Math.min(6, Math.max(1, settings.batchSize || 6));
+                        CONFIG.testDelay = settings.testDelay || 3000;
+                        
+                        elements.connectivityThreshold.value = CONFIG.connectivityThreshold;
+                        elements.batchSizeInput.value = CONFIG.batchSize;
+                        elements.testDelayInput.value = CONFIG.testDelay;
+                    }
+                } catch (error) {
+                    console.error('加载设置失败:', error);
+                }
+            }
+
+            // 保存设置
+            function saveSettings() {
+                try {
+                    CONFIG.connectivityThreshold = parseInt(elements.connectivityThreshold.value) || 90;
+                    CONFIG.batchSize = Math.min(6, Math.max(1, parseInt(elements.batchSizeInput.value) || 6));
+                    CONFIG.testDelay = parseInt(elements.testDelayInput.value) || 3000;
+                    
+                    const settings = {
+                        connectivityThreshold: CONFIG.connectivityThreshold,
+                        batchSize: CONFIG.batchSize,
+                        testDelay: CONFIG.testDelay
+                    };
+                    
+                    localStorage.setItem('system_settings', JSON.stringify(settings));
+                    
+                    addLog(`设置已保存: 阈值=${CONFIG.connectivityThreshold}%, 批量=${CONFIG.batchSize}, 延迟=${CONFIG.testDelay}ms`, 'success');
+                    
+                    // 关闭设置面板
+                    elements.settingsPanel.style.display = 'none';
+                    
+                } catch (error) {
+                    console.error('保存设置失败:', error);
+                    addLog('保存设置失败', 'error');
                 }
             }
 
@@ -981,7 +1174,6 @@
                         timerEndTime = config.endTime || '22:00';
                         timerMode = config.mode || 'continuous';
                         
-                        // 检查是否有活动的定时器
                         const timerActiveStr = localStorage.getItem('timer_active');
                         if (timerActiveStr === 'true') {
                             startTimer();
@@ -1019,11 +1211,18 @@
 
             // 设置事件监听器
             function setupEventListeners() {
+                // 设置面板切换
+                elements.settingsToggle.addEventListener('click', () => {
+                    elements.settingsPanel.style.display = 
+                        elements.settingsPanel.style.display === 'none' ? 'block' : 'none';
+                });
+                
+                // 保存设置
+                elements.saveSettingsBtn.addEventListener('click', saveSettings);
+                
                 // Telegram配置事件
                 elements.saveConfigBtn.addEventListener('click', saveConfig);
                 elements.testConfigBtn.addEventListener('click', testConfig);
-                elements.getChatIdBtn.addEventListener('click', getChatId);
-                elements.clearConfigBtn.addEventListener('click', clearConfig);
                 
                 // 定时器配置事件
                 elements.timerInterval.addEventListener('change', saveTimerConfig);
@@ -1066,7 +1265,6 @@
                     addLog('域名列表已清空', 'info');
                 });
                 
-                elements.testSelectedBtn.addEventListener('click', startBatchTest);
                 elements.loadExampleBtn.addEventListener('click', loadExampleDomains);
                 elements.pauseBtn.addEventListener('click', pauseTest);
                 elements.stopBtn.addEventListener('click', stopTest);
@@ -1074,16 +1272,6 @@
                 
                 // 监听来自ITDOG页面的消息
                 window.addEventListener('message', handleITDOGMessage);
-                
-                // 设置示例域名
-                elements.domains.value = `https://alibabacloud.com
-http://dynadot.com
-itdog.cn
-baidu.com
-google.com
-github.com
-cloudflare.com
-akamai.com`;
             }
 
             // 处理ITDOG消息
@@ -1092,12 +1280,11 @@ akamai.com`;
                     const data = event.data;
                     const domain = data.domain;
                     const rate = data.connectivityRate || 0;
-                    const isLowRate = data.isLowRate;
+                    const isLowRate = rate < CONFIG.connectivityThreshold;
                     
                     let domainIndex = -1;
                     for (let i = 0; i < domainArray.length; i++) {
                         const originalDomain = domainArray[i];
-                        // 检查原始域名是否匹配，支持完整URL
                         if (originalDomain === domain || 
                             domain.includes(originalDomain.replace(/^https?:\/\//, '')) ||
                             originalDomain.replace(/^https?:\/\//, '').includes(domain)) {
@@ -1113,7 +1300,7 @@ akamai.com`;
                         updateProgress();
                         
                         if (isLowRate) {
-                            addLog(`⚠️ ${domain} - 连通率: ${rate}% (低于90%)`, 'warning');
+                            addLog(`⚠️ ${domain} - 连通率: ${rate}% (低于${CONFIG.connectivityThreshold}%)`, 'warning');
                             sendLowRateNotification(domain, data)
                                 .then(success => {
                                     if (success) {
@@ -1125,6 +1312,11 @@ akamai.com`;
                         }
                         
                         checkTestCompletion();
+                        
+                        // 如果还有待测试的域名且有可用的并发槽位，继续打开
+                        if (currentIndex < domainArray.length && activeTabs.size < CONFIG.batchSize) {
+                            setTimeout(openNextBatch, CONFIG.testDelay);
+                        }
                     }
                 }
             }
@@ -1209,78 +1401,6 @@ akamai.com`;
                         showStatus('❌ 网络错误: ' + error.message, 'error');
                         addLog('网络错误: ' + error.message, 'error');
                     });
-            }
-
-            // 获取Chat ID
-            function getChatId() {
-                const botToken = elements.botToken.value.trim();
-                
-                if (!botToken) {
-                    showStatus('请输入Bot Token', 'error');
-                    return;
-                }
-                
-                if (!botToken.match(/^\d+:[A-Za-z0-9_-]+$/)) {
-                    showStatus('Bot Token格式不正确', 'error');
-                    return;
-                }
-                
-                showStatus('正在获取Chat ID...', 'info');
-                addLog('获取Chat ID...', 'info');
-                
-                fetch(`https://api.telegram.org/bot${botToken}/getUpdates`)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (!data.ok) {
-                            showStatus('请求失败: ' + data.description, 'error');
-                            addLog('获取Chat ID失败: ' + data.description, 'error');
-                            return;
-                        }
-                        
-                        if (!data.result || data.result.length === 0) {
-                            showStatus('没有找到消息，请先给机器人发送一条消息', 'error');
-                            addLog('未找到Chat ID，请先给机器人发送消息', 'warning');
-                            return;
-                        }
-                        
-                        let message = '找到的Chat ID:\n\n';
-                        data.result.forEach((update, index) => {
-                            if (update.message && update.message.chat) {
-                                const chat = update.message.chat;
-                                message += `${index + 1}. 类型: ${chat.type}\n`;
-                                message += `   Chat ID: ${chat.id}\n`;
-                                message += `   标题: ${chat.title || '私聊'}\n\n`;
-                                
-                                if (chat.type === 'private') {
-                                    elements.chatId.value = chat.id;
-                                }
-                            }
-                        });
-                        
-                        const selectedId = prompt(message + '\n请选择要使用的Chat ID（输入数字）:');
-                        if (selectedId && data.result[selectedId - 1] && data.result[selectedId - 1].message) {
-                            const chatId = data.result[selectedId - 1].message.chat.id;
-                            elements.chatId.value = chatId;
-                            showStatus('Chat ID已设置', 'success');
-                            addLog('Chat ID已设置: ' + chatId, 'success');
-                        }
-                    })
-                    .catch(error => {
-                        showStatus('网络错误: ' + error.message, 'error');
-                        addLog('网络错误: ' + error.message, 'error');
-                    });
-            }
-
-            // 清除配置
-            function clearConfig() {
-                if (confirm('确定要清除Telegram配置吗？')) {
-                    telegramConfig = null;
-                    elements.botToken.value = '';
-                    elements.chatId.value = '';
-                    localStorage.removeItem('telegram_config');
-                    showStatus('配置已清除', 'info');
-                    addLog('配置已清除', 'warning');
-                }
             }
 
             // 开始定时器
@@ -1410,11 +1530,9 @@ akamai.com`;
                 const startTimeInMinutes = startHour * 60 + startMinute;
                 const endTimeInMinutes = endHour * 60 + endMinute;
                 
-                // 检查是否在工作时间内
                 let shouldRunNow = false;
                 
                 if (timerMode === 'daily') {
-                    // 每日单次模式
                     shouldRunNow = currentTimeInMinutes >= startTimeInMinutes && 
                                    currentTimeInMinutes < startTimeInMinutes + 5;
                     nextTestTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 
@@ -1430,8 +1548,7 @@ akamai.com`;
                     }, nextTestTime.getTime() - now.getTime());
                     
                 } else if (timerMode === 'workday') {
-                    // 工作日模式
-                    const dayOfWeek = now.getDay(); // 0=周日, 1=周一, ..., 6=周六
+                    const dayOfWeek = now.getDay();
                     shouldRunNow = dayOfWeek >= 1 && dayOfWeek <= 5 && 
                                   currentTimeInMinutes >= startTimeInMinutes && 
                                   currentTimeInMinutes <= endTimeInMinutes;
@@ -1439,7 +1556,6 @@ akamai.com`;
                     nextTestTime = new Date(now.getTime() + intervalMs);
                     
                 } else if (timerMode === 'weekend') {
-                    // 周末模式
                     const dayOfWeek = now.getDay();
                     shouldRunNow = (dayOfWeek === 0 || dayOfWeek === 6) && 
                                   currentTimeInMinutes >= startTimeInMinutes && 
@@ -1448,16 +1564,14 @@ akamai.com`;
                     nextTestTime = new Date(now.getTime() + intervalMs);
                     
                 } else {
-                    // 连续模式
                     shouldRunNow = currentTimeInMinutes >= startTimeInMinutes && 
                                   currentTimeInMinutes <= endTimeInMinutes;
                     const intervalMs = timerInterval;
                     nextTestTime = new Date(now.getTime() + intervalMs);
                 }
                 
-                // 如果应该立即运行
                 if (shouldRunNow) {
-                    const randomDelay = Math.floor(Math.random() * 30000); // 0-30秒随机延迟
+                    const randomDelay = Math.floor(Math.random() * 30000);
                     timerIntervalId = setTimeout(() => {
                         if (timerActive && !timerPaused) {
                             startBatchTest();
@@ -1465,7 +1579,6 @@ akamai.com`;
                         }
                     }, randomDelay);
                 } else {
-                    // 安排到开始时间
                     const nextStart = new Date(now);
                     nextStart.setHours(startHour, startMinute, 0, 0);
                     if (nextStart < now) {
@@ -1527,17 +1640,14 @@ akamai.com`;
                     return;
                 }
                 
-                // 保存域名列表
                 localStorage.setItem('domains_config', domains);
                 
-                // 解析域名列表 - 保留完整的URL
                 domainArray = domains.split('\n')
                     .map(domain => domain.trim())
                     .filter(domain => domain.length > 0);
                 
                 if (domainArray.length === 0) return;
                 
-                // 显示域名列表
                 elements.domainsContainer.innerHTML = '';
                 domainStatus = {};
                 
@@ -1557,7 +1667,6 @@ akamai.com`;
                 elements.domainList.style.display = 'block';
                 elements.testControls.style.display = 'block';
                 
-                // 重置状态
                 currentIndex = 0;
                 isTesting = true;
                 isPaused = false;
@@ -1575,28 +1684,33 @@ akamai.com`;
                 updateStatsDisplay();
                 saveStats();
                 
-                // 开始测试
                 openNextBatch();
             }
 
-            // 打开下一批标签页
+            // 打开下一批标签页 - 修改为最多6个，智能等待
             function openNextBatch() {
                 if (!isTesting || isPaused || currentIndex >= domainArray.length) {
                     checkTestCompletion();
                     return;
                 }
                 
-                const batchCount = Math.min(batchSize, domainArray.length - currentIndex);
-                addLog(`打开批次 ${Math.floor(currentIndex / batchSize) + 1}，共 ${batchCount} 个域名`, 'info');
+                // 计算当前可以打开的标签页数量
+                const availableSlots = Math.max(0, CONFIG.batchSize - activeTabs.size);
+                if (availableSlots <= 0) {
+                    // 没有可用槽位，等待一段时间再试
+                    setTimeout(() => openNextBatch(), 1000);
+                    return;
+                }
+                
+                const batchCount = Math.min(availableSlots, domainArray.length - currentIndex);
+                addLog(`打开批次 ${Math.floor(currentIndex / CONFIG.batchSize) + 1}，共 ${batchCount} 个域名`, 'info');
                 
                 for (let i = 0; i < batchCount; i++) {
                     const domainIndex = currentIndex + i;
                     const domain = domainArray[domainIndex];
                     
-                    // 更新状态
                     updateDomainStatus(domainIndex, 'testing', 0);
                     
-                    // 延迟打开
                     setTimeout(() => {
                         openITDOGTab(domain, domainIndex);
                     }, i * 1000);
@@ -1605,39 +1719,33 @@ akamai.com`;
                 currentIndex += batchCount;
                 updateProgress();
                 
-                // 安排下一批次
+                // 如果还有域名未处理，安排下一批次（延迟打开）
                 if (currentIndex < domainArray.length && !isPaused) {
-                    setTimeout(openNextBatch, testDelay);
+                    setTimeout(() => openNextBatch(), CONFIG.testDelay);
                 }
             }
 
-            // 打开ITDOG标签页 - 修改为保留完整URL
+            // 打开ITDOG标签页
             function openITDOGTab(originalDomain, index) {
                 try {
-                    // 提取域名部分用于ITDOG查询
                     let domainForQuery = originalDomain;
                     
-                    // 如果包含协议，提取主机名
                     if (originalDomain.includes('://')) {
                         try {
                             const url = new URL(originalDomain);
                             domainForQuery = url.hostname;
                         } catch (e) {
-                            // 如果不是有效的URL，尝试提取域名
                             const match = originalDomain.match(/^(?:https?:\/\/)?([^\/:]+)/);
                             if (match) {
                                 domainForQuery = match[1];
                             }
                         }
                     } else {
-                        // 如果没有协议，直接使用（可能是路径）
                         domainForQuery = originalDomain.split('/')[0];
                     }
                     
-                    // 构建ITDOG URL - 传递原始域名作为参数
                     const url = `https://www.itdog.cn/http/?domain=${encodeURIComponent(domainForQuery)}&original=${encodeURIComponent(originalDomain)}`;
                     
-                    // 打开新标签页
                     const tab = window.open(url, `itdog_tab_${index}`);
                     
                     if (tab) {
@@ -1650,7 +1758,6 @@ akamai.com`;
                         
                         addLog(`标签页已打开: ${originalDomain}`, 'info');
                         
-                        // 设置超时检查
                         setTimeout(() => {
                             checkTabStatus(index);
                         }, 120000);
@@ -1675,12 +1782,21 @@ akamai.com`;
                 try {
                     if (tabInfo.tab.closed) {
                         activeTabs.delete(index);
+                        // 标签页关闭后，检查是否可以打开新的
+                        if (isTesting && !isPaused && currentIndex < domainArray.length) {
+                            setTimeout(openNextBatch, 1000);
+                        }
                     } else {
                         if (Date.now() - tabInfo.openedAt > 180000) {
                             addLog(`⏰ 标签页超时: ${tabInfo.domain}，强制关闭`, 'warning');
                             tabInfo.tab.close();
                             activeTabs.delete(index);
                             updateDomainStatus(index, 'timeout', 0);
+                            
+                            // 超时后，检查是否可以打开新的
+                            if (isTesting && !isPaused && currentIndex < domainArray.length) {
+                                setTimeout(openNextBatch, 1000);
+                            }
                         }
                     }
                 } catch (e) {
@@ -1767,7 +1883,6 @@ akamai.com`;
                     
                     saveStats();
                     
-                    // 如果是定时测试，记录日志
                     if (timerActive) {
                         addLog('定时测试轮次完成', 'info');
                     }
@@ -1830,12 +1945,7 @@ baidu.com
 google.com
 github.com
 cloudflare.com
-akamai.com
-https://sub.example.com
-example.com/path/to/page
-api.example.com/v1/status
-https://shop.example.com:8080
-blog.example.com/articles/2024`;
+akamai.com`;
 
                 elements.domains.value = exampleDomains;
                 showStatus('已加载示例域名列表', 'success');
@@ -1925,7 +2035,7 @@ blog.example.com/articles/2024`;
                     `└ 连通率: *${results.connectivityRate}%*\n\n` +
                     `📋 *异常状态码分布*\n` +
                     `${getStatusCodeDistribution(results.otherStatusCodes)}\n` +
-                    `⚠️ *告警说明:* 网站连通率低于90%，请立即检查！\n\n` +
+                    `⚠️ *告警说明:* 网站连通率低于${CONFIG.connectivityThreshold}%，请立即检查！\n\n` +
                     `🔧 *建议操作*\n` +
                     `1. 检查服务器状态\n` +
                     `2. 检查DNS解析\n` +
