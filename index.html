@@ -1009,7 +1009,7 @@
                     <div class="input-row">
                         <div class="input-group">
                             <label for="timer-interval">测试间隔（分钟）</label>
-                            <input type="number" id="timer-interval" min="5" max="1440" value="30">
+                            <input type="number" id="timer-interval" min="5" max="1440" value="120">
                         </div>
                         
                         <div class="input-group">
@@ -1217,7 +1217,7 @@
 
     <script>
         // ============================================
-        // ITDOG监控系统 v8.0 - 修复重复通知问题
+        // ITDOG监控系统 v8.0 - 修复重复通知和定时器问题
         // ============================================
         document.addEventListener('DOMContentLoaded', function() {
             // 元素引用
@@ -1297,13 +1297,13 @@
                 testDelay: 3000
             };
             
-            // 定时器相关变量
-            let timerInterval = 30 * 60 * 1000;
+            // 定时器相关变量 - 修复的关键
+            let timerIntervalMs = 120 * 60 * 1000; // 默认120分钟
             let timerActive = false;
             let timerPaused = false;
             let nextTestTime = null;
-            let timerStartTime = null;
-            let timerEndTime = null;
+            let timerStartTime = '08:00';
+            let timerEndTime = '22:00';
             let timerMode = 'continuous';
             let timerIntervalId = null;
             let elapsedTimerId = null;
@@ -1320,10 +1320,8 @@
                 lastReset: new Date().toDateString()
             };
 
-            // =============== 修复重复通知的关键变量 ===============
-            // 用于跟踪哪些域名已经发送过通知
+            // 修复重复通知的关键变量
             let sentNotificationsCache = new Set();
-            // 最近通知的时间戳，用于防止短时间内重复通知
             let lastNotificationTime = {};
             
             // 初始化
@@ -1346,7 +1344,7 @@
                 // 加载已发送通知的缓存
                 loadNotificationCache();
                 
-                console.log('ITDOG监控系统 v8.0 已加载 - 修复重复通知版');
+                console.log('ITDOG监控系统 v8.0 已加载 - 修复定时器和重复通知问题版');
             }
 
             // 检查定时器状态
@@ -1481,12 +1479,12 @@
                     const timerConfigStr = localStorage.getItem('timer_config');
                     if (timerConfigStr) {
                         const config = JSON.parse(timerConfigStr);
-                        elements.timerInterval.value = config.interval || 30;
+                        elements.timerInterval.value = config.interval || 120;
                         elements.timerStartTime.value = config.startTime || '08:00';
                         elements.timerEndTime.value = config.endTime || '22:00';
                         elements.timerMode.value = config.mode || 'continuous';
                         
-                        timerInterval = (config.interval || 30) * 60 * 1000;
+                        timerIntervalMs = (config.interval || 120) * 60 * 1000;
                         timerStartTime = config.startTime || '08:00';
                         timerEndTime = config.endTime || '22:00';
                         timerMode = config.mode || 'continuous';
@@ -1499,8 +1497,9 @@
             // 保存定时器配置
             function saveTimerConfig() {
                 try {
+                    const intervalMinutes = parseInt(elements.timerInterval.value) || 120;
                     const config = {
-                        interval: parseInt(elements.timerInterval.value) || 30,
+                        interval: intervalMinutes,
                         startTime: elements.timerStartTime.value,
                         endTime: elements.timerEndTime.value,
                         mode: elements.timerMode.value
@@ -1508,16 +1507,19 @@
                     
                     localStorage.setItem('timer_config', JSON.stringify(config));
                     
-                    timerInterval = config.interval * 60 * 1000;
+                    timerIntervalMs = config.interval * 60 * 1000;
                     timerStartTime = config.startTime;
                     timerEndTime = config.endTime;
                     timerMode = config.mode;
+                    
+                    addLog(`📅 定时器配置已保存: 间隔=${intervalMinutes}分钟, 时间=${timerStartTime}-${timerEndTime}, 模式=${timerMode}`, 'info');
                     
                     if (timerActive) {
                         restartTimer();
                     }
                 } catch (error) {
                     console.error('保存定时器配置失败:', error);
+                    addLog('❌ 保存定时器配置失败', 'error');
                 }
             }
 
@@ -1670,7 +1672,6 @@
             // 清空通知缓存（在开始新的测试批次时调用）
             function clearNotificationCacheForNewTest() {
                 // 不清空整个缓存，只清空与当前测试批次相关的域名
-                // 这样不同批次的测试不会互相影响
                 for (const domain of domainArray) {
                     sentNotificationsCache.delete(domain);
                     delete lastNotificationTime[domain];
@@ -1760,7 +1761,7 @@
                     });
             }
 
-            // 开始定时器
+            // 开始定时器 - 修复的关键函数
             function startTimer() {
                 if (timerActive) {
                     showStatus('定时器已经在运行', 'info');
@@ -1785,6 +1786,8 @@
                 startElapsedTimer();
                 
                 addLog('⏰ 定时测试已启动', 'success');
+                addLog(`📅 测试间隔: ${elements.timerInterval.value}分钟 (${timerIntervalMs/60000}分钟)`, 'info');
+                addLog(`⏰ 时间范围: ${timerStartTime} - ${timerEndTime}`, 'info');
                 showStatus('定时测试已启动', 'success');
             }
 
@@ -1870,7 +1873,7 @@
                 }
             }
 
-            // 计划下一次测试
+            // 计划下一次测试 - 修复的关键函数
             function scheduleNextTest() {
                 if (timerIntervalId) {
                     clearTimeout(timerIntervalId);
@@ -1910,22 +1913,27 @@
                         startTimeToday.setDate(startTimeToday.getDate() + 1);
                         nextTestTime = startTimeToday;
                         const delay = nextTestTime.getTime() - currentTime;
+                        
                         timerIntervalId = setTimeout(() => {
                             if (timerActive && !timerPaused) {
                                 startBatchTest();
                                 scheduleNextTest();
                             }
                         }, delay);
+                        
                         updateTimerDisplay();
+                        addLog(`📅 每日模式：下次测试安排到明天 ${timerStartTime}`, 'info');
                         return;
                     }
                 }
                 
                 if (isWithinTimeRange && isAllowedDay) {
-                    // 在允许的时间和日期范围内，立即执行或安排下一次
-                    if (!lastTestTime || (currentTime - lastTestTime.getTime() >= timerInterval)) {
-                        // 立即执行测试
+                    // 在允许的时间和日期范围内
+                    if (!lastTestTime) {
+                        // 第一次运行，立即执行（加上随机延迟）
                         const randomDelay = Math.floor(Math.random() * 10000); // 0-10秒随机延迟
+                        nextTestTime = new Date(currentTime + randomDelay);
+                        
                         timerIntervalId = setTimeout(() => {
                             if (timerActive && !timerPaused) {
                                 startBatchTest();
@@ -1933,24 +1941,15 @@
                             }
                         }, randomDelay);
                         
-                        nextTestTime = new Date(currentTime + randomDelay);
+                        addLog(`⏰ 立即执行第一次测试（随机延迟${randomDelay/1000}秒）`, 'info');
                     } else {
-                        // 安排下一次测试
                         const timeSinceLastTest = currentTime - lastTestTime.getTime();
-                        const timeUntilNextTest = timerInterval - timeSinceLastTest;
                         
-                        if (timeUntilNextTest > 0) {
-                            timerIntervalId = setTimeout(() => {
-                                if (timerActive && !timerPaused) {
-                                    startBatchTest();
-                                    scheduleNextTest();
-                                }
-                            }, timeUntilNextTest);
+                        if (timeSinceLastTest >= timerIntervalMs) {
+                            // 已经超过间隔时间，立即执行
+                            const randomDelay = Math.floor(Math.random() * 5000); // 0-5秒随机延迟
+                            nextTestTime = new Date(currentTime + randomDelay);
                             
-                            nextTestTime = new Date(currentTime + timeUntilNextTest);
-                        } else {
-                            // 立即执行（可能因为暂停等原因错过了上次测试）
-                            const randomDelay = Math.floor(Math.random() * 5000);
                             timerIntervalId = setTimeout(() => {
                                 if (timerActive && !timerPaused) {
                                     startBatchTest();
@@ -1958,13 +1957,29 @@
                                 }
                             }, randomDelay);
                             
-                            nextTestTime = new Date(currentTime + randomDelay);
+                            addLog(`⏰ 已超过间隔时间，立即执行测试（随机延迟${randomDelay/1000}秒）`, 'info');
+                        } else {
+                            // 等待到下一次测试时间
+                            const timeUntilNextTest = timerIntervalMs - timeSinceLastTest;
+                            nextTestTime = new Date(currentTime + timeUntilNextTest);
+                            
+                            timerIntervalId = setTimeout(() => {
+                                if (timerActive && !timerPaused) {
+                                    startBatchTest();
+                                    scheduleNextTest();
+                                }
+                            }, timeUntilNextTest);
+                            
+                            const nextMinutes = Math.floor(timeUntilNextTest / 60000);
+                            const nextSeconds = Math.floor((timeUntilNextTest % 60000) / 1000);
+                            addLog(`⏰ 下一次测试在 ${nextMinutes}分${nextSeconds}秒后`, 'info');
                         }
                     }
                 } else {
-                    // 不在允许的时间范围内，安排到明天的开始时间
+                    // 不在允许的时间范围内，安排到下一个允许的时间
                     let nextStartTime = new Date(startTimeToday);
                     
+                    // 如果当前时间已超过今天的结束时间，则安排到明天
                     if (currentTime > endTimeToday.getTime()) {
                         nextStartTime.setDate(nextStartTime.getDate() + 1);
                     }
@@ -1990,6 +2005,10 @@
                             scheduleNextTest();
                         }
                     }, delay);
+                    
+                    const delayHours = Math.floor(delay / 3600000);
+                    const delayMinutes = Math.floor((delay % 3600000) / 60000);
+                    addLog(`📅 不在允许时间范围内，下次测试安排到 ${nextStartTime.getHours().toString().padStart(2, '0')}:${nextStartTime.getMinutes().toString().padStart(2, '0')} (${delayHours}小时${delayMinutes}分钟后)`, 'info');
                 }
                 
                 updateTimerDisplay();
@@ -2087,6 +2106,7 @@
                 // 记录定时测试时间
                 if (timerActive) {
                     lastTestTime = new Date();
+                    addLog(`⏰ 定时测试执行中... 下一次将在${Math.floor(timerIntervalMs/60000)}分钟后`, 'info');
                 }
                 
                 openNextBatch();
