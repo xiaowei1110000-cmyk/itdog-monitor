@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ITDOG网站测速监控系统 v8.0 - GitHub配置中心</title>
+    <title>ITDOG网站测速监控系统 v8.0</title>
     <style>
         /* ===== 全局样式重置 ===== */
         * {
@@ -62,7 +62,7 @@
         
         .container {
             width: 100%;
-            max-width: 1600px;
+            max-width: 1400px;
             background: white;
             border-radius: var(--radius-xl);
             box-shadow: var(--shadow-xl);
@@ -82,74 +82,12 @@
             background: var(--primary-gradient);
         }
         
-        /* ===== Telegram配置 - 右上角 ===== */
-        .telegram-config {
-            position: absolute;
-            top: 30px;
-            right: 30px;
-            width: 380px;
-            background: white;
-            border-radius: var(--radius-lg);
-            padding: 25px;
-            box-shadow: var(--shadow-lg);
-            border: 1px solid var(--border-color);
-            z-index: 100;
-            transition: var(--transition-normal);
-        }
-        
-        .telegram-config:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-xl);
-        }
-        
-        .telegram-config::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: var(--telegram-gradient);
-            border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-        }
-        
-        .telegram-config h4 {
-            color: var(--dark-color);
-            margin-bottom: 20px;
-            font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-weight: 600;
-        }
-        
-        .telegram-config .input-group {
-            margin-bottom: 20px;
-        }
-        
-        .telegram-config .buttons {
-            margin-top: 25px;
-            display: flex;
-            gap: 12px;
-        }
-        
-        .telegram-config .btn {
-            flex: 1;
-            padding: 12px 15px;
-            font-size: 0.95rem;
-            font-weight: 600;
-            border-radius: var(--radius-md);
-        }
-        
         /* ===== 头部样式 ===== */
         header {
             text-align: center;
-            margin-bottom: 50px;
-            padding-bottom: 30px;
+            margin-bottom: 40px;
+            padding-bottom: 25px;
             border-bottom: 2px solid var(--border-color);
-            max-width: 900px;
-            margin-left: auto;
-            margin-right: auto;
             position: relative;
         }
         
@@ -167,8 +105,8 @@
         
         h1 {
             color: transparent;
-            margin-bottom: 15px;
-            font-size: 2.8rem;
+            margin-bottom: 12px;
+            font-size: 2.6rem;
             font-weight: 800;
             background: var(--primary-gradient);
             -webkit-background-clip: text;
@@ -178,11 +116,123 @@
         
         .subtitle {
             color: var(--text-secondary);
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 400;
             max-width: 700px;
             margin: 0 auto;
             line-height: 1.6;
+        }
+        
+        /* ===== 主要布局 ===== */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        @media (max-width: 1200px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* ===== Telegram配置 - 登录表单样式 ===== */
+        .telegram-config {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 30px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-color);
+            height: fit-content;
+            position: sticky;
+            top: 30px;
+        }
+        
+        .telegram-config::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--telegram-gradient);
+            border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+        }
+        
+        .telegram-config h4 {
+            color: var(--dark-color);
+            margin-bottom: 25px;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            text-align: center;
+            justify-content: center;
+        }
+        
+        .telegram-config .input-group {
+            margin-bottom: 24px;
+        }
+        
+        .telegram-config label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+        
+        .telegram-config input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            background: var(--light-color);
+            transition: var(--transition-fast);
+        }
+        
+        .telegram-config input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+            background: white;
+        }
+        
+        .telegram-config .buttons {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .telegram-config .btn {
+            width: 100%;
+            padding: 14px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: var(--radius-md);
+        }
+        
+        .telegram-help {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: var(--radius-md);
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+        
+        .telegram-help ul {
+            margin-left: 20px;
+            margin-top: 8px;
+        }
+        
+        .telegram-help li {
+            margin-bottom: 4px;
         }
         
         /* ===== 说明区域 ===== */
@@ -190,28 +240,24 @@
             background: linear-gradient(135deg, rgba(255, 249, 230, 0.9) 0%, rgba(255, 234, 167, 0.9) 100%);
             border-left: 5px solid var(--warning-color);
             padding: 25px;
-            margin: 30px 0;
+            margin-bottom: 30px;
             border-radius: var(--radius-lg);
-            max-width: 900px;
-            margin-left: auto;
-            margin-right: auto;
             box-shadow: var(--shadow-md);
-            backdrop-filter: blur(10px);
         }
         
         .instructions h4 {
             color: var(--warning-color);
-            margin-bottom: 20px;
-            font-size: 1.3rem;
+            margin-bottom: 18px;
+            font-size: 1.2rem;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             font-weight: 600;
         }
         
         .instructions p {
             color: var(--text-primary);
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             line-height: 1.6;
             padding-left: 5px;
         }
@@ -222,20 +268,20 @@
         
         /* ===== 表单元素 ===== */
         .form-group {
-            margin-bottom: 35px;
+            margin-bottom: 25px;
         }
         
         label {
             display: block;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             color: var(--text-primary);
             font-weight: 600;
-            font-size: 1.1rem;
+            font-size: 1rem;
         }
         
         textarea, input, select {
             width: 100%;
-            padding: 16px;
+            padding: 14px 16px;
             border: 2px solid var(--border-color);
             border-radius: var(--radius-md);
             font-size: 1rem;
@@ -245,9 +291,11 @@
         }
         
         textarea {
-            height: 200px;
+            height: 180px;
             resize: vertical;
             line-height: 1.5;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.95rem;
         }
         
         textarea:focus, input:focus, select:focus {
@@ -257,45 +305,32 @@
             background: white;
         }
         
-        .example {
-            background: var(--light-color);
-            padding: 15px;
-            border-radius: var(--radius-md);
-            margin-top: 15px;
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-            border-left: 5px solid var(--primary-color);
-            font-family: 'JetBrains Mono', monospace;
-            line-height: 1.5;
-        }
-        
         /* ===== 按钮样式 ===== */
         .buttons {
             display: flex;
-            gap: 15px;
-            margin-top: 30px;
+            gap: 12px;
+            margin-top: 20px;
             flex-wrap: wrap;
         }
         
         .btn {
-            padding: 16px 32px;
+            padding: 14px 24px;
             border: none;
             border-radius: var(--radius-md);
             font-size: 1rem;
-            font-weight: 700;
+            font-weight: 600;
             cursor: pointer;
             transition: all var(--transition-normal);
             display: flex;
             align-items: center;
             justify-content: center;
-            min-width: 180px;
-            gap: 10px;
-            letter-spacing: 0.3px;
+            gap: 8px;
+            min-width: 140px;
         }
         
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
+            box-shadow: var(--shadow-md);
         }
         
         .btn:active {
@@ -305,10 +340,6 @@
         .btn-success {
             background: var(--success-gradient);
             color: white;
-        }
-        
-        .btn-success:hover {
-            box-shadow: 0 8px 25px rgba(46, 204, 113, 0.3);
         }
         
         .btn-telegram {
@@ -343,70 +374,360 @@
         
         /* ===== 配置区域 ===== */
         .config-section {
-            background: linear-gradient(135deg, rgba(212, 237, 218, 0.15) 0%, rgba(195, 230, 203, 0.15) 100%);
-            border: 1px solid rgba(40, 167, 69, 0.2);
-            padding: 30px;
-            margin: 30px 0;
+            background: linear-gradient(135deg, rgba(212, 237, 218, 0.1) 0%, rgba(195, 230, 203, 0.1) 100%);
+            border: 1px solid rgba(40, 167, 69, 0.15);
+            padding: 25px;
+            margin-bottom: 25px;
             border-radius: var(--radius-lg);
-            max-width: 900px;
-            margin-left: auto;
-            margin-right: auto;
             box-shadow: var(--shadow-md);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .config-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 5px;
-            height: 100%;
-            background: var(--success-gradient);
         }
         
         .config-section h4 {
             color: var(--success-color);
-            margin-bottom: 25px;
-            font-size: 1.3rem;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             font-weight: 600;
         }
         
         .input-group {
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
         
         .input-group label {
             font-weight: 600;
             color: var(--text-primary);
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             display: block;
-            font-size: 1rem;
-        }
-        
-        .input-group input {
-            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.95rem;
         }
         
         .input-row {
-            display: flex;
-            gap: 20px;
-            align-items: flex-end;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            align-items: end;
         }
         
-        .input-row .input-group {
+        /* ===== 定时器状态 ===== */
+        .timer-status {
+            background: linear-gradient(135deg, rgba(255, 243, 205, 0.9) 0%, rgba(255, 234, 167, 0.9) 100%);
+            border: 1px solid #ffeaa7;
+            padding: 20px;
+            border-radius: var(--radius-lg);
+            margin: 20px 0;
+            display: none;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .timer-active {
+            background: linear-gradient(135deg, rgba(212, 237, 218, 0.9) 0%, rgba(195, 230, 203, 0.9) 100%);
+            border-color: #c3e6cb;
+        }
+        
+        .timer-stopped {
+            background: linear-gradient(135deg, rgba(248, 215, 218, 0.9) 0%, rgba(245, 198, 203, 0.9) 100%);
+            border-color: #f5c6cb;
+        }
+        
+        .timer-display {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .timer-item {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 15px;
+            border-radius: var(--radius-md);
+            text-align: center;
+        }
+        
+        .timer-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .timer-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        .timer-controls {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .timer-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: var(--transition-fast);
             flex: 1;
-            margin-bottom: 0;
+        }
+        
+        .timer-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .timer-start {
+            background: var(--success-gradient);
+            color: white;
+        }
+        
+        .timer-stop {
+            background: var(--danger-gradient);
+            color: white;
+        }
+        
+        .timer-reset {
+            background: var(--dark-gradient);
+            color: white;
+        }
+        
+        /* ===== 统计面板 ===== */
+        .stats-panel {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 25px 0;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: var(--radius-lg);
+            text-align: center;
+            box-shadow: var(--shadow-md);
+            border-top: 5px solid var(--info-color);
+            transition: var(--transition-normal);
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .stat-card.warning {
+            border-top-color: var(--warning-color);
+        }
+        
+        .stat-card.danger {
+            border-top-color: var(--danger-color);
+        }
+        
+        .stat-card.success {
+            border-top-color: var(--success-color);
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin: 10px 0;
+        }
+        
+        .stat-title {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+        
+        /* ===== 域名列表 ===== */
+        .domain-list {
+            margin: 20px 0;
+            padding: 20px;
+            background: white;
+            border-radius: var(--radius-lg);
+            max-height: 400px;
+            overflow-y: auto;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+        }
+        
+        .domain-item {
+            padding: 15px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all var(--transition-fast);
+        }
+        
+        .domain-item:last-child {
+            border-bottom: none;
+        }
+        
+        .domain-item:hover {
+            background: var(--light-color);
+        }
+        
+        .domain-name {
+            flex: 1;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+        }
+        
+        .domain-status {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            min-width: 120px;
+            text-align: center;
+        }
+        
+        .status-pending {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            color: var(--text-secondary);
+        }
+        
+        .status-testing {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            color: #1976d2;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+        
+        .status-success {
+            background: linear-gradient(135deg, #e8f5e8 0%, #c8e6c9 100%);
+            color: #2e7d32;
+        }
+        
+        .status-error {
+            background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+            color: #c62828;
+        }
+        
+        .status-warning {
+            background: linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%);
+            color: #f57c00;
+        }
+        
+        /* ===== 测试控制 ===== */
+        .test-controls {
+            background: linear-gradient(135deg, #f8fdff 0%, #e8f4fc 100%);
+            padding: 20px;
+            border-radius: var(--radius-lg);
+            margin: 20px 0;
+            border: 1px solid rgba(52, 152, 219, 0.2);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .test-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-item {
+            background: white;
+            padding: 15px;
+            border-radius: var(--radius-md);
+            text-align: center;
+        }
+        
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+        }
+        
+        .stat-value {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: var(--text-primary);
+        }
+        
+        .progress-container {
+            margin: 20px 0;
+        }
+        
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .progress-bar {
+            height: 12px;
+            background: var(--light-color);
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: var(--success-gradient);
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 6px;
+        }
+        
+        /* ===== 监控日志 ===== */
+        .monitor-log {
+            margin-top: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+            background: var(--dark-color);
+            padding: 15px;
+            border-radius: var(--radius-lg);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: #e9ecef;
+            border: 1px solid #34495e;
+        }
+        
+        .log-entry {
+            padding: 10px 0;
+            border-bottom: 1px solid #34495e;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .log-entry:last-child {
+            border-bottom: none;
+        }
+        
+        .log-time {
+            color: var(--text-light);
+            font-size: 0.8rem;
+            min-width: 65px;
+        }
+        
+        .log-content {
+            flex: 1;
+            word-break: break-word;
         }
         
         /* ===== 状态消息 ===== */
         .status-message {
             margin-top: 15px;
-            padding: 15px;
+            padding: 12px 15px;
             border-radius: var(--radius-md);
             display: none;
             font-weight: 500;
@@ -434,392 +755,6 @@
             background: linear-gradient(135deg, rgba(209, 236, 241, 0.9) 0%, rgba(190, 229, 235, 0.9) 100%);
             color: #0c5460;
             border-left: 5px solid var(--info-color);
-        }
-        
-        /* ===== 域名列表 ===== */
-        .domain-list {
-            margin: 25px 0;
-            padding: 25px;
-            background: white;
-            border-radius: var(--radius-lg);
-            max-height: 500px;
-            overflow-y: auto;
-            box-shadow: var(--shadow-md);
-            border: 1px solid var(--border-color);
-        }
-        
-        .domain-item {
-            padding: 18px 20px;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: all var(--transition-fast);
-            border-radius: var(--radius-md);
-            margin-bottom: 8px;
-        }
-        
-        .domain-item:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-        }
-        
-        .domain-item:hover {
-            background: var(--light-color);
-            transform: translateX(5px);
-        }
-        
-        .domain-name {
-            flex: 1;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.95rem;
-            color: var(--text-primary);
-            font-weight: 500;
-        }
-        
-        .domain-status {
-            padding: 10px 20px;
-            border-radius: 25px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            min-width: 140px;
-            text-align: center;
-            transition: var(--transition-fast);
-        }
-        
-        .status-pending {
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            color: var(--text-secondary);
-            border: 1px solid #dee2e6;
-        }
-        
-        .status-testing {
-            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
-            color: #1976d2;
-            border: 1px solid #90caf9;
-            animation: pulse 1.5s infinite;
-        }
-        
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.7; }
-            100% { opacity: 1; }
-        }
-        
-        .status-success {
-            background: linear-gradient(135deg, #e8f5e8 0%, #c8e6c9 100%);
-            color: #2e7d32;
-            border: 1px solid #a5d6a7;
-        }
-        
-        .status-error {
-            background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
-            color: #c62828;
-            border: 1px solid #ef9a9a;
-        }
-        
-        .status-warning {
-            background: linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%);
-            color: #f57c00;
-            border: 1px solid #ffd54f;
-        }
-        
-        /* ===== 测试控制 ===== */
-        .test-controls {
-            background: linear-gradient(135deg, #f8fdff 0%, #e8f4fc 100%);
-            padding: 25px;
-            border-radius: var(--radius-lg);
-            margin: 25px 0;
-            border: 1px solid rgba(52, 152, 219, 0.2);
-            box-shadow: var(--shadow-md);
-        }
-        
-        .progress-container {
-            margin: 25px 0;
-        }
-        
-        .progress-info {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 12px;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-        
-        .progress-bar {
-            height: 14px;
-            background: var(--light-color);
-            border-radius: 7px;
-            overflow: hidden;
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
-        }
-        
-        .progress-fill {
-            height: 100%;
-            background: var(--success-gradient);
-            width: 0%;
-            transition: width 0.5s ease;
-            border-radius: 7px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .progress-fill::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            right: 0;
-            background-image: linear-gradient(
-                -45deg,
-                rgba(255, 255, 255, 0.2) 25%,
-                transparent 25%,
-                transparent 50%,
-                rgba(255, 255, 255, 0.2) 50%,
-                rgba(255, 255, 255, 0.2) 75%,
-                transparent 75%,
-                transparent
-            );
-            background-size: 20px 20px;
-            animation: move 2s linear infinite;
-        }
-        
-        @keyframes move {
-            0% { background-position: 0 0; }
-            100% { background-position: 20px 20px; }
-        }
-        
-        /* ===== 统计卡片 ===== */
-        .stats-panel {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
-            margin: 30px 0;
-        }
-        
-        .stat-card {
-            background: white;
-            padding: 25px;
-            border-radius: var(--radius-lg);
-            text-align: center;
-            box-shadow: var(--shadow-md);
-            border-top: 5px solid var(--info-color);
-            transition: var(--transition-normal);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
-        }
-        
-        .stat-card.warning {
-            border-top-color: var(--warning-color);
-        }
-        
-        .stat-card.danger {
-            border-top-color: var(--danger-color);
-        }
-        
-        .stat-card.success {
-            border-top-color: var(--success-color);
-        }
-        
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--text-primary);
-            margin: 15px 0;
-            font-feature-settings: "tnum";
-        }
-        
-        .stat-title {
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 600;
-        }
-        
-        /* ===== 监控日志 ===== */
-        .monitor-log {
-            margin-top: 20px;
-            max-height: 350px;
-            overflow-y: auto;
-            background: var(--dark-color);
-            padding: 20px;
-            border-radius: var(--radius-lg);
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.9rem;
-            color: #e9ecef;
-            border: 1px solid #34495e;
-        }
-        
-        .log-entry {
-            padding: 12px 0;
-            border-bottom: 1px solid #34495e;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            transition: var(--transition-fast);
-        }
-        
-        .log-entry:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: var(--radius-sm);
-            padding-left: 10px;
-            padding-right: 10px;
-        }
-        
-        .log-entry:last-child {
-            border-bottom: none;
-        }
-        
-        .log-time {
-            color: var(--text-light);
-            font-size: 0.85rem;
-            min-width: 70px;
-            font-feature-settings: "tnum";
-        }
-        
-        .log-content {
-            flex: 1;
-            word-break: break-word;
-        }
-        
-        /* ===== 通知历史 ===== */
-        .notification-history {
-            background: linear-gradient(135deg, #fffbf0 0%, #fff8e1 100%);
-            border: 1px solid #ffecb3;
-            border-radius: var(--radius-lg);
-            padding: 25px;
-            margin-top: 25px;
-            max-height: 350px;
-            overflow-y: auto;
-            box-shadow: var(--shadow-md);
-        }
-        
-        .notification-item {
-            background: white;
-            padding: 20px;
-            margin-bottom: 15px;
-            border-radius: var(--radius-md);
-            border-left: 5px solid var(--warning-color);
-            transition: var(--transition-fast);
-            box-shadow: var(--shadow-sm);
-        }
-        
-        .notification-item:hover {
-            transform: translateX(5px);
-            box-shadow: var(--shadow-md);
-        }
-        
-        .notification-time {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            margin-bottom: 8px;
-            font-feature-settings: "tnum";
-        }
-        
-        .notification-domain {
-            font-weight: 700;
-            color: var(--warning-color);
-            margin-bottom: 10px;
-            font-size: 1.1rem;
-        }
-        
-        .notification-message {
-            font-size: 0.95rem;
-            color: var(--text-primary);
-            line-height: 1.5;
-        }
-        
-        /* ===== 定时器状态 ===== */
-        .timer-status {
-            background: linear-gradient(135deg, rgba(255, 243, 205, 0.9) 0%, rgba(255, 234, 167, 0.9) 100%);
-            border: 1px solid #ffeaa7;
-            padding: 20px;
-            border-radius: var(--radius-lg);
-            margin: 20px 0;
-            display: none;
-            box-shadow: var(--shadow-md);
-        }
-        
-        .timer-active {
-            background: linear-gradient(135deg, rgba(212, 237, 218, 0.9) 0%, rgba(195, 230, 203, 0.9) 100%);
-            border-color: #c3e6cb;
-        }
-        
-        .timer-stopped {
-            background: linear-gradient(135deg, rgba(248, 215, 218, 0.9) 0%, rgba(245, 198, 203, 0.9) 100%);
-            border-color: #f5c6cb;
-        }
-        
-        .timer-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            padding-bottom: 15px;
-            border-bottom: 1px dashed rgba(0,0,0,0.1);
-        }
-        
-        .timer-info:last-child {
-            margin-bottom: 0;
-            padding-bottom: 0;
-            border-bottom: none;
-        }
-        
-        .timer-label {
-            font-weight: 600;
-            color: var(--text-primary);
-            font-size: 1rem;
-        }
-        
-        .timer-value {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            font-family: 'JetBrains Mono', monospace;
-        }
-        
-        .timer-controls {
-            display: flex;
-            gap: 12px;
-            margin-top: 20px;
-        }
-        
-        .timer-btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: var(--radius-md);
-            cursor: pointer;
-            font-size: 0.95rem;
-            font-weight: 600;
-            transition: var(--transition-fast);
-            flex: 1;
-        }
-        
-        .timer-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-        
-        .timer-start {
-            background: var(--success-gradient);
-            color: white;
-        }
-        
-        .timer-stop {
-            background: var(--danger-gradient);
-            color: white;
-        }
-        
-        .timer-reset {
-            background: var(--dark-gradient);
-            color: white;
         }
         
         /* ===== 设置面板 ===== */
@@ -854,26 +789,25 @@
         }
         
         .settings-panel .input-group {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
         
         .settings-panel .input-group label {
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             font-weight: 600;
-            margin-bottom: 8px;
-            color: var(--text-primary);
+            margin-bottom: 5px;
         }
         
         .settings-panel input {
-            padding: 12px;
-            font-size: 0.95rem;
+            padding: 10px;
+            font-size: 0.9rem;
         }
         
         .settings-panel .btn {
             width: 100%;
-            padding: 14px;
+            padding: 12px;
             font-size: 0.95rem;
-            margin-top: 15px;
+            margin-top: 10px;
         }
         
         .settings-toggle {
@@ -892,21 +826,19 @@
             z-index: 1001;
             box-shadow: var(--shadow-lg);
             transition: var(--transition-normal);
-            font-size: 1.2rem;
         }
         
         .settings-toggle:hover {
             transform: rotate(90deg);
-            box-shadow: var(--shadow-xl);
         }
         
         /* ===== 页脚 ===== */
         footer {
-            margin-top: 60px;
+            margin-top: 40px;
             text-align: center;
             color: var(--text-secondary);
-            font-size: 0.95rem;
-            padding: 30px;
+            font-size: 0.9rem;
+            padding: 20px;
             width: 100%;
             border-top: 1px solid var(--border-color);
         }
@@ -915,38 +847,33 @@
             color: var(--primary-color);
             text-decoration: none;
             font-weight: 600;
-            transition: var(--transition-fast);
         }
         
         footer a:hover {
-            color: var(--secondary-color);
             text-decoration: underline;
         }
         
         /* ===== 响应式设计 ===== */
-        @media (max-width: 1200px) {
-            .telegram-config {
-                position: static;
-                width: 100%;
-                margin: 25px 0;
-            }
-            
-            .container {
-                padding-top: 40px;
-            }
-        }
-        
         @media (max-width: 768px) {
             .container {
                 padding: 25px 20px;
             }
             
             h1 {
-                font-size: 2.2rem;
+                font-size: 2rem;
             }
             
             .subtitle {
-                font-size: 1.1rem;
+                font-size: 1rem;
+            }
+            
+            .main-layout {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .telegram-config {
+                position: static;
             }
             
             .buttons {
@@ -957,9 +884,8 @@
                 width: 100%;
             }
             
-            .input-row {
-                flex-direction: column;
-                gap: 15px;
+            .timer-display {
+                grid-template-columns: 1fr;
             }
             
             .settings-panel {
@@ -973,29 +899,19 @@
                 top: 20px;
                 left: 20px;
             }
-            
-            .telegram-config {
-                padding: 20px;
-            }
-            
-            .stats-panel {
-                grid-template-columns: 1fr;
-                gap: 15px;
-            }
         }
         
         @media (max-width: 480px) {
             body {
-                padding: 10px;
-            }
-            
-            h1 {
-                font-size: 1.8rem;
+                padding: 15px;
             }
             
             .container {
                 padding: 20px 15px;
-                margin-top: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
             }
             
             .config-section {
@@ -1009,18 +925,18 @@
         
         /* ===== 滚动条美化 ===== */
         ::-webkit-scrollbar {
-            width: 10px;
-            height: 10px;
+            width: 8px;
+            height: 8px;
         }
         
         ::-webkit-scrollbar-track {
             background: #f1f1f1;
-            border-radius: 5px;
+            border-radius: 4px;
         }
         
         ::-webkit-scrollbar-thumb {
             background: #c1c1c1;
-            border-radius: 5px;
+            border-radius: 4px;
         }
         
         ::-webkit-scrollbar-thumb:hover {
@@ -1034,30 +950,10 @@
         .monitor-log::-webkit-scrollbar-thumb {
             background: #4a6572;
         }
-        
-        .monitor-log::-webkit-scrollbar-thumb:hover {
-            background: #556b78;
-        }
-        
-        /* ===== 加载动画 ===== */
-        .loading {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255,255,255,.3);
-            border-radius: 50%;
-            border-top-color: white;
-            animation: spin 1s ease-in-out infinite;
-            margin-right: 10px;
-        }
-        
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
     <!-- 设置按钮 -->
@@ -1090,227 +986,238 @@
     </div>
     
     <div class="container">
-        <!-- Telegram配置 - 右上角 -->
-        <div class="telegram-config">
-            <h4><i class="fab fa-telegram"></i> Telegram通知配置</h4>
-            
-            <div class="input-group">
-                <input type="password" id="bot-token" placeholder="Bot Token (如: 123456789:ABCdefGHIjklMNOpqrsTUVwxyz)">
-            </div>
-            
-            <div class="input-group">
-                <input type="text" id="chat-id" placeholder="Chat ID (如: -1001234567890)">
-            </div>
-            
-            <div class="buttons">
-                <button class="btn btn-telegram" id="save-config-btn">
-                    <i class="fas fa-save"></i> 保存配置
-                </button>
-                <button class="btn btn-secondary" id="test-config-btn">
-                    <i class="fas fa-paper-plane"></i> 测试连接
-                </button>
-            </div>
-            
-            <div id="config-status" class="status-message"></div>
-        </div>
-        
         <header>
             <h1><i class="fas fa-tachometer-alt"></i> ITDOG网站测速监控系统 v8.0</h1>
-            <p class="subtitle">GitHub Pages配置中心 | Telegram异常通知 | 专业监控解决方案</p>
+            <p class="subtitle">专业网站监控解决方案 | Telegram异常通知 | 定时批量测试</p>
         </header>
         
-        <div class="instructions">
-            <h4><i class="fas fa-info-circle"></i> 系统说明</h4>
-            <p>1. 本系统通过Tampermonkey脚本自动监控网站连通率，基于状态码200判断</p>
-            <p>2. 当连通率低于设定阈值时，自动发送专业的Telegram通知</p>
-            <p>3. 支持批量测试、定时测试和完整URL支持</p>
-            <p>4. 必须先配置Telegram信息才能使用通知功能</p>
-            <p>5. v8.0新增：定时测试功能、完整URL支持、二级域名跳转</p>
-        </div>
-        
-        <!-- 定时测试配置 -->
-        <div class="config-section">
-            <h4><i class="fas fa-clock"></i> 定时测试配置</h4>
-            
-            <div class="input-row">
-                <div class="input-group">
-                    <label for="timer-interval">测试间隔（分钟）</label>
-                    <input type="number" id="timer-interval" min="5" max="1440" value="30" placeholder="输入测试间隔分钟数">
+        <div class="main-layout">
+            <div class="main-content">
+                <div class="instructions">
+                    <h4><i class="fas fa-info-circle"></i> 使用说明</h4>
+                    <p>1. 首先在右侧配置Telegram通知信息（需要先创建Telegram Bot）</p>
+                    <p>2. 配置定时测试参数或直接开始批量测试</p>
+                    <p>3. 在下方输入要监控的网站地址，每行一个</p>
+                    <p>4. 系统会自动打开ITDOG页面进行测试，连通率低于阈值时发送通知</p>
+                    <p>5. 建议安装Tampermonkey扩展以获得最佳体验</p>
                 </div>
                 
-                <div class="input-group">
-                    <label for="timer-start-time">每日开始时间</label>
-                    <input type="time" id="timer-start-time" value="08:00">
-                </div>
-                
-                <div class="input-group">
-                    <label for="timer-end-time">每日结束时间</label>
-                    <input type="time" id="timer-end-time" value="22:00">
-                </div>
-            </div>
-            
-            <div class="input-group">
-                <label for="timer-mode">定时模式</label>
-                <select id="timer-mode">
-                    <option value="continuous">连续模式（间隔时间循环测试）</option>
-                    <option value="daily">每日单次（在开始时间测试一次）</option>
-                    <option value="workday">工作日模式（周一至周五测试）</option>
-                    <option value="weekend">周末模式（周六至周日测试）</option>
-                </select>
-            </div>
-            
-            <div class="buttons">
-                <button class="btn btn-info" id="start-timer-btn">
-                    <i class="fas fa-play-circle"></i> 启动定时测试
-                </button>
-                <button class="btn btn-warning" id="stop-timer-btn">
-                    <i class="fas fa-stop-circle"></i> 停止定时测试
-                </button>
-                <button class="btn btn-secondary" id="test-now-btn">
-                    <i class="fas fa-bolt"></i> 立即测试一次
-                </button>
-            </div>
-            
-            <!-- 定时器状态显示 -->
-            <div class="timer-status" id="timer-status">
-                <div class="timer-info">
-                    <div class="timer-label">定时器状态：</div>
-                    <div class="timer-value" id="timer-state">未运行</div>
-                </div>
-                <div class="timer-info">
-                    <div class="timer-label">下次测试：</div>
-                    <div class="timer-value" id="next-test-time">--:--</div>
-                </div>
-                <div class="timer-info">
-                    <div class="timer-label">已运行：</div>
-                    <div class="timer-value" id="elapsed-time">00:00:00</div>
-                </div>
-                <div class="timer-controls">
-                    <button class="timer-btn timer-start" id="timer-control-start">开始</button>
-                    <button class="timer-btn timer-stop" id="timer-control-stop">暂停</button>
-                    <button class="timer-btn timer-reset" id="timer-control-reset">重置</button>
-                </div>
-            </div>
-        </div>
-        
-        <!-- 统计面板 -->
-        <div class="stats-panel" id="stats-panel">
-            <div class="stat-card">
-                <div class="stat-title">今日测试</div>
-                <div class="stat-number" id="today-tests">0</div>
-            </div>
-            <div class="stat-card warning">
-                <div class="stat-title">异常网站</div>
-                <div class="stat-number" id="error-sites">0</div>
-            </div>
-            <div class="stat-card success">
-                <div class="stat-title">正常网站</div>
-                <div class="stat-number" id="success-sites">0</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-title">发送通知</div>
-                <div class="stat-number" id="sent-notifications">0</div>
-            </div>
-        </div>
-        
-        <!-- 批量测试 -->
-        <div class="config-section">
-            <h4><i class="fas fa-globe"></i> 批量网站测试</h4>
-            
-            <div class="input-group">
-                <label for="domains">要测试的网站地址（每行一个，支持完整URL）</label>
-                <textarea id="domains" placeholder="https://example.com&#10;http://sub.example.com&#10;example.com/path/to/page"></textarea>
-            </div>
-            
-            <div class="buttons">
-                <button class="btn btn-success" id="start-test-btn">
-                    <i class="fas fa-rocket"></i> 开始批量测试
-                </button>
-                <button class="btn btn-secondary" id="clear-domains-btn">
-                    <i class="fas fa-redo"></i> 清空列表
-                </button>
-                <button class="btn btn-info" id="load-example-btn">
-                    <i class="fas fa-download"></i> 加载示例
-                </button>
-            </div>
-            
-            <!-- 域名列表 -->
-            <div class="domain-list" id="domain-list" style="display: none;">
-                <h5 style="margin-bottom: 15px; color: var(--text-primary);">测试队列</h5>
-                <div id="domains-container"></div>
-            </div>
-            
-            <!-- 测试控制 -->
-            <div class="test-controls" id="test-controls" style="display: none;">
-                <div class="test-stats">
-                    <div class="stat-item">
-                        <div class="stat-label">已测试</div>
-                        <div class="stat-value" id="tested-count">0</div>
+                <!-- 定时测试配置 -->
+                <div class="config-section">
+                    <h4><i class="fas fa-clock"></i> 定时测试配置</h4>
+                    
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="timer-interval">测试间隔（分钟）</label>
+                            <input type="number" id="timer-interval" min="5" max="1440" value="30">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="timer-start-time">每日开始时间</label>
+                            <input type="time" id="timer-start-time" value="08:00">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="timer-end-time">每日结束时间</label>
+                            <input type="time" id="timer-end-time" value="22:00">
+                        </div>
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-label">进行中</div>
-                        <div class="stat-value" id="active-count">0</div>
+                    
+                    <div class="input-group">
+                        <label for="timer-mode">定时模式</label>
+                        <select id="timer-mode">
+                            <option value="continuous">连续模式（间隔时间循环测试）</option>
+                            <option value="daily">每日单次（在开始时间测试一次）</option>
+                            <option value="workday">工作日模式（周一至周五测试）</option>
+                            <option value="weekend">周末模式（周六至周日测试）</option>
+                        </select>
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-label">待测试</div>
-                        <div class="stat-value" id="pending-count">0</div>
+                    
+                    <div class="buttons">
+                        <button class="btn btn-info" id="start-timer-btn">
+                            <i class="fas fa-play-circle"></i> 启动定时测试
+                        </button>
+                        <button class="btn btn-warning" id="stop-timer-btn">
+                            <i class="fas fa-stop-circle"></i> 停止定时测试
+                        </button>
+                        <button class="btn btn-secondary" id="test-now-btn">
+                            <i class="fas fa-bolt"></i> 立即测试
+                        </button>
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-label">异常</div>
-                        <div class="stat-value" id="error-count">0</div>
+                    
+                    <!-- 定时器状态显示 -->
+                    <div class="timer-status" id="timer-status">
+                        <div class="timer-display">
+                            <div class="timer-item">
+                                <div class="timer-label">定时器状态</div>
+                                <div class="timer-value" id="timer-state">未运行</div>
+                            </div>
+                            <div class="timer-item">
+                                <div class="timer-label">下次测试</div>
+                                <div class="timer-value" id="next-test-time">--:--</div>
+                            </div>
+                            <div class="timer-item">
+                                <div class="timer-label">已运行</div>
+                                <div class="timer-value" id="elapsed-time">00:00:00</div>
+                            </div>
+                        </div>
+                        <div class="timer-controls">
+                            <button class="timer-btn timer-start" id="timer-control-start">开始</button>
+                            <button class="timer-btn timer-stop" id="timer-control-stop">暂停</button>
+                            <button class="timer-btn timer-reset" id="timer-control-reset">重置</button>
+                        </div>
                     </div>
                 </div>
                 
-                <div class="progress-container">
-                    <div class="progress-info">
-                        <span>测试进度</span>
-                        <span id="progress-text">0/0</span>
+                <!-- 统计面板 -->
+                <div class="stats-panel" id="stats-panel">
+                    <div class="stat-card">
+                        <div class="stat-title">今日测试</div>
+                        <div class="stat-number" id="today-tests">0</div>
                     </div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="progress-bar"></div>
+                    <div class="stat-card warning">
+                        <div class="stat-title">异常网站</div>
+                        <div class="stat-number" id="error-sites">0</div>
                     </div>
+                    <div class="stat-card success">
+                        <div class="stat-title">正常网站</div>
+                        <div class="stat-number" id="success-sites">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-title">发送通知</div>
+                        <div class="stat-number" id="sent-notifications">0</div>
+                    </div>
+                </div>
+                
+                <!-- 批量测试 -->
+                <div class="config-section">
+                    <h4><i class="fas fa-globe"></i> 批量网站测试</h4>
+                    
+                    <div class="input-group">
+                        <label for="domains">要测试的网站地址（每行一个，支持完整URL）</label>
+                        <textarea id="domains" placeholder="https://example.com&#10;http://sub.example.com&#10;example.com/path/to/page"></textarea>
+                    </div>
+                    
+                    <div class="buttons">
+                        <button class="btn btn-success" id="start-test-btn">
+                            <i class="fas fa-rocket"></i> 开始批量测试
+                        </button>
+                        <button class="btn btn-secondary" id="clear-domains-btn">
+                            <i class="fas fa-redo"></i> 清空列表
+                        </button>
+                        <button class="btn btn-info" id="load-example-btn">
+                            <i class="fas fa-download"></i> 加载示例
+                        </button>
+                    </div>
+                    
+                    <!-- 域名列表 -->
+                    <div class="domain-list" id="domain-list" style="display: none;">
+                        <h5 style="margin-bottom: 15px; color: var(--text-primary);">测试队列</h5>
+                        <div id="domains-container"></div>
+                    </div>
+                    
+                    <!-- 测试控制 -->
+                    <div class="test-controls" id="test-controls" style="display: none;">
+                        <div class="test-stats">
+                            <div class="stat-item">
+                                <div class="stat-label">已测试</div>
+                                <div class="stat-value" id="tested-count">0</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">进行中</div>
+                                <div class="stat-value" id="active-count">0</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">待测试</div>
+                                <div class="stat-value" id="pending-count">0</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">异常</div>
+                                <div class="stat-value" id="error-count">0</div>
+                            </div>
+                        </div>
+                        
+                        <div class="progress-container">
+                            <div class="progress-info">
+                                <span>测试进度</span>
+                                <span id="progress-text">0/0</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="progress-bar"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="buttons">
+                            <button class="btn btn-warning" id="pause-btn">
+                                <i class="fas fa-pause"></i> 暂停测试
+                            </button>
+                            <button class="btn btn-secondary" id="stop-btn">
+                                <i class="fas fa-stop"></i> 停止全部
+                            </button>
+                            <button class="btn btn-info" id="export-results-btn">
+                                <i class="fas fa-file-export"></i> 导出结果
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 监控日志 -->
+                <div class="config-section">
+                    <h4><i class="fas fa-clipboard-list"></i> 监控日志</h4>
+                    <div class="monitor-log" id="monitor-log">
+                        <div class="log-entry">
+                            <span class="log-time">就绪</span>
+                            <span class="log-content">系统已就绪，等待开始测试...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Telegram配置 -->
+            <div class="telegram-config">
+                <h4><i class="fab fa-telegram"></i> Telegram通知配置</h4>
+                
+                <div class="input-group">
+                    <label for="bot-token">Bot Token</label>
+                    <input type="password" id="bot-token" placeholder="输入Bot Token">
+                </div>
+                
+                <div class="input-group">
+                    <label for="chat-id">Chat ID</label>
+                    <input type="text" id="chat-id" placeholder="输入Chat ID">
                 </div>
                 
                 <div class="buttons">
-                    <button class="btn btn-warning" id="pause-btn">
-                        <i class="fas fa-pause"></i> 暂停测试
+                    <button class="btn btn-telegram" id="save-config-btn">
+                        <i class="fas fa-save"></i> 保存配置
                     </button>
-                    <button class="btn btn-secondary" id="stop-btn">
-                        <i class="fas fa-stop"></i> 停止全部
-                    </button>
-                    <button class="btn btn-info" id="export-results-btn">
-                        <i class="fas fa-file-export"></i> 导出结果
+                    <button class="btn btn-secondary" id="test-config-btn">
+                        <i class="fas fa-paper-plane"></i> 测试连接
                     </button>
                 </div>
-            </div>
-        </div>
-        
-        <!-- 监控日志 -->
-        <div class="test-controls" style="margin-top: 30px;">
-            <h4><i class="fas fa-clipboard-list"></i> 监控日志</h4>
-            <div class="monitor-log" id="monitor-log">
-                <div class="log-entry">
-                    <span class="log-time">就绪</span>
-                    <span class="log-content">系统已就绪，等待开始测试...</span>
+                
+                <div id="config-status" class="status-message"></div>
+                
+                <div class="telegram-help">
+                    <strong>如何获取配置信息：</strong>
+                    <ul>
+                        <li>Bot Token: 通过 @BotFather 创建机器人获取</li>
+                        <li>Chat ID: 向 @userinfobot 发送消息获取</li>
+                        <li>保存后点击测试连接验证配置</li>
+                    </ul>
                 </div>
             </div>
-        </div>
-        
-        <!-- 通知历史 -->
-        <div class="notification-history" id="notification-history" style="display: none;">
-            <h5><i class="fas fa-bell"></i> 通知历史记录</h5>
-            <div id="notifications-container"></div>
         </div>
         
         <footer>
-            <p>ITDOG网站测速监控系统 v8.0 | © 2026 GitHub Pages配置中心 | 专业网站监控解决方案</p>
+            <p>ITDOG网站测速监控系统 v8.0 | © 2026 专业网站监控解决方案</p>
             <p>在使用前请确保已安装 <a href="https://www.tampermonkey.net/" target="_blank">Tampermonkey</a> 扩展</p>
         </footer>
     </div>
 
     <script>
         // ============================================
-        // ITDOG监控系统 v8.0 - 主页面JavaScript代码
+        // ITDOG监控系统 v8.0 - 优化版
         // ============================================
         document.addEventListener('DOMContentLoaded', function() {
             // 元素引用
@@ -1367,10 +1274,6 @@
                 // 监控日志元素
                 monitorLog: document.getElementById('monitor-log'),
                 
-                // 通知历史元素
-                notificationHistory: document.getElementById('notification-history'),
-                notificationsContainer: document.getElementById('notifications-container'),
-                
                 // 统计元素
                 todayTests: document.getElementById('today-tests'),
                 errorSites: document.getElementById('error-sites'),
@@ -1394,7 +1297,7 @@
                 testDelay: 3000
             };
             
-            // 定时器相关变量
+            // 定时器相关变量 - 修复定时器逻辑
             let timerInterval = 30 * 60 * 1000;
             let timerActive = false;
             let timerPaused = false;
@@ -1406,6 +1309,7 @@
             let elapsedTimerId = null;
             let startTime = null;
             let elapsedSeconds = 0;
+            let lastTestTime = null;
             
             // 统计变量
             let stats = {
@@ -1421,17 +1325,27 @@
                 loadConfig();
                 loadSettings();
                 loadTimerConfig();
-                loadNotificationHistory();
                 checkDailyReset();
                 setupEventListeners();
                 
                 // 添加欢迎日志
                 addLog('🎉 ITDOG监控系统 v8.0 已启动', 'success');
-                addLog(`⚙️  连通率阈值: ${CONFIG.connectivityThreshold}%`, 'info');
-                addLog(`⚙️  批量打开数量: ${CONFIG.batchSize}`, 'info');
-                addLog('💡 请先配置Telegram信息，然后开始测试', 'info');
+                addLog(`⚙️ 连通率阈值: ${CONFIG.connectivityThreshold}%`, 'info');
+                addLog(`⚙️ 批量打开数量: ${CONFIG.batchSize}`, 'info');
+                addLog('💡 请在右侧配置Telegram通知信息', 'info');
                 
-                console.log('ITDOG监控系统 v8.0 已加载 - 完整功能版');
+                // 检查定时器状态
+                checkTimerStatus();
+                
+                console.log('ITDOG监控系统 v8.0 已加载 - 优化版');
+            }
+
+            // 检查定时器状态
+            function checkTimerStatus() {
+                const timerActiveStr = localStorage.getItem('timer_active');
+                if (timerActiveStr === 'true') {
+                    startTimer();
+                }
             }
 
             // 加载配置
@@ -1528,11 +1442,6 @@
                         timerStartTime = config.startTime || '08:00';
                         timerEndTime = config.endTime || '22:00';
                         timerMode = config.mode || 'continuous';
-                        
-                        const timerActiveStr = localStorage.getItem('timer_active');
-                        if (timerActiveStr === 'true') {
-                            startTimer();
-                        }
                     }
                 } catch (error) {
                     console.error('加载定时器配置失败:', error);
@@ -1617,7 +1526,7 @@
                     elements.domains.value = '';
                     localStorage.removeItem('domains_config');
                     showStatus('域名列表已清空', 'info');
-                    addLog('🗑️  域名列表已清空', 'info');
+                    addLog('🗑️ 域名列表已清空', 'info');
                 });
                 
                 elements.loadExampleBtn.addEventListener('click', loadExampleDomains);
@@ -1655,15 +1564,15 @@
                         updateProgress();
                         
                         if (isLowRate) {
-                            addLog(`⚠️  ${domain} - 连通率: ${rate}% (低于${CONFIG.connectivityThreshold}%)`, 'warning');
+                            addLog(`⚠️ ${domain} - 连通率: ${rate}% (低于${CONFIG.connectivityThreshold}%)`, 'warning');
                             sendLowRateNotification(domain, data)
                                 .then(success => {
                                     if (success) {
-                                        addLog(`📤  Telegram通知已发送: ${domain}`, 'success');
+                                        addLog(`📤 Telegram通知已发送: ${domain}`, 'success');
                                     }
                                 });
                         } else {
-                            addLog(`✅  ${domain} - 连通率: ${rate}%`, 'success');
+                            addLog(`✅ ${domain} - 连通率: ${rate}%`, 'success');
                         }
                         
                         checkTestCompletion();
@@ -1758,7 +1667,7 @@
                     });
             }
 
-            // 开始定时器
+            // 开始定时器 - 修复定时器逻辑
             function startTimer() {
                 if (timerActive) {
                     showStatus('定时器已经在运行', 'info');
@@ -1770,6 +1679,7 @@
                 timerPaused = false;
                 startTime = Date.now();
                 elapsedSeconds = 0;
+                lastTestTime = null;
                 
                 localStorage.setItem('timer_active', 'true');
                 
@@ -1867,7 +1777,7 @@
                 }
             }
 
-            // 计划下一次测试
+            // 计划下一次测试 - 修复定时器逻辑
             function scheduleNextTest() {
                 if (timerIntervalId) {
                     clearTimeout(timerIntervalId);
@@ -1876,78 +1786,117 @@
                 if (!timerActive || timerPaused) return;
                 
                 const now = new Date();
-                const currentHour = now.getHours();
-                const currentMinute = now.getMinutes();
-                const currentTimeInMinutes = currentHour * 60 + currentMinute;
+                const currentTime = now.getTime();
                 
+                // 解析开始和结束时间
                 const [startHour, startMinute] = timerStartTime.split(':').map(Number);
                 const [endHour, endMinute] = timerEndTime.split(':').map(Number);
-                const startTimeInMinutes = startHour * 60 + startMinute;
-                const endTimeInMinutes = endHour * 60 + endMinute;
                 
-                let shouldRunNow = false;
+                const startTimeToday = new Date(now);
+                startTimeToday.setHours(startHour, startMinute, 0, 0);
                 
-                if (timerMode === 'daily') {
-                    shouldRunNow = currentTimeInMinutes >= startTimeInMinutes && 
-                                   currentTimeInMinutes < startTimeInMinutes + 5;
-                    nextTestTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 
-                                           startHour, startMinute);
-                    if (nextTestTime < now) {
-                        nextTestTime.setDate(nextTestTime.getDate() + 1);
-                    }
-                    timerIntervalId = setTimeout(() => {
-                        if (timerActive && !timerPaused) {
-                            startBatchTest();
-                            scheduleNextTest();
-                        }
-                    }, nextTestTime.getTime() - now.getTime());
-                    
-                } else if (timerMode === 'workday') {
-                    const dayOfWeek = now.getDay();
-                    shouldRunNow = dayOfWeek >= 1 && dayOfWeek <= 5 && 
-                                  currentTimeInMinutes >= startTimeInMinutes && 
-                                  currentTimeInMinutes <= endTimeInMinutes;
-                    const intervalMs = timerInterval;
-                    nextTestTime = new Date(now.getTime() + intervalMs);
-                    
+                const endTimeToday = new Date(now);
+                endTimeToday.setHours(endHour, endMinute, 0, 0);
+                
+                // 检查当前时间是否在允许测试的时间范围内
+                const isWithinTimeRange = currentTime >= startTimeToday.getTime() && 
+                                        currentTime <= endTimeToday.getTime();
+                
+                // 检查是否为允许的日期
+                const dayOfWeek = now.getDay(); // 0=周日, 1=周一, ..., 6=周六
+                let isAllowedDay = true;
+                
+                if (timerMode === 'workday') {
+                    isAllowedDay = dayOfWeek >= 1 && dayOfWeek <= 5; // 周一至周五
                 } else if (timerMode === 'weekend') {
-                    const dayOfWeek = now.getDay();
-                    shouldRunNow = (dayOfWeek === 0 || dayOfWeek === 6) && 
-                                  currentTimeInMinutes >= startTimeInMinutes && 
-                                  currentTimeInMinutes <= endTimeInMinutes;
-                    const intervalMs = timerInterval;
-                    nextTestTime = new Date(now.getTime() + intervalMs);
-                    
-                } else {
-                    shouldRunNow = currentTimeInMinutes >= startTimeInMinutes && 
-                                  currentTimeInMinutes <= endTimeInMinutes;
-                    const intervalMs = timerInterval;
-                    nextTestTime = new Date(now.getTime() + intervalMs);
+                    isAllowedDay = dayOfWeek === 0 || dayOfWeek === 6; // 周六和周日
+                } else if (timerMode === 'daily') {
+                    // 每日模式，只执行一次
+                    if (lastTestTime && lastTestTime.toDateString() === now.toDateString()) {
+                        // 今天已经测试过，安排明天的测试
+                        startTimeToday.setDate(startTimeToday.getDate() + 1);
+                        nextTestTime = startTimeToday;
+                        const delay = nextTestTime.getTime() - currentTime;
+                        timerIntervalId = setTimeout(() => {
+                            if (timerActive && !timerPaused) {
+                                startBatchTest();
+                                scheduleNextTest();
+                            }
+                        }, delay);
+                        updateTimerDisplay();
+                        return;
+                    }
                 }
                 
-                if (shouldRunNow) {
-                    const randomDelay = Math.floor(Math.random() * 30000);
-                    timerIntervalId = setTimeout(() => {
-                        if (timerActive && !timerPaused) {
-                            startBatchTest();
-                            scheduleNextTest();
+                if (isWithinTimeRange && isAllowedDay) {
+                    // 在允许的时间和日期范围内，立即执行或安排下一次
+                    if (!lastTestTime || (currentTime - lastTestTime.getTime() >= timerInterval)) {
+                        // 立即执行测试
+                        const randomDelay = Math.floor(Math.random() * 10000); // 0-10秒随机延迟
+                        timerIntervalId = setTimeout(() => {
+                            if (timerActive && !timerPaused) {
+                                startBatchTest();
+                                scheduleNextTest();
+                            }
+                        }, randomDelay);
+                        
+                        nextTestTime = new Date(currentTime + randomDelay);
+                    } else {
+                        // 安排下一次测试
+                        const timeSinceLastTest = currentTime - lastTestTime.getTime();
+                        const timeUntilNextTest = timerInterval - timeSinceLastTest;
+                        
+                        if (timeUntilNextTest > 0) {
+                            timerIntervalId = setTimeout(() => {
+                                if (timerActive && !timerPaused) {
+                                    startBatchTest();
+                                    scheduleNextTest();
+                                }
+                            }, timeUntilNextTest);
+                            
+                            nextTestTime = new Date(currentTime + timeUntilNextTest);
+                        } else {
+                            // 立即执行（可能因为暂停等原因错过了上次测试）
+                            const randomDelay = Math.floor(Math.random() * 5000);
+                            timerIntervalId = setTimeout(() => {
+                                if (timerActive && !timerPaused) {
+                                    startBatchTest();
+                                    scheduleNextTest();
+                                }
+                            }, randomDelay);
+                            
+                            nextTestTime = new Date(currentTime + randomDelay);
                         }
-                    }, randomDelay);
+                    }
                 } else {
-                    const nextStart = new Date(now);
-                    nextStart.setHours(startHour, startMinute, 0, 0);
-                    if (nextStart < now) {
-                        nextStart.setDate(nextStart.getDate() + 1);
+                    // 不在允许的时间范围内，安排到明天的开始时间
+                    let nextStartTime = new Date(startTimeToday);
+                    
+                    if (currentTime > endTimeToday.getTime()) {
+                        nextStartTime.setDate(nextStartTime.getDate() + 1);
                     }
                     
+                    // 如果是工作日/周末模式，需要找到下一个允许的日期
+                    if (timerMode === 'workday' || timerMode === 'weekend') {
+                        while (true) {
+                            const nextDayOfWeek = nextStartTime.getDay();
+                            const isNextDayAllowed = (timerMode === 'workday' && nextDayOfWeek >= 1 && nextDayOfWeek <= 5) ||
+                                                    (timerMode === 'weekend' && (nextDayOfWeek === 0 || nextDayOfWeek === 6));
+                            
+                            if (isNextDayAllowed) break;
+                            nextStartTime.setDate(nextStartTime.getDate() + 1);
+                        }
+                    }
+                    
+                    nextTestTime = nextStartTime;
+                    const delay = nextTestTime.getTime() - currentTime;
+                    
                     timerIntervalId = setTimeout(() => {
                         if (timerActive && !timerPaused) {
                             startBatchTest();
                             scheduleNextTest();
                         }
-                    }, nextStart.getTime() - now.getTime());
-                    
-                    nextTestTime = nextStart;
+                    }, delay);
                 }
                 
                 updateTimerDisplay();
@@ -2039,6 +1988,11 @@
                 updateStatsDisplay();
                 saveStats();
                 
+                // 记录定时测试时间
+                if (timerActive) {
+                    lastTestTime = new Date();
+                }
+                
                 openNextBatch();
             }
 
@@ -2080,7 +2034,7 @@
                 }
             }
 
-            // 打开ITDOG标签页 - 修改后的函数
+            // 打开ITDOG标签页
             function openITDOGTab(originalDomain, index) {
                 try {
                     // 直接使用原始域名，不进行额外处理
@@ -2393,7 +2347,6 @@ akamai.com`;
                             stats.sentNotifications++;
                             updateStatsDisplay();
                             saveStats();
-                            addNotificationToHistory(domain, results.connectivityRate, currentTime, message);
                             return true;
                         } else {
                             throw new Error(response.description || '发送失败');
@@ -2422,74 +2375,6 @@ akamai.com`;
                 });
                 
                 return distribution;
-            }
-
-            // 添加通知到历史记录
-            function addNotificationToHistory(domain, rate, time, message) {
-                const notification = {
-                    domain: domain,
-                    rate: rate,
-                    time: time,
-                    message: message,
-                    timestamp: Date.now()
-                };
-                
-                let history = [];
-                try {
-                    const historyStr = localStorage.getItem('notification_history');
-                    if (historyStr) {
-                        history = JSON.parse(historyStr);
-                    }
-                } catch (e) {
-                    console.error('读取通知历史失败:', e);
-                }
-                
-                history.unshift(notification);
-                
-                if (history.length > 100) {
-                    history = history.slice(0, 100);
-                }
-                
-                localStorage.setItem('notification_history', JSON.stringify(history));
-                
-                displayNotificationHistory();
-            }
-
-            // 显示通知历史
-            function displayNotificationHistory() {
-                let history = [];
-                try {
-                    const historyStr = localStorage.getItem('notification_history');
-                    if (historyStr) {
-                        history = JSON.parse(historyStr);
-                    }
-                } catch (e) {
-                    console.error('读取通知历史失败:', e);
-                }
-                
-                if (history.length === 0) {
-                    elements.notificationsContainer.innerHTML = '<div style="text-align: center; padding: 20px; color: #666;">暂无通知记录</div>';
-                    return;
-                }
-                
-                let html = '';
-                history.forEach((notification, index) => {
-                    html += `
-                        <div class="notification-item">
-                            <div class="notification-time">${notification.time}</div>
-                            <div class="notification-domain">${notification.domain} (${notification.rate}%)</div>
-                            <div class="notification-message">${notification.message.replace(/\*/g, '').substring(0, 100)}...</div>
-                        </div>
-                    `;
-                });
-                
-                elements.notificationsContainer.innerHTML = html;
-                elements.notificationHistory.style.display = 'block';
-            }
-
-            // 加载通知历史
-            function loadNotificationHistory() {
-                displayNotificationHistory();
             }
 
             // 更新统计显示
@@ -2571,9 +2456,10 @@ akamai.com`;
                 elements.monitorLog.appendChild(logEntry);
                 elements.monitorLog.scrollTop = elements.monitorLog.scrollHeight;
                 
+                // 限制日志数量
                 const logEntries = elements.monitorLog.querySelectorAll('.log-entry');
-                if (logEntries.length > 500) {
-                    for (let i = 0; i < logEntries.length - 500; i++) {
+                if (logEntries.length > 300) {
+                    for (let i = 0; i < logEntries.length - 300; i++) {
                         logEntries[i].remove();
                     }
                 }
