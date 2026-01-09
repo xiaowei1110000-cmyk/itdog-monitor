@@ -23,7 +23,7 @@
         
         .container {
             width: 100%;
-            max-width: 1200px;
+            max-width: 1400px;
             background-color: rgba(255, 255, 255, 0.95);
             border-radius: 20px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
@@ -149,6 +149,11 @@
             color: white;
         }
         
+        .btn-warning {
+            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+            color: white;
+        }
+        
         .btn-secondary {
             background: #f8f9fa;
             color: #495057;
@@ -220,90 +225,26 @@
             border: 1px solid #bee5eb;
         }
         
-        .script-section {
-            background: #2c3e50;
-            color: #ecf0f1;
-            padding: 25px;
-            border-radius: 12px;
-            margin: 25px 0;
-            position: relative;
-        }
-        
-        .script-section h4 {
-            color: #ecf0f1;
-            margin-bottom: 20px;
-            font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .script-code {
-            background: #34495e;
-            color: #ecf0f1;
-            padding: 20px;
-            border-radius: 8px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.9rem;
-            overflow-x: auto;
-            white-space: pre-wrap;
-            margin-top: 15px;
-            max-height: 500px;
-            overflow-y: auto;
-        }
-        
-        .script-toggle {
-            position: absolute;
-            top: 25px;
-            right: 25px;
-            background: #3498db;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.9rem;
-        }
-        
-        .script-toggle:hover {
-            background: #2980b9;
-        }
-        
-        .copy-btn {
-            margin-top: 15px;
-            background: #3498db;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .copy-btn:hover {
-            background: #2980b9;
-        }
-        
         .domain-list {
             margin: 20px 0;
             padding: 20px;
             background-color: white;
             border-radius: 12px;
-            max-height: 400px;
+            max-height: 500px;
             overflow-y: auto;
         }
         
         .domain-item {
-            padding: 12px;
+            padding: 15px;
             border-bottom: 1px solid #f8f9fa;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            transition: all 0.3s;
+        }
+        
+        .domain-item:hover {
+            background: #f8f9fa;
         }
         
         .domain-name {
@@ -313,11 +254,11 @@
         }
         
         .domain-status {
-            padding: 6px 12px;
+            padding: 8px 16px;
             border-radius: 20px;
             font-size: 0.85rem;
             font-weight: 600;
-            min-width: 100px;
+            min-width: 120px;
             text-align: center;
         }
         
@@ -390,6 +331,7 @@
             border-radius: 10px;
             flex: 1;
             min-width: 150px;
+            text-align: center;
         }
         
         .stat-label {
@@ -406,7 +348,7 @@
         
         .monitor-log {
             margin-top: 15px;
-            max-height: 200px;
+            max-height: 300px;
             overflow-y: auto;
             background: white;
             padding: 15px;
@@ -416,38 +358,56 @@
         }
         
         .log-entry {
-            padding: 5px 0;
+            padding: 8px 0;
             border-bottom: 1px solid #f0f0f0;
-        }
-        
-        .schedule-controls {
-            background: #fff3e0;
-            padding: 20px;
-            border-radius: 12px;
-            margin: 20px 0;
-            border: 1px solid #ff9800;
-        }
-        
-        .schedule-buttons {
             display: flex;
+            align-items: center;
             gap: 10px;
-            margin: 15px 0;
-            flex-wrap: wrap;
         }
         
-        .schedule-btn {
-            padding: 10px 20px;
+        .log-time {
+            color: #6c757d;
+            font-size: 0.8rem;
+            min-width: 60px;
+        }
+        
+        .log-content {
+            flex: 1;
+        }
+        
+        .notification-history {
+            background: #fff8e1;
+            border: 1px solid #ffecb3;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .notification-item {
             background: white;
-            border: 2px solid #dee2e6;
+            padding: 15px;
+            margin-bottom: 10px;
             border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
+            border-left: 4px solid #f39c12;
         }
         
-        .schedule-btn.active {
-            background: #667eea;
-            color: white;
-            border-color: #667eea;
+        .notification-time {
+            font-size: 0.8rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .notification-domain {
+            font-weight: bold;
+            color: #e67e22;
+            margin-bottom: 5px;
+        }
+        
+        .notification-message {
+            font-size: 0.9rem;
+            color: #333;
         }
         
         footer {
@@ -477,79 +437,47 @@
             }
         }
         
-        /* 诊断信息样式 */
-        .diagnostic-info {
-            background: #e8f4fc;
-            border-left: 5px solid #007bff;
+        /* 统计面板 */
+        .stats-panel {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .stat-card {
+            background: white;
             padding: 20px;
-            margin: 25px 0;
-            border-radius: 12px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border-top: 4px solid #3498db;
         }
         
-        .diagnostic-info h4 {
-            color: #007bff;
-            margin-bottom: 15px;
-            font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        .stat-card.warning {
+            border-top-color: #f39c12;
         }
         
-        .diagnostic-list {
-            list-style-type: none;
-            padding-left: 0;
+        .stat-card.danger {
+            border-top-color: #e74c3c;
         }
         
-        .diagnostic-item {
-            padding: 10px 0;
-            border-bottom: 1px solid #cce5ff;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        .stat-card.success {
+            border-top-color: #2ecc71;
         }
         
-        .diagnostic-icon {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
+        .stat-number {
+            font-size: 2rem;
             font-weight: bold;
-            font-size: 0.8rem;
+            color: #2c3e50;
+            margin: 10px 0;
         }
         
-        .icon-success {
-            background: #28a745;
-        }
-        
-        .icon-warning {
-            background: #ffc107;
-        }
-        
-        .icon-error {
-            background: #dc3545;
-        }
-        
-        .icon-info {
-            background: #17a2b8;
-        }
-        
-        .diagnostic-details {
+        .stat-title {
             font-size: 0.9rem;
-            color: #495057;
-        }
-        
-        .diagnostic-action {
-            margin-left: auto;
-            padding: 5px 10px;
-            background: #007bff;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.8rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -559,16 +487,15 @@
     <div class="container">
         <header>
             <h1><i class="fas fa-tachometer-alt"></i> ITDOG网站测速监控系统</h1>
-            <p class="subtitle">GitHub Pages配置中心 | Telegram异常通知 | 定时测试</p>
+            <p class="subtitle">GitHub Pages配置中心 | Telegram异常通知 | 专业监控解决方案</p>
         </header>
         
         <div class="instructions">
             <h4><i class="fas fa-info-circle"></i> 系统说明</h4>
-            <p>1. 本系统通过Tampermonkey脚本自动监控网站连通率</p>
-            <p>2. 当连通率低于设定阈值时，自动发送Telegram通知</p>
-            <p>3. 支持定时自动测试（1小时、4小时、12小时、24小时）</p>
-            <p>4. 配置保存在GitHub Pages中，跨设备同步</p>
-            <p>5. 必须先配置Telegram信息才能使用通知功能</p>
+            <p>1. 本系统通过Tampermonkey脚本自动监控网站连通率，基于状态码200判断</p>
+            <p>2. 当连通率低于90%时，自动发送专业的Telegram通知</p>
+            <p>3. 支持批量测试和定时测试功能</p>
+            <p>4. 必须先配置Telegram信息才能使用通知功能</p>
         </div>
         
         <!-- Telegram配置 -->
@@ -589,7 +516,7 @@
                 <button class="btn btn-telegram" id="save-config-btn">
                     <i class="fas fa-save btn-icon"></i> 保存配置
                 </button>
-                <button class="btn btn-success" id="test-config-btn">
+                <button class="btn btn-warning" id="test-config-btn">
                     <i class="fas fa-paper-plane btn-icon"></i> 测试通知
                 </button>
                 <button class="btn btn-telegram" id="get-chat-id-btn">
@@ -603,49 +530,23 @@
             <div id="config-status" class="status-message"></div>
         </div>
         
-        <!-- 定时测试配置 -->
-        <div class="schedule-controls">
-            <h4><i class="fas fa-clock"></i> 定时测试配置</h4>
-            
-            <div class="input-group">
-                <label>测试频率</label>
-                <div class="schedule-buttons">
-                    <button class="schedule-btn active" data-minutes="60">1小时</button>
-                    <button class="schedule-btn" data-minutes="240">4小时</button>
-                    <button class="schedule-btn" data-minutes="720">12小时</button>
-                    <button class="schedule-btn" data-minutes="1440">24小时</button>
-                </div>
-                <div style="margin-top: 10px;">
-                    <input type="number" id="custom-interval" placeholder="自定义分钟数" style="width: 150px;">
-                    <span style="margin-left: 10px; color: #666;">分钟</span>
-                </div>
+        <!-- 统计面板 -->
+        <div class="stats-panel" id="stats-panel">
+            <div class="stat-card">
+                <div class="stat-title">今日测试</div>
+                <div class="stat-number" id="today-tests">0</div>
             </div>
-            
-            <div class="buttons">
-                <button class="btn btn-success" id="start-schedule-btn">
-                    <i class="fas fa-play btn-icon"></i> 启动定时测试
-                </button>
-                <button class="btn btn-secondary" id="stop-schedule-btn" style="display: none;">
-                    <i class="fas fa-stop btn-icon"></i> 停止定时
-                </button>
+            <div class="stat-card warning">
+                <div class="stat-title">异常网站</div>
+                <div class="stat-number" id="error-sites">0</div>
             </div>
-            
-            <div class="timer-status" style="margin-top: 20px; padding: 15px; background: white; border-radius: 8px; display: none;">
-                <h5 style="margin-bottom: 10px;">定时状态</h5>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px;">
-                    <div>
-                        <div style="font-size: 0.8rem; color: #666;">状态</div>
-                        <div style="font-weight: bold;" id="schedule-status">运行中</div>
-                    </div>
-                    <div>
-                        <div style="font-size: 0.8rem; color: #666;">下次测试</div>
-                        <div style="font-weight: bold;" id="next-test-time">--:--</div>
-                    </div>
-                    <div>
-                        <div style="font-size: 0.8rem; color: #666;">运行次数</div>
-                        <div style="font-weight: bold;" id="test-count">0</div>
-                    </div>
-                </div>
+            <div class="stat-card success">
+                <div class="stat-title">正常网站</div>
+                <div class="stat-number" id="success-sites">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-title">发送通知</div>
+                <div class="stat-number" id="sent-notifications">0</div>
             </div>
         </div>
         
@@ -654,13 +555,14 @@
             <h4><i class="fas fa-globe"></i> 批量网站测试</h4>
             
             <div class="input-group">
-                <label for="domains">要测试的网站地址（每行一个）</label>
-                <textarea id="domains" placeholder="https://www.example.com&#10;www.google.com&#10;github.com"></textarea>
+                <label for="domains">要测试的网站地址（每行一个，无需添加http://）</label>
+                <textarea id="domains" placeholder="example.com&#10;google.com&#10;github.com"></textarea>
                 <div class="example">
-                    <strong>示例：</strong><br>
-                    https://www.alibabacloud.com<br>
-                    www.dynadot.com<br>
-                    itdog.cn
+                    <strong>示例格式：</strong><br>
+                    alibabacloud.com<br>
+                    dynadot.com<br>
+                    itdog.cn<br>
+                    baidu.com
                 </div>
             </div>
             
@@ -671,14 +573,14 @@
                 <button class="btn btn-secondary" id="clear-domains-btn">
                     <i class="fas fa-redo btn-icon"></i> 清空列表
                 </button>
-                <button class="btn btn-secondary" id="manual-test-btn">
-                    <i class="fas fa-play-circle btn-icon"></i> 手动测试一次
+                <button class="btn btn-warning" id="test-selected-btn">
+                    <i class="fas fa-bolt btn-icon"></i> 测试选中域名
                 </button>
             </div>
             
             <!-- 域名列表 -->
             <div class="domain-list" id="domain-list" style="display: none;">
-                <h5 style="margin-bottom: 15px;">测试队列</h5>
+                <h5 style="margin-bottom: 15px; color: #495057;">测试队列</h5>
                 <div id="domains-container"></div>
             </div>
             
@@ -697,6 +599,10 @@
                         <div class="stat-label">待测试</div>
                         <div class="stat-value" id="pending-count">0</div>
                     </div>
+                    <div class="stat-item">
+                        <div class="stat-label">异常</div>
+                        <div class="stat-value" id="error-count">0</div>
+                    </div>
                 </div>
                 
                 <div class="progress-container">
@@ -710,899 +616,42 @@
                 </div>
                 
                 <div class="buttons">
-                    <button class="btn btn-success" id="pause-btn">
-                        <i class="fas fa-pause btn-icon"></i> 暂停
+                    <button class="btn btn-warning" id="pause-btn">
+                        <i class="fas fa-pause btn-icon"></i> 暂停测试
                     </button>
                     <button class="btn btn-secondary" id="stop-btn">
-                        <i class="fas fa-stop btn-icon"></i> 停止
+                        <i class="fas fa-stop btn-icon"></i> 停止全部
                     </button>
                 </div>
             </div>
-            
-            <!-- 监控日志 -->
-            <div class="monitor-log" id="monitor-log" style="display: none;">
-                <div class="log-entry">等待开始测试...</div>
-            </div>
         </div>
         
-        <!-- 诊断信息 -->
-        <div class="diagnostic-info" id="diagnostic-section">
-            <h4><i class="fas fa-stethoscope"></i> Tampermonkey脚本诊断</h4>
-            <ul class="diagnostic-list" id="diagnostic-list">
-                <li class="diagnostic-item">
-                    <div class="diagnostic-icon icon-info">1</div>
-                    <div class="diagnostic-details">检查Tampermonkey扩展是否安装...</div>
-                </li>
-                <li class="diagnostic-item">
-                    <div class="diagnostic-icon icon-info">2</div>
-                    <div class="diagnostic-details">检查脚本是否正确安装...</div>
-                </li>
-                <li class="diagnostic-item">
-                    <div class="diagnostic-icon icon-info">3</div>
-                    <div class="diagnostic-details">验证Telegram配置是否正确...</div>
-                </li>
-                <li class="diagnostic-item">
-                    <div class="diagnostic-icon icon-info">4</div>
-                    <div class="diagnostic-details">测试脚本通信功能...</div>
-                </li>
-            </ul>
-            <div style="margin-top: 15px;">
-                <button class="btn btn-telegram" id="run-diagnostic-btn">
-                    <i class="fas fa-search btn-icon"></i> 运行诊断
-                </button>
-            </div>
-        </div>
-        
-        <!-- Tampermonkey脚本 -->
-        <div class="script-section" id="script-section">
-            <button class="script-toggle" id="script-toggle">
-                <i class="fas fa-eye-slash"></i> 隐藏脚本
-            </button>
-            
-            <h4><i class="fas fa-robot"></i> Tampermonkey脚本安装</h4>
-            <p><strong>重要：必须安装此脚本才能自动监控并发送Telegram通知！</strong></p>
-            
-            <button class="copy-btn" id="copy-script-btn">
-                <i class="fas fa-copy"></i> 复制Tampermonkey脚本
-            </button>
-            
-            <div class="script-code" id="script-code">
-// ==UserScript==
-// @name         ITDOG网站测速监控 - 完整功能版
-// @namespace    http://tampermonkey.net/
-// @version      4.0
-// @description  自动提取域名、取消港澳台选项、点击开始测试、监控连通率并发送Telegram通知
-// @author       ITDOG监控系统
-// @match        https://www.itdog.cn/http/*
-// @run-at       document-idle
-// @grant        GM_xmlhttpRequest
-// @grant        GM_setValue
-// @grant        GM_getValue
-// @grant        GM_addStyle
-// @connect      api.telegram.org
-// @connect      *
-// ==/UserScript==
-
-(function() {
-    'use strict';
-
-    console.log('🚀 ITDOG监控脚本启动 - 完整功能版 v4.0');
-
-    // 配置
-    const CONFIG = {
-        maxChecks: 50,
-        checkInterval: 1500,
-        minSuccessRate: 90,
-        autoCloseTimeout: 5 * 60 * 1000 // 5分钟后关闭
-    };
-
-    // 存储配置的键名
-    const CONFIG_KEY = 'itdog_telegram_config';
-    
-    // 获取存储的Telegram配置
-    function getStoredConfig() {
-        try {
-            const configStr = GM_getValue(CONFIG_KEY);
-            if (configStr) {
-                return JSON.parse(configStr);
-            }
-        } catch (error) {
-            console.log('读取存储配置失败:', error);
-        }
-        return null;
-    }
-    
-    // 保存配置到存储
-    function saveConfig(config) {
-        try {
-            GM_setValue(CONFIG_KEY, JSON.stringify(config));
-            return true;
-        } catch (error) {
-            console.log('保存配置失败:', error);
-            return false;
-        }
-    }
-
-    // 获取Telegram配置（从存储或opener）
-    async function getTelegramConfig() {
-        console.log('🔍 获取Telegram配置...');
-        
-        // 首先检查存储的配置
-        const storedConfig = getStoredConfig();
-        if (storedConfig && storedConfig.botToken && storedConfig.chatId) {
-            console.log('✅ 从本地存储读取配置');
-            return storedConfig;
-        }
-        
-        // 如果没有存储的配置，尝试从opener获取
-        return new Promise((resolve) => {
-            try {
-                if (window.opener && !window.opener.closed) {
-                    console.log('尝试从主页面获取配置...');
-                    window.opener.postMessage({ type: 'REQUEST_TELEGRAM_CONFIG' }, '*');
-                    
-                    const messageHandler = function(event) {
-                        if (event.data.type === 'TELEGRAM_CONFIG') {
-                            window.removeEventListener('message', messageHandler);
-                            console.log('✅ 从主页面获取配置成功');
-                            
-                            // 保存到本地存储
-                            if (event.data.config) {
-                                saveConfig(event.data.config);
-                            }
-                            
-                            resolve(event.data.config);
-                        }
-                    };
-                    
-                    window.addEventListener('message', messageHandler);
-                    
-                    // 3秒超时
-                    setTimeout(() => {
-                        window.removeEventListener('message', messageHandler);
-                        console.log('获取配置超时');
-                        resolve(null);
-                    }, 3000);
-                } else {
-                    console.log('无法访问opener');
-                    resolve(null);
-                }
-            } catch (error) {
-                console.log('获取配置失败:', error);
-                resolve(null);
-            }
-        });
-    }
-
-    // 发送Telegram通知
-    async function sendToTelegram(domain, connectivityRate, testResults) {
-        try {
-            console.log('📤 准备发送Telegram通知...');
-            
-            const config = await getTelegramConfig();
-            
-            if (!config || !config.botToken || !config.chatId) {
-                console.log('❌ Telegram配置无效，无法发送通知');
-                showErrorMessage('Telegram配置无效，请检查配置页面');
-                return false;
-            }
-            
-            const { botToken, chatId } = config;
-            
-            const now = new Date();
-            const currentTime = now.toLocaleString('zh-CN', {
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit',
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit',
-                hour12: false
-            }).replace(/\//g, '-');
-
-            // 计算统计
-            const totalTests = testResults.totalTests || 140;
-            const successTests = testResults.success200Tests || Math.round(totalTests * (connectivityRate / 100));
-            const errorCount = totalTests - successTests;
-            const successRate = connectivityRate.toFixed(2);
-            
-            // 构建消息
-            let message = `🔔 ITDOG监控告警\\n\\n`;
-            message += `⚠️ 问题域名: ${domain}\\n`;
-            message += `🕒 检测时间: ${currentTime}\\n`;
-            message += `📊 总测试节点: ${totalTests}\\n`;
-            message += `❌ 异常节点: ${errorCount}\\n`;
-            message += `✅ 可访问率: ${successRate}%\\n\\n`;
-
-            // 地区列表
-            const regions = [
-                '浙江-杭州-联通', '广东-东莞-电信', '海南-海口-电信',
-                '广东-佛山-电信', '福建-龙岩-电信', '四川-眉山-联通',
-                '四川-成都-联通', '浙江-宁波-电信', '甘肃-兰州-联通',
-                '广东-广州-移动', '上海-上海-电信', '浙江-温州-电信',
-                '湖北-十堰-电信', '北京-北京-电信', '山东-济南-联通',
-                '陕西-咸阳-联通', '浙江-杭州-移动', '浙江-宁波-移动',
-                '广东-深圳-电信', '江西-南昌-移动', '湖北-武汉-联通',
-                '广东-深圳-移动', '广西-桂林-联通', '江苏-南京-移动',
-                '江西-南昌-电信', '山东-泰安-联通', '青海-西宁-电信',
-                '河南-洛阳-电信', '山东-淄博-联通', '云南-昆明-联通'
-            ];
-
-            // 生成异常详情
-            const maxErrors = Math.min(errorCount, 10);
-            for (let i = 0; i < maxErrors; i++) {
-                const region = regions[i % regions.length];
-                message += `⚡ ${region} | 访问异常\\n`;
-            }
-
-            if (errorCount > 10) {
-                message += `\\n...还有 ${errorCount - 10} 个异常节点\\n`;
-            }
-            
-            message += `\\n可访问率低于${CONFIG.minSuccessRate}%，请及时处理！`;
-
-            // 发送请求
-            return new Promise((resolve) => {
-                GM_xmlhttpRequest({
-                    method: 'POST',
-                    url: `https://api.telegram.org/bot${botToken}/sendMessage`,
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    data: JSON.stringify({
-                        chat_id: chatId,
-                        text: message,
-                        parse_mode: 'Markdown',
-                        disable_web_page_preview: true
-                    }),
-                    timeout: 10000,
-                    onload: function(response) {
-                        try {
-                            const data = JSON.parse(response.responseText);
-                            if (data.ok) {
-                                console.log('✅ Telegram通知发送成功！');
-                                showSuccessMessage(domain, connectivityRate);
-                                resolve(true);
-                            } else {
-                                console.log('❌ Telegram发送失败:', data.description);
-                                showErrorMessage('Telegram发送失败: ' + data.description);
-                                resolve(false);
-                            }
-                        } catch (e) {
-                            console.log('❌ 解析响应失败:', e);
-                            showErrorMessage('解析响应失败');
-                            resolve(false);
-                        }
-                    },
-                    onerror: function(error) {
-                        console.log('❌ 网络请求失败:', error);
-                        showErrorMessage('网络请求失败');
-                        resolve(false);
-                    },
-                    ontimeout: function() {
-                        console.log('❌ 请求超时');
-                        showErrorMessage('请求超时');
-                        resolve(false);
-                    }
-                });
-            });
-
-        } catch (error) {
-            console.log('❌ 发送Telegram失败:', error);
-            showErrorMessage('发送过程出错: ' + error.message);
-            return false;
-        }
-    }
-
-    // 显示成功消息
-    function showSuccessMessage(domain, rate) {
-        const div = document.createElement('div');
-        div.style.cssText = `
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
-            color: white;
-            padding: 15px 20px;
-            border-radius: 10px;
-            z-index: 999999;
-            font-size: 14px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            font-family: 'Segoe UI', sans-serif;
-            max-width: 300px;
-            animation: slideIn 0.5s ease-out;
-        `;
-        div.innerHTML = `
-            <div style="font-weight: bold; margin-bottom: 10px;">✅ Telegram通知已发送</div>
-            <div>域名: <strong>${domain}</strong></div>
-            <div>连通率: <strong>${rate}%</strong></div>
-        `;
-        document.body.appendChild(div);
-        
-        setTimeout(() => {
-            if (div.parentNode) div.parentNode.removeChild(div);
-        }, 5000);
-    }
-
-    // 显示错误消息
-    function showErrorMessage(message) {
-        const div = document.createElement('div');
-        div.style.cssText = `
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
-            color: white;
-            padding: 15px 20px;
-            border-radius: 10px;
-            z-index: 999999;
-            font-size: 14px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            font-family: 'Segoe UI', sans-serif;
-            max-width: 300px;
-            animation: slideIn 0.5s ease-out;
-        `;
-        div.innerHTML = `
-            <div style="font-weight: bold; margin-bottom: 10px;">❌ 发送失败</div>
-            <div>${message}</div>
-        `;
-        document.body.appendChild(div);
-        
-        setTimeout(() => {
-            if (div.parentNode) div.parentNode.removeChild(div);
-        }, 5000);
-    }
-
-    // 获取域名参数
-    function getDomainFromURL() {
-        try {
-            const urlParams = new URLSearchParams(window.location.search);
-            const domain = urlParams.get('domain');
-            if (!domain) {
-                console.log('未找到域名参数');
-                return null;
-            }
-            return decodeURIComponent(domain);
-        } catch (error) {
-            console.log('获取域名参数失败:', error);
-            return null;
-        }
-    }
-
-    // 查找并填充域名输入框
-    function findAndFillInput(domain) {
-        console.log('🔍 查找输入框并填充域名:', domain);
-
-        const findInput = setInterval(() => {
-            const inputs = document.querySelectorAll('input[type="text"], textarea, input[type="url"]');
-            for (const input of inputs) {
-                if (input.offsetParent !== null && 
-                   (input.placeholder?.toLowerCase().includes('域名') || 
-                    input.placeholder?.toLowerCase().includes('host') ||
-                    input.name?.toLowerCase().includes('host') ||
-                    input.name?.toLowerCase().includes('domain') ||
-                    input.id?.toLowerCase().includes('host') ||
-                    input.id?.toLowerCase().includes('domain'))) {
-                    
-                    clearInterval(findInput);
-                    
-                    // 填充域名
-                    input.value = domain;
-                    input.dispatchEvent(new Event('input', { bubbles: true }));
-                    input.dispatchEvent(new Event('change', { bubbles: true }));
-                    
-                    console.log('✅ 域名已填充到输入框:', input);
-                    
-                    // 显示脚本标识
-                    showScriptIdentifier(domain);
-                    
-                    // 取消"港澳台，海外"选项
-                    setTimeout(() => {
-                        uncheckHongKongMacaoTaiwan();
-                    }, 500);
-                    
-                    // 开始测试
-                    setTimeout(() => {
-                        startTest();
-                    }, 1000);
-                    
-                    return;
-                }
-            }
-            
-            // 如果找不到，尝试更通用的方法
-            if (document.activeElement && document.activeElement.tagName === 'INPUT') {
-                clearInterval(findInput);
-                document.activeElement.value = domain;
-                console.log('✅ 域名已填充到当前焦点输入框');
-                
-                showScriptIdentifier(domain);
-                setTimeout(() => {
-                    uncheckHongKongMacaoTaiwan();
-                    setTimeout(() => startTest(), 500);
-                }, 500);
-            }
-            
-        }, 500);
-    }
-
-    // 取消"港澳台，海外"选项
-    function uncheckHongKongMacaoTaiwan() {
-        console.log('🔍 查找并取消"港澳台，海外"选项...');
-        
-        let found = false;
-        
-        // 查找所有复选框
-        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-        checkboxes.forEach(checkbox => {
-            // 获取周围的文本内容
-            const parentText = checkbox.parentElement?.textContent || '';
-            const label = document.querySelector(`label[for="${checkbox.id}"]`);
-            const labelText = label ? label.textContent : '';
-            
-            const allText = (parentText + labelText).toLowerCase();
-            
-            // 检查是否包含目标关键词
-            const targetKeywords = ['港澳台', '香港', '澳门', '台湾', '海外', '国外', '国际'];
-            
-            for (const keyword of targetKeywords) {
-                if (allText.includes(keyword)) {
-                    if (checkbox.checked) {
-                        console.log(`✅ 找到并取消勾选: ${keyword}`);
-                        checkbox.click();
-                        found = true;
-                    }
-                    break;
-                }
-            }
-        });
-        
-        if (!found) {
-            console.log('⚠️ 未找到"港澳台，海外"选项，可能页面结构已变化');
-        }
-        
-        return found;
-    }
-
-    // 开始测试
-    function startTest() {
-        console.log('🔍 查找测试按钮...');
-        
-        const findTestButton = () => {
-            // 查找所有可能的按钮
-            const buttons = document.querySelectorAll('button, .btn, .ant-btn, .el-button, input[type="button"], input[type="submit"]');
-            
-            for (const button of buttons) {
-                const text = (button.textContent || '').toLowerCase();
-                const html = (button.innerHTML || '').toLowerCase();
-                const value = (button.value || '').toLowerCase();
-                
-                // 检查是否是测试按钮
-                const isTestButton = 
-                    text.includes('测试') || 
-                    text.includes('test') ||
-                    text.includes('开始') ||
-                    text.includes('检测') ||
-                    text.includes('测速') ||
-                    html.includes('测试') ||
-                    html.includes('test') ||
-                    value.includes('测试') ||
-                    value.includes('test');
-                
-                if (isTestButton && !button.disabled && button.offsetParent !== null) {
-                    console.log('✅ 找到测试按钮，点击:', button);
-                    button.click();
-                    return true;
-                }
-            }
-            
-            // 尝试查找包含特定类的按钮
-            const btnByClass = document.querySelectorAll('[class*="test"], [class*="start"], [class*="btn-start"]');
-            for (const button of btnByClass) {
-                if (button.tagName === 'BUTTON' || button.tagName === 'INPUT') {
-                    console.log('✅ 通过类名找到按钮，点击:', button);
-                    button.click();
-                    return true;
-                }
-            }
-            
-            return false;
-        };
-        
-        // 尝试多次查找
-        let attempts = 0;
-        const buttonInterval = setInterval(() => {
-            attempts++;
-            if (findTestButton()) {
-                clearInterval(buttonInterval);
-                console.log('✅ 已开始测试');
-                
-                // 开始监控测试结果
-                setTimeout(() => {
-                    monitorTestResults();
-                }, 3000);
-            } else if (attempts >= 20) {
-                clearInterval(buttonInterval);
-                console.log('❌ 未找到测试按钮，请手动点击开始测试');
-                showManualOperationPrompt();
-            }
-        }, 1000);
-    }
-
-    // 显示手动操作提示
-    function showManualOperationPrompt() {
-        const domain = getDomainFromURL();
-        if (!domain) return;
-        
-        const prompt = document.createElement('div');
-        prompt.style.cssText = `
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
-            color: white;
-            padding: 25px;
-            border-radius: 15px;
-            z-index: 999999;
-            font-size: 16px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            text-align: center;
-            max-width: 500px;
-            width: 90%;
-        `;
-        prompt.innerHTML = `
-            <div style="font-weight: bold; margin-bottom: 15px; font-size: 18px;">⚠️ 自动操作失败</div>
-            <div style="margin-bottom: 20px;">请手动执行以下操作：</div>
-            <div style="text-align: left; margin-bottom: 20px; background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px;">
-                <div style="margin-bottom: 10px;">1. 在输入框中粘贴域名: <strong style="color: #fff; background: rgba(0,0,0,0.2); padding: 2px 6px; border-radius: 4px;">${domain}</strong></div>
-                <div style="margin-bottom: 10px;">2. <strong>取消勾选"港澳台，海外"选项</strong></div>
-                <div style="margin-bottom: 10px;">3. 点击"开始测试"按钮</div>
-            </div>
-            <div style="font-size: 14px; opacity: 0.9;">脚本将继续监控测试结果并自动发送通知</div>
-        `;
-        document.body.appendChild(prompt);
-        
-        // 添加关闭按钮
-        const closeBtn = document.createElement('button');
-        closeBtn.textContent = '知道了';
-        closeBtn.style.cssText = `
-            margin-top: 20px;
-            padding: 10px 20px;
-            background: white;
-            color: #e67e22;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-        `;
-        closeBtn.onclick = () => prompt.remove();
-        prompt.appendChild(closeBtn);
-    }
-
-    // 显示脚本标识
-    function showScriptIdentifier(domain) {
-        // 移除旧的标识
-        const oldId = document.getElementById('itdog-script-identifier');
-        if (oldId) oldId.remove();
-        
-        const identifier = document.createElement('div');
-        identifier.id = 'itdog-script-identifier';
-        identifier.style.cssText = `
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 8px 12px;
-            border-radius: 8px;
-            z-index: 999999;
-            font-size: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            font-family: 'Segoe UI', sans-serif;
-            max-width: 250px;
-            border: 2px solid white;
-        `;
-        identifier.innerHTML = `
-            <div style="display: flex; align-items: center; gap: 8px;">
-                <span style="font-size: 14px;">🤖</span>
-                <div>
-                    <div style="font-weight: bold; font-size: 11px;">ITDOG监控脚本 v4.0</div>
-                    <div style="font-size: 10px; opacity: 0.9;">正在监控: ${domain.substring(0, 30)}${domain.length > 30 ? '...' : ''}</div>
+        <!-- 监控日志 -->
+        <div class="test-controls" style="margin-top: 30px;">
+            <h4><i class="fas fa-clipboard-list"></i> 监控日志</h4>
+            <div class="monitor-log" id="monitor-log">
+                <div class="log-entry">
+                    <span class="log-time">就绪</span>
+                    <span class="log-content">系统已就绪，等待开始测试...</span>
                 </div>
             </div>
-        `;
-        document.body.appendChild(identifier);
-    }
-
-    // 提取连通率数据
-    function extractConnectivityData() {
-        console.log('📊 提取连通率数据...');
-
-        let totalTests = 0;
-        let success200Tests = 0;
-        let otherStatusCodes = [];
-        let connectivityRate = null;
-
-        try {
-            // 方法1: 查找百分比显示
-            const percentElements = document.querySelectorAll('*');
-            for (const element of percentElements) {
-                const text = element.textContent.trim();
-                if (text.includes('%') && text.includes('连通率')) {
-                    const match = text.match(/(\d+(\.\d+)?)%/);
-                    if (match) {
-                        connectivityRate = parseFloat(match[1]);
-                        console.log('✅ 从文本找到连通率:', connectivityRate + '%');
-                        break;
-                    }
-                }
-            }
-            
-            // 方法2: 查找状态码表格
-            if (connectivityRate === null) {
-                const tables = document.querySelectorAll('table');
-                for (const table of tables) {
-                    const rows = table.querySelectorAll('tr');
-                    for (const row of rows) {
-                        const cells = row.querySelectorAll('td, th');
-                        for (const cell of cells) {
-                            const text = cell.textContent;
-                            // 查找状态码
-                            const statusMatch = text.match(/\b(\d{3})\b/);
-                            if (statusMatch) {
-                                const code = parseInt(statusMatch[1]);
-                                totalTests++;
-                                if (code === 200) {
-                                    success200Tests++;
-                                } else {
-                                    otherStatusCodes.push(code);
-                                }
-                            }
-                        }
-                    }
-                }
-                
-                if (totalTests > 0) {
-                    connectivityRate = Math.round((success200Tests / totalTests) * 100);
-                    console.log(`表格统计: 200=${success200Tests}, 其他=${otherStatusCodes.length}, 总计=${totalTests}, 连通率=${connectivityRate}%`);
-                }
-            }
-            
-            // 方法3: 查找所有状态码
-            if (totalTests === 0) {
-                const allText = document.body.textContent;
-                const statusCodePattern = /\b(\d{3})\b/g;
-                let match;
-                
-                while ((match = statusCodePattern.exec(allText)) !== null) {
-                    const code = parseInt(match[1]);
-                    if (code >= 100 && code <= 599) {
-                        totalTests++;
-                        if (code === 200) {
-                            success200Tests++;
-                        } else {
-                            otherStatusCodes.push(code);
-                        }
-                    }
-                }
-                
-                if (totalTests > 0) {
-                    connectivityRate = Math.round((success200Tests / totalTests) * 100);
-                    console.log(`正则统计: 200=${success200Tests}, 其他=${otherStatusCodes.length}, 总计=${totalTests}, 连通率=${connectivityRate}%`);
-                }
-            }
-
-        } catch (error) {
-            console.log('提取连通率数据出错:', error);
-        }
-
-        return {
-            rate: connectivityRate,
-            success200Tests: success200Tests,
-            totalTests: totalTests,
-            otherStatusCodes: otherStatusCodes,
-            isLowRate: connectivityRate !== null && connectivityRate < CONFIG.minSuccessRate
-        };
-    }
-
-    // 监控测试结果
-    async function monitorTestResults() {
-        console.log('🔍 开始监控测试结果...');
+        </div>
         
-        const domain = getDomainFromURL();
-        if (!domain) return;
-        
-        let checkCount = 0;
-        let hasSentData = false;
-        
-        const intervalId = setInterval(async () => {
-            checkCount++;
-            
-            const data = extractConnectivityData();
-            let { rate, success200Tests, totalTests, otherStatusCodes, isLowRate } = data;
-            
-            console.log(`监控进度 ${checkCount}/${CONFIG.maxChecks}:`, data);
-            
-            if (totalTests > 0 && rate !== null && !hasSentData) {
-                clearInterval(intervalId);
-                
-                console.log('📊 测试完成:', data);
-                
-                // 发送结果到主页面
-                try {
-                    if (window.opener && !window.opener.closed) {
-                        window.opener.postMessage({
-                            type: 'ITDOG_TEST_RESULT',
-                            domain: domain,
-                            rate: rate,
-                            data: data,
-                            timestamp: new Date().toISOString()
-                        }, '*');
-                        console.log('✅ 结果已发送到主页面');
-                    }
-                } catch (e) {
-                    console.log('发送结果到主页面失败:', e);
-                }
-                
-                // 如果是低连通率，发送Telegram通知
-                if (isLowRate) {
-                    console.log(`📤 连通率${rate}%低于${CONFIG.minSuccessRate}%，发送Telegram通知`);
-                    await sendToTelegram(domain, rate, data);
-                } else {
-                    console.log(`✅ 连通率${rate}%正常，无需发送通知`);
-                }
-                
-                hasSentData = true;
-                
-                // 显示完成提示
-                showCompletionMessage(domain, rate, data);
-                
-                // 5分钟后关闭标签页
-                setTimeout(() => {
-                    console.log('⏰ 5分钟超时，关闭标签页');
-                    window.close();
-                }, CONFIG.autoCloseTimeout);
-            }
-            
-            if (checkCount >= CONFIG.maxChecks && !hasSentData) {
-                clearInterval(intervalId);
-                console.log('❌ 监控超时');
-                
-                // 超时也发送通知
-                await sendToTelegram(domain, 0, {
-                    totalTests: 0,
-                    success200Tests: 0,
-                    errorMessage: '测试超时'
-                });
-                
-                setTimeout(() => {
-                    window.close();
-                }, 10000);
-            }
-            
-        }, CONFIG.checkInterval);
-    }
-
-    // 显示完成提示
-    function showCompletionMessage(domain, rate, testResults) {
-        const div = document.createElement('div');
-        div.style.cssText = `
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(0,0,0,0.9);
-            color: white;
-            padding: 25px;
-            border-radius: 15px;
-            z-index: 1000000;
-            text-align: center;
-            min-width: 350px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            animation: fadeInScale 0.5s ease-out;
-        `;
-        
-        let statusText = '测试完成';
-        let statusIcon = '✅';
-        let messageColor = '#2ecc71';
-        
-        if (rate < CONFIG.minSuccessRate) {
-            statusText = '连通率低';
-            statusIcon = '⚠️';
-            messageColor = '#f39c12';
-        }
-        
-        div.innerHTML = `
-            <div style="font-size: 36px; margin-bottom: 15px;">${statusIcon}</div>
-            <div style="font-weight: bold; font-size: 18px; margin-bottom: 10px;">${statusText}</div>
-            <div style="margin-bottom: 5px; font-size: 14px; word-break: break-all;">${domain}</div>
-            <div style="margin-bottom: 15px; font-size: 28px; font-weight: bold; color: ${messageColor}">
-                连通率: ${rate}%
-            </div>
-            <div style="margin-bottom: 10px; font-size: 12px; opacity: 0.8;">
-                状态码200: ${testResults.success200Tests}/${testResults.totalTests}
-            </div>
-            <div style="font-size: 12px; opacity: 0.8;">5分钟后自动关闭</div>
-        `;
-        document.body.appendChild(div);
-    }
-
-    // 主函数
-    function main() {
-        const domain = getDomainFromURL();
-        if (!domain) {
-            console.log('❌ 未找到域名参数');
-            showErrorMessage('未找到域名参数');
-            return;
-        }
-        
-        console.log('🎯 开始处理域名:', domain);
-        
-        // 显示脚本标识
-        showScriptIdentifier(domain);
-        
-        // 显示欢迎消息
-        const welcome = document.createElement('div');
-        welcome.style.cssText = `
-            position: fixed;
-            top: 60px;
-            right: 10px;
-            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
-            color: white;
-            padding: 10px 15px;
-            border-radius: 8px;
-            z-index: 999999;
-            font-size: 12px;
-            font-family: 'Segoe UI', sans-serif;
-            max-width: 300px;
-            animation: slideIn 0.5s ease-out;
-        `;
-        welcome.innerHTML = `
-            <div style="font-weight: bold;">ITDOG监控脚本已启动</div>
-            <div>正在处理: ${domain}</div>
-        `;
-        document.body.appendChild(welcome);
-        
-        setTimeout(() => welcome.remove(), 3000);
-        
-        // 填充域名
-        setTimeout(() => {
-            findAndFillInput(domain);
-        }, 1000);
-    }
-
-    // 添加CSS动画
-    GM_addStyle(`
-        @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-        @keyframes fadeInScale {
-            from { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
-            to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-        }
-    `);
-
-    // 启动脚本
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', main);
-    } else {
-        setTimeout(main, 1000);
-    }
-})();
-            </div>
+        <!-- 通知历史 -->
+        <div class="notification-history" id="notification-history" style="display: none;">
+            <h5><i class="fas fa-bell"></i> 通知历史记录</h5>
+            <div id="notifications-container"></div>
         </div>
         
         <footer>
-            <p>GitHub Pages配置中心 | © 2026 ITDOG网站测速监控系统 | 完整功能版 | 仅供学习使用</p>
+            <p>ITDOG网站测速监控系统 v6.0 | © 2026 GitHub Pages配置中心 | 专业网站监控解决方案</p>
             <p>在使用前请确保已安装 <a href="https://www.tampermonkey.net/" target="_blank" style="color: white; text-decoration: underline;">Tampermonkey</a> 扩展</p>
         </footer>
     </div>
 
-<script>
+    <script>
         // ============================================
-        // GitHub Pages配置中心 - JavaScript代码
+        // ITDOG监控系统 - 主页面JavaScript代码
         // ============================================
         document.addEventListener('DOMContentLoaded', function() {
             // 元素引用
@@ -1617,58 +666,52 @@
                 domains: document.getElementById('domains'),
                 startTestBtn: document.getElementById('start-test-btn'),
                 clearDomainsBtn: document.getElementById('clear-domains-btn'),
-                manualTestBtn: document.getElementById('manual-test-btn'),
+                testSelectedBtn: document.getElementById('test-selected-btn'),
                 domainList: document.getElementById('domain-list'),
                 domainsContainer: document.getElementById('domains-container'),
                 testControls: document.getElementById('test-controls'),
                 monitorLog: document.getElementById('monitor-log'),
-                copyScriptBtn: document.getElementById('copy-script-btn'),
-                scriptCode: document.getElementById('script-code'),
-                scriptSection: document.getElementById('script-section'),
-                scriptToggle: document.getElementById('script-toggle'),
-                
-                // 诊断相关
-                diagnosticList: document.getElementById('diagnostic-list'),
-                runDiagnosticBtn: document.getElementById('run-diagnostic-btn'),
-                
-                // 定时测试
-                startScheduleBtn: document.getElementById('start-schedule-btn'),
-                stopScheduleBtn: document.getElementById('stop-schedule-btn'),
-                scheduleStatus: document.getElementById('schedule-status'),
-                nextTestTime: document.getElementById('next-test-time'),
-                testCount: document.getElementById('test-count'),
-                
-                // 测试控制
                 pauseBtn: document.getElementById('pause-btn'),
                 stopBtn: document.getElementById('stop-btn'),
                 testedCount: document.getElementById('tested-count'),
                 activeCount: document.getElementById('active-count'),
                 pendingCount: document.getElementById('pending-count'),
+                errorCount: document.getElementById('error-count'),
                 progressText: document.getElementById('progress-text'),
-                progressBar: document.getElementById('progress-bar')
+                progressBar: document.getElementById('progress-bar'),
+                notificationHistory: document.getElementById('notification-history'),
+                notificationsContainer: document.getElementById('notifications-container'),
+                // 统计元素
+                todayTests: document.getElementById('today-tests'),
+                errorSites: document.getElementById('error-sites'),
+                successSites: document.getElementById('success-sites'),
+                sentNotifications: document.getElementById('sent-notifications')
             };
 
             // 状态变量
             let telegramConfig = null;
             let domainArray = [];
+            let domainStatus = {};
             let currentIndex = 0;
             let isTesting = false;
             let isPaused = false;
-            let activeTabs = 0;
-            let openedTabs = [];
-            let batchSize = 3;
-            let testInterval = 5000;
+            let activeTabs = new Map(); // 使用Map存储打开的标签页
+            let batchSize = 2; // 同时打开的标签页数量
+            let testDelay = 3000; // 标签页间打开延迟
             
-            // 定时测试变量
-            let scheduleRunning = false;
-            let scheduleInterval = 60 * 60 * 1000; // 默认1小时
-            let scheduleTimer = null;
-            let testCycleCount = 0;
-            let nextTestTimestamp = null;
+            // 统计变量
+            let stats = {
+                todayTests: 0,
+                errorSites: 0,
+                successSites: 0,
+                sentNotifications: 0,
+                lastReset: new Date().toDateString()
+            };
 
-            // 加载配置
+            // 加载配置和状态
             function loadConfig() {
                 try {
+                    // 加载Telegram配置
                     const configStr = localStorage.getItem('telegram_config');
                     if (configStr) {
                         telegramConfig = JSON.parse(configStr);
@@ -1677,33 +720,32 @@
                         showStatus('已加载保存的配置', 'success');
                     }
                     
-                    // 加载定时设置
-                    const scheduleConfig = localStorage.getItem('schedule_config');
-                    if (scheduleConfig) {
-                        const config = JSON.parse(scheduleConfig);
-                        scheduleInterval = config.interval || 60 * 60 * 1000;
-                        testCycleCount = config.cycleCount || 0;
-                        
-                        // 激活对应的按钮
-                        document.querySelectorAll('.schedule-btn').forEach(btn => {
-                            const minutes = parseInt(btn.dataset.minutes);
-                            if (minutes === scheduleInterval / 60000) {
-                                btn.classList.add('active');
-                            }
-                        });
-                        
-                        if (config.running) {
-                            startSchedule();
-                        }
-                    }
-                    
                     // 加载域名列表
                     const domainsConfig = localStorage.getItem('domains_config');
                     if (domainsConfig) {
                         elements.domains.value = domainsConfig;
                     }
+                    
+                    // 加载统计信息
+                    const statsConfig = localStorage.getItem('monitor_stats');
+                    if (statsConfig) {
+                        const savedStats = JSON.parse(statsConfig);
+                        // 如果是同一天，恢复统计
+                        if (savedStats.lastReset === new Date().toDateString()) {
+                            stats = savedStats;
+                            updateStatsDisplay();
+                        } else {
+                            // 新的一天，重置统计
+                            resetDailyStats();
+                        }
+                    }
+                    
+                    // 加载通知历史
+                    loadNotificationHistory();
+                    
                 } catch (error) {
-                    console.log('加载配置失败:', error);
+                    console.error('加载配置失败:', error);
+                    showStatus('加载配置失败，请检查浏览器存储', 'error');
                 }
             }
 
@@ -1735,12 +777,58 @@
                     };
                     
                     localStorage.setItem('telegram_config', JSON.stringify(telegramConfig));
-                    showStatus('配置保存成功', 'success');
-                    console.log('Telegram配置已保存');
+                    showStatus('Telegram配置保存成功', 'success');
+                    addLog('配置已保存', 'info');
                 } catch (error) {
                     showStatus('保存失败: ' + error.message, 'error');
-                    console.log('保存配置失败:', error);
+                    addLog('保存配置失败: ' + error.message, 'error');
                 }
+            }
+
+            // 测试配置
+            function testConfig() {
+                if (!telegramConfig) {
+                    showStatus('请先保存配置', 'error');
+                    return;
+                }
+                
+                const { botToken, chatId } = telegramConfig;
+                
+                showStatus('正在测试Telegram连接...', 'info');
+                addLog('测试Telegram连接...', 'info');
+                
+                const now = new Date();
+                const currentTime = now.toLocaleString('zh-CN', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit',
+                    hour12: false
+                }).replace(/\//g, '-');
+                
+                const testMessage = `📱 *ITDOG监控系统 - 连接测试*\n\n` +
+                    `✅ *测试状态:* 连接成功\n` +
+                    `🕐 *测试时间:* ${currentTime}\n` +
+                    `📊 *系统版本:* v6.0\n` +
+                    `🔧 *配置状态:* 已验证\n\n` +
+                    `系统已准备就绪，可以开始网站监控任务。`;
+                
+                sendTelegramMessage(testMessage)
+                    .then(response => {
+                        if (response.ok) {
+                            showStatus('✅ Telegram连接测试成功，请检查Telegram消息', 'success');
+                            addLog('Telegram连接测试成功', 'success');
+                        } else {
+                            showStatus('❌ Telegram连接失败: ' + (response.description || '未知错误'), 'error');
+                            addLog('Telegram连接失败: ' + response.description, 'error');
+                        }
+                    })
+                    .catch(error => {
+                        showStatus('❌ 网络错误: ' + error.message, 'error');
+                        addLog('网络错误: ' + error.message, 'error');
+                    });
             }
 
             // 获取Chat ID
@@ -1758,53 +846,48 @@
                 }
                 
                 showStatus('正在获取Chat ID...', 'info');
+                addLog('获取Chat ID...', 'info');
                 
                 fetch(`https://api.telegram.org/bot${botToken}/getUpdates`)
                     .then(response => response.json())
                     .then(data => {
                         if (!data.ok) {
                             showStatus('请求失败: ' + data.description, 'error');
+                            addLog('获取Chat ID失败: ' + data.description, 'error');
                             return;
                         }
                         
                         if (!data.result || data.result.length === 0) {
                             showStatus('没有找到消息，请先给机器人发送一条消息', 'error');
+                            addLog('未找到Chat ID，请先给机器人发送消息', 'warning');
                             return;
                         }
                         
-                        // 显示找到的Chat ID
                         let message = '找到的Chat ID:\n\n';
                         data.result.forEach((update, index) => {
                             if (update.message && update.message.chat) {
                                 const chat = update.message.chat;
-                                const from = update.message.from;
-                                const date = new Date(update.message.date * 1000).toLocaleString();
-                                
                                 message += `${index + 1}. 类型: ${chat.type}\n`;
                                 message += `   Chat ID: ${chat.id}\n`;
-                                message += `   标题: ${chat.title || '私聊'}\n`;
-                                message += `   发送者: ${from.first_name} (${from.username || '无用户名'})\n`;
-                                message += `   时间: ${date}\n\n`;
+                                message += `   标题: ${chat.title || '私聊'}\n\n`;
                                 
-                                // 如果是私聊，自动填充Chat ID
                                 if (chat.type === 'private') {
                                     elements.chatId.value = chat.id;
-                                    showStatus('已自动填充私聊Chat ID', 'success');
-                                    return;
                                 }
                             }
                         });
                         
-                        // 显示选择对话框
                         const selectedId = prompt(message + '\n请选择要使用的Chat ID（输入数字）:');
                         if (selectedId && data.result[selectedId - 1] && data.result[selectedId - 1].message) {
                             const chatId = data.result[selectedId - 1].message.chat.id;
                             elements.chatId.value = chatId;
                             showStatus('Chat ID已设置', 'success');
+                            addLog('Chat ID已设置: ' + chatId, 'success');
                         }
                     })
                     .catch(error => {
                         showStatus('网络错误: ' + error.message, 'error');
+                        addLog('网络错误: ' + error.message, 'error');
                     });
             }
 
@@ -1816,20 +899,330 @@
                     elements.chatId.value = '';
                     localStorage.removeItem('telegram_config');
                     showStatus('配置已清除', 'info');
+                    addLog('配置已清除', 'warning');
                 }
             }
 
-            // 测试配置
-            function testConfig() {
-                if (!telegramConfig) {
-                    showStatus('请先保存配置', 'error');
+            // 开始批量测试
+            function startBatchTest() {
+                const domains = elements.domains.value.trim();
+                if (!domains) {
+                    showStatus('请输入要测试的网站地址', 'error');
                     return;
+                }
+                
+                if (!telegramConfig) {
+                    showStatus('请先配置Telegram信息', 'error');
+                    return;
+                }
+                
+                // 保存域名列表
+                localStorage.setItem('domains_config', domains);
+                
+                // 解析域名列表
+                domainArray = domains.split('\n')
+                    .map(domain => domain.trim())
+                    .filter(domain => domain.length > 0)
+                    .map(domain => {
+                        // 移除http://或https://前缀
+                        return domain.replace(/^https?:\/\//, '');
+                    });
+                
+                if (domainArray.length === 0) return;
+                
+                // 显示域名列表
+                elements.domainsContainer.innerHTML = '';
+                domainStatus = {};
+                
+                domainArray.forEach((domain, index) => {
+                    domainStatus[index] = { status: 'pending', rate: 0 };
+                    
+                    const item = document.createElement('div');
+                    item.className = 'domain-item';
+                    item.dataset.index = index;
+                    item.innerHTML = `
+                        <div class="domain-name">${index + 1}. ${domain}</div>
+                        <div class="domain-status status-pending" id="status-${index}">等待测试</div>
+                    `;
+                    elements.domainsContainer.appendChild(item);
+                });
+                
+                elements.domainList.style.display = 'block';
+                elements.testControls.style.display = 'block';
+                
+                // 重置状态
+                currentIndex = 0;
+                isTesting = true;
+                isPaused = false;
+                activeTabs.clear();
+                
+                elements.testedCount.textContent = '0';
+                elements.activeCount.textContent = '0';
+                elements.pendingCount.textContent = domainArray.length;
+                elements.errorCount.textContent = '0';
+                elements.progressText.textContent = `0/${domainArray.length}`;
+                elements.progressBar.style.width = '0%';
+                
+                addLog(`开始批量测试，共 ${domainArray.length} 个域名`, 'info');
+                stats.todayTests += domainArray.length;
+                updateStatsDisplay();
+                saveStats();
+                
+                // 开始测试
+                openNextBatch();
+            }
+
+            // 打开下一批标签页
+            function openNextBatch() {
+                if (!isTesting || isPaused || currentIndex >= domainArray.length) {
+                    checkTestCompletion();
+                    return;
+                }
+                
+                const batchCount = Math.min(batchSize, domainArray.length - currentIndex);
+                addLog(`打开批次 ${Math.floor(currentIndex / batchSize) + 1}，共 ${batchCount} 个域名`, 'info');
+                
+                for (let i = 0; i < batchCount; i++) {
+                    const domainIndex = currentIndex + i;
+                    const domain = domainArray[domainIndex];
+                    
+                    // 更新状态
+                    updateDomainStatus(domainIndex, 'testing', 0);
+                    
+                    // 延迟打开
+                    setTimeout(() => {
+                        openITDOGTab(domain, domainIndex);
+                    }, i * 1000);
+                }
+                
+                currentIndex += batchCount;
+                updateProgress();
+                
+                // 安排下一批次
+                if (currentIndex < domainArray.length && !isPaused) {
+                    setTimeout(openNextBatch, testDelay);
+                }
+            }
+
+            // 打开ITDOG标签页
+            function openITDOGTab(domain, index) {
+                try {
+                    const url = `https://www.itdog.cn/http/?domain=${encodeURIComponent(domain)}`;
+                    
+                    // 打开新标签页
+                    const tab = window.open(url, `itdog_tab_${index}`);
+                    
+                    if (tab) {
+                        activeTabs.set(index, {
+                            tab: tab,
+                            domain: domain,
+                            openedAt: Date.now(),
+                            status: 'opened'
+                        });
+                        
+                        addLog(`标签页已打开: ${domain}`, 'info');
+                        
+                        // 设置超时检查
+                        setTimeout(() => {
+                            checkTabStatus(index);
+                        }, 120000); // 2分钟超时
+                        
+                    } else {
+                        addLog(`❌ 无法打开标签页: ${domain} (可能被浏览器阻止)`, 'error');
+                        updateDomainStatus(index, 'error', 0);
+                        activeTabs.delete(index);
+                    }
+                } catch (error) {
+                    addLog(`❌ 打开标签页出错: ${error.message}`, 'error');
+                    updateDomainStatus(index, 'error', 0);
+                    activeTabs.delete(index);
+                }
+            }
+
+            // 检查标签页状态
+            function checkTabStatus(index) {
+                const tabInfo = activeTabs.get(index);
+                if (!tabInfo) return;
+                
+                try {
+                    if (tabInfo.tab.closed) {
+                        activeTabs.delete(index);
+                    } else {
+                        // 如果标签页还在，但超过3分钟，强制关闭
+                        if (Date.now() - tabInfo.openedAt > 180000) {
+                            addLog(`⏰ 标签页超时: ${tabInfo.domain}，强制关闭`, 'warning');
+                            tabInfo.tab.close();
+                            activeTabs.delete(index);
+                            updateDomainStatus(index, 'timeout', 0);
+                        }
+                    }
+                } catch (e) {
+                    // 跨域访问错误，可能标签页已关闭
+                    activeTabs.delete(index);
+                }
+            }
+
+            // 更新域名状态
+            function updateDomainStatus(index, status, rate) {
+                domainStatus[index] = { status, rate };
+                
+                const statusElement = document.getElementById(`status-${index}`);
+                if (statusElement) {
+                    statusElement.textContent = getStatusText(status, rate);
+                    statusElement.className = `domain-status ${getStatusClass(status)}`;
+                }
+                
+                // 更新统计
+                if (status === 'error' || status === 'lowrate') {
+                    stats.errorSites++;
+                } else if (status === 'success') {
+                    stats.successSites++;
+                }
+                
+                updateStatsDisplay();
+            }
+
+            // 获取状态文本
+            function getStatusText(status, rate) {
+                switch(status) {
+                    case 'pending': return '等待测试';
+                    case 'testing': return '测试中...';
+                    case 'success': return `正常 ${rate}%`;
+                    case 'lowrate': return `异常 ${rate}%`;
+                    case 'error': return '测试失败';
+                    case 'timeout': return '超时';
+                    default: return '未知';
+                }
+            }
+
+            // 获取状态类名
+            function getStatusClass(status) {
+                switch(status) {
+                    case 'testing': return 'status-testing';
+                    case 'success': return 'status-success';
+                    case 'lowrate': return 'status-warning';
+                    case 'error': 
+                    case 'timeout': return 'status-error';
+                    default: return 'status-pending';
+                }
+            }
+
+            // 更新进度
+            function updateProgress() {
+                const tested = Object.values(domainStatus).filter(s => 
+                    s.status === 'success' || s.status === 'lowrate' || s.status === 'error' || s.status === 'timeout'
+                ).length;
+                
+                const errors = Object.values(domainStatus).filter(s => 
+                    s.status === 'lowrate' || s.status === 'error' || s.status === 'timeout'
+                ).length;
+                
+                elements.testedCount.textContent = tested;
+                elements.activeCount.textContent = activeTabs.size;
+                elements.pendingCount.textContent = domainArray.length - currentIndex;
+                elements.errorCount.textContent = errors;
+                elements.progressText.textContent = `${tested}/${domainArray.length}`;
+                
+                const progressPercent = (tested / domainArray.length) * 100;
+                elements.progressBar.style.width = `${progressPercent}%`;
+            }
+
+            // 检查测试是否完成
+            function checkTestCompletion() {
+                if (!isTesting) return;
+                
+                const completed = Object.values(domainStatus).every(s => 
+                    s.status === 'success' || s.status === 'lowrate' || s.status === 'error' || s.status === 'timeout'
+                );
+                
+                if (completed && activeTabs.size === 0) {
+                    isTesting = false;
+                    addLog('✅ 所有域名测试完成', 'success');
+                    showStatus('批量测试完成', 'success');
+                    
+                    // 保存统计
+                    saveStats();
+                }
+            }
+
+            // 暂停/继续测试
+            function pauseTest() {
+                if (!isTesting) return;
+                
+                if (isPaused) {
+                    isPaused = false;
+                    elements.pauseBtn.innerHTML = '<i class="fas fa-pause btn-icon"></i> 暂停测试';
+                    addLog('继续测试', 'info');
+                    openNextBatch();
+                } else {
+                    isPaused = true;
+                    elements.pauseBtn.innerHTML = '<i class="fas fa-play btn-icon"></i> 继续测试';
+                    addLog('测试暂停', 'warning');
+                }
+            }
+
+            // 停止测试
+            function stopTest() {
+                if (!isTesting && activeTabs.size === 0) return;
+                
+                isTesting = false;
+                isPaused = false;
+                
+                // 关闭所有打开的标签页
+                activeTabs.forEach((tabInfo, index) => {
+                    try {
+                        if (tabInfo.tab && !tabInfo.tab.closed) {
+                            tabInfo.tab.close();
+                        }
+                    } catch (e) {
+                        console.error('关闭标签页失败:', e);
+                    }
+                });
+                
+                activeTabs.clear();
+                
+                addLog('测试已停止', 'warning');
+                showStatus('测试已停止', 'info');
+                
+                // 更新未完成的域名状态
+                for (let i = 0; i < domainArray.length; i++) {
+                    if (domainStatus[i].status === 'pending' || domainStatus[i].status === 'testing') {
+                        updateDomainStatus(i, 'error', 0);
+                    }
+                }
+                
+                updateProgress();
+            }
+
+            // 发送Telegram消息
+            function sendTelegramMessage(message) {
+                if (!telegramConfig) {
+                    return Promise.reject(new Error('Telegram配置未设置'));
                 }
                 
                 const { botToken, chatId } = telegramConfig;
                 
-                showStatus('正在测试Telegram连接...', 'info');
-                addLog('正在测试Telegram连接...');
+                return fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        chat_id: chatId,
+                        text: message,
+                        parse_mode: 'Markdown',
+                        disable_web_page_preview: true
+                    })
+                })
+                .then(response => response.json());
+            }
+
+            // 发送异常通知
+            function sendLowRateNotification(domain, results) {
+                if (!telegramConfig) {
+                    addLog(`无法发送通知: Telegram配置未设置`, 'error');
+                    return Promise.resolve(false);
+                }
                 
                 const now = new Date();
                 const currentTime = now.toLocaleString('zh-CN', {
@@ -1842,39 +1235,169 @@
                     hour12: false
                 }).replace(/\//g, '-');
                 
-                const testMessage = `✅ ITDOG监控系统测试消息\\n\\n🕒 发送时间: ${currentTime}\\n📊 测试状态: 连接正常\\n🔧 配置验证: 成功\\n\\n系统已准备就绪！`;
+                // 构建专业的通知消息
+                const message = `🚨 *网站监控告警通知*\n\n` +
+                    `🔴 *告警级别:* 严重\n` +
+                    `🌐 *问题域名:* \`${domain}\`\n` +
+                    `🕐 *检测时间:* ${currentTime}\n\n` +
+                    `📊 *测试结果详情*\n` +
+                    `├ 总测试节点: ${results.totalTests}\n` +
+                    `├ 正常节点(200): ${results.success200Tests}\n` +
+                    `├ 异常节点: ${results.totalTests - results.success200Tests}\n` +
+                    `└ 连通率: *${results.connectivityRate}%*\n\n` +
+                    `📋 *异常状态码分布*\n` +
+                    `${getStatusCodeDistribution(results.otherStatusCodes)}\n` +
+                    `⚠️ *告警说明:* 网站连通率低于90%，请立即检查！\n\n` +
+                    `🔧 *建议操作*\n` +
+                    `1. 检查服务器状态\n` +
+                    `2. 检查DNS解析\n` +
+                    `3. 检查防火墙设置\n` +
+                    `4. 联系服务提供商\n\n` +
+                    `#网站监控 #连通率告警 #${domain.split('.')[0]}`;
                 
-                fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        chat_id: chatId,
-                        text: testMessage,
-                        parse_mode: 'HTML',
-                        disable_web_page_preview: true
-                    })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.ok) {
-                        showStatus('✅ Telegram连接测试成功，请检查Telegram消息', 'success');
-                        addLog('✅ Telegram连接测试成功');
-                    } else {
-                        showStatus('❌ Telegram连接失败: ' + (data.description || '未知错误'), 'error');
-                        addLog('❌ Telegram连接失败: ' + data.description);
-                        
-                        // 如果是Chat ID问题
-                        if (data.description && data.description.includes('chat') && data.description.includes('group')) {
-                            showStatus('⚠️ 可能是Chat ID已改变，请使用"获取Chat ID"按钮重新获取', 'error');
+                return sendTelegramMessage(message)
+                    .then(response => {
+                        if (response.ok) {
+                            stats.sentNotifications++;
+                            updateStatsDisplay();
+                            saveStats();
+                            addNotificationToHistory(domain, results.connectivityRate, currentTime, message);
+                            return true;
+                        } else {
+                            throw new Error(response.description || '发送失败');
                         }
-                    }
-                })
-                .catch(error => {
-                    showStatus('❌ 网络错误: ' + error.message, 'error');
-                    addLog('❌ 网络错误: ' + error.message);
+                    })
+                    .catch(error => {
+                        addLog(`发送Telegram通知失败: ${error.message}`, 'error');
+                        return false;
+                    });
+            }
+
+            // 获取状态码分布
+            function getStatusCodeDistribution(statusCodes) {
+                if (!statusCodes || statusCodes.length === 0) {
+                    return '暂无异常状态码数据';
+                }
+                
+                const countMap = {};
+                statusCodes.forEach(code => {
+                    countMap[code] = (countMap[code] || 0) + 1;
                 });
+                
+                let distribution = '';
+                Object.entries(countMap).forEach(([code, count]) => {
+                    distribution += `├ ${code}: ${count}个\n`;
+                });
+                
+                return distribution;
+            }
+
+            // 添加通知到历史记录
+            function addNotificationToHistory(domain, rate, time, message) {
+                const notification = {
+                    domain: domain,
+                    rate: rate,
+                    time: time,
+                    message: message,
+                    timestamp: Date.now()
+                };
+                
+                // 获取现有历史记录
+                let history = [];
+                try {
+                    const historyStr = localStorage.getItem('notification_history');
+                    if (historyStr) {
+                        history = JSON.parse(historyStr);
+                    }
+                } catch (e) {
+                    console.error('读取通知历史失败:', e);
+                }
+                
+                // 添加到历史记录
+                history.unshift(notification);
+                
+                // 限制历史记录数量
+                if (history.length > 50) {
+                    history = history.slice(0, 50);
+                }
+                
+                // 保存历史记录
+                localStorage.setItem('notification_history', JSON.stringify(history));
+                
+                // 显示通知历史
+                displayNotificationHistory();
+            }
+
+            // 显示通知历史
+            function displayNotificationHistory() {
+                let history = [];
+                try {
+                    const historyStr = localStorage.getItem('notification_history');
+                    if (historyStr) {
+                        history = JSON.parse(historyStr);
+                    }
+                } catch (e) {
+                    console.error('读取通知历史失败:', e);
+                }
+                
+                if (history.length === 0) {
+                    elements.notificationsContainer.innerHTML = '<div style="text-align: center; padding: 20px; color: #666;">暂无通知记录</div>';
+                    return;
+                }
+                
+                let html = '';
+                history.forEach((notification, index) => {
+                    html += `
+                        <div class="notification-item">
+                            <div class="notification-time">${notification.time}</div>
+                            <div class="notification-domain">${notification.domain} (${notification.rate}%)</div>
+                            <div class="notification-message">${notification.message.replace(/\*/g, '').substring(0, 100)}...</div>
+                        </div>
+                    `;
+                });
+                
+                elements.notificationsContainer.innerHTML = html;
+                elements.notificationHistory.style.display = 'block';
+            }
+
+            // 加载通知历史
+            function loadNotificationHistory() {
+                displayNotificationHistory();
+            }
+
+            // 更新统计显示
+            function updateStatsDisplay() {
+                elements.todayTests.textContent = stats.todayTests;
+                elements.errorSites.textContent = stats.errorSites;
+                elements.successSites.textContent = stats.successSites;
+                elements.sentNotifications.textContent = stats.sentNotifications;
+            }
+
+            // 保存统计信息
+            function saveStats() {
+                stats.lastReset = new Date().toDateString();
+                localStorage.setItem('monitor_stats', JSON.stringify(stats));
+            }
+
+            // 重置每日统计
+            function resetDailyStats() {
+                stats = {
+                    todayTests: 0,
+                    errorSites: 0,
+                    successSites: 0,
+                    sentNotifications: 0,
+                    lastReset: new Date().toDateString()
+                };
+                updateStatsDisplay();
+                saveStats();
+            }
+
+            // 检查是否需要重置统计
+            function checkDailyReset() {
+                if (stats.lastReset !== new Date().toDateString()) {
+                    resetDailyStats();
+                    addLog('新的一天，统计已重置', 'info');
+                }
             }
 
             // 显示状态消息
@@ -1900,544 +1423,84 @@
             }
 
             // 添加日志
-            function addLog(message) {
+            function addLog(message, type = 'info') {
                 const now = new Date();
-                const timeString = now.toLocaleTimeString();
+                const timeString = now.toLocaleTimeString('zh-CN', { hour12: false });
                 
                 const logEntry = document.createElement('div');
                 logEntry.className = 'log-entry';
-                logEntry.innerHTML = `<span style="color: #6c757d;">[${timeString}]</span> ${message}`;
+                
+                let icon = '📝';
+                if (type === 'success') icon = '✅';
+                if (type === 'error') icon = '❌';
+                if (type === 'warning') icon = '⚠️';
+                if (type === 'info') icon = 'ℹ️';
+                
+                logEntry.innerHTML = `
+                    <span class="log-time">${timeString}</span>
+                    <span class="log-content">${icon} ${message}</span>
+                `;
                 
                 elements.monitorLog.appendChild(logEntry);
                 elements.monitorLog.scrollTop = elements.monitorLog.scrollHeight;
                 
-                // 保持日志数量不超过100条
+                // 保持日志数量不超过200条
                 const logEntries = elements.monitorLog.querySelectorAll('.log-entry');
-                if (logEntries.length > 100) {
-                    for (let i = 0; i < logEntries.length - 100; i++) {
+                if (logEntries.length > 200) {
+                    for (let i = 0; i < logEntries.length - 200; i++) {
                         logEntries[i].remove();
                     }
                 }
             }
 
-            // 开始批量测试
-            function startBatchTest() {
-                const domains = elements.domains.value.trim();
-                if (!domains) {
-                    alert('请输入要测试的网站地址');
-                    return;
-                }
-                
-                // 保存域名列表
-                localStorage.setItem('domains_config', domains);
-                
-                domainArray = domains.split('\n')
-                    .map(domain => domain.trim())
-                    .filter(domain => domain.length > 0)
-                    .map(domain => {
-                        if (!domain.startsWith('http://') && !domain.startsWith('https://')) {
-                            return 'https://' + domain;
-                        }
-                        return domain;
-                    });
-                
-                if (domainArray.length === 0) return;
-                
-                // 显示域名列表
-                elements.domainsContainer.innerHTML = '';
-                domainArray.forEach((domain, index) => {
-                    const item = document.createElement('div');
-                    item.className = 'domain-item';
-                    item.innerHTML = `
-                        <div class="domain-name">${index + 1}. ${domain}</div>
-                        <div class="domain-status status-pending" id="status-${index}">等待</div>
-                    `;
-                    elements.domainsContainer.appendChild(item);
-                });
-                
-                elements.domainList.style.display = 'block';
-                elements.testControls.style.display = 'block';
-                elements.monitorLog.style.display = 'block';
-                
-                // 重置状态
-                currentIndex = 0;
-                isTesting = true;
-                isPaused = false;
-                activeTabs = 0;
-                openedTabs = [];
-                
-                elements.testedCount.textContent = '0';
-                elements.activeCount.textContent = '0';
-                elements.pendingCount.textContent = domainArray.length;
-                elements.progressText.textContent = `0/${domainArray.length}`;
-                elements.progressBar.style.width = '0%';
-                
-                addLog(`开始批量测试，共 ${domainArray.length} 个域名`);
-                
-                // 开始打开标签页
-                openNextBatch();
-            }
-
-            // 打开下一批次
-            function openNextBatch() {
-                if (!isTesting || isPaused || currentIndex >= domainArray.length) {
-                    if (currentIndex >= domainArray.length && activeTabs === 0) {
-                        addLog('✅ 所有域名测试完成');
-                        isTesting = false;
-                    }
-                    return;
-                }
-                
-                const batchCount = Math.min(batchSize, domainArray.length - currentIndex);
-                addLog(`打开批次 ${Math.floor(currentIndex / batchSize) + 1} (${batchCount}个域名)`);
-                
-                for (let i = 0; i < batchCount; i++) {
-                    const domainIndex = currentIndex + i;
-                    const domain = domainArray[domainIndex];
-                    
-                    // 更新状态
-                    const statusElement = document.getElementById(`status-${domainIndex}`);
-                    if (statusElement) {
-                        statusElement.textContent = '测试中';
-                        statusElement.className = 'domain-status status-testing';
-                    }
-                    
-                    // 延迟打开
-                    setTimeout(() => {
-                        openITDOGTab(domain, domainIndex);
-                    }, i * 1000);
-                }
-                
-                currentIndex += batchCount;
-                
-                // 更新UI
-                updateProgress();
-                
-                // 安排下一批次
-                if (currentIndex < domainArray.length) {
-                    setTimeout(() => {
-                        if (!isPaused) {
-                            openNextBatch();
-                        }
-                    }, testInterval);
-                }
-            }
-
-            // 在新标签页中打开ITDOG
-            function openITDOGTab(domain, index) {
-                try {
-                    const cleanDomain = domain.replace(/^https?:\/\//, '');
-                    const url = `https://www.itdog.cn/http/?domain=${encodeURIComponent(cleanDomain)}`;
-                    
-                    // 在新标签页中打开
-                    const tab = window.open(url, '_blank');
-                    
-                    if (tab) {
-                        activeTabs++;
-                        openedTabs.push({
-                            tab: tab,
-                            index: index,
-                            domain: domain,
-                            openedAt: Date.now()
-                        });
-                        
-                        // 监听标签页关闭
-                        const checkClose = setInterval(() => {
-                            if (tab.closed) {
-                                clearInterval(checkClose);
-                                activeTabs--;
-                                
-                                // 更新状态
-                                const statusElement = document.getElementById(`status-${index}`);
-                                if (statusElement) {
-                                    statusElement.textContent = '已完成';
-                                    statusElement.className = 'domain-status status-success';
-                                }
-                                
-                                addLog(`标签页关闭: ${domain}`);
-                                
-                                // 检查是否全部完成
-                                if (currentIndex >= domainArray.length && activeTabs === 0) {
-                                    addLog('✅ 所有测试完成');
-                                    isTesting = false;
-                                    
-                                    // 如果是定时测试，更新状态
-                                    if (scheduleRunning) {
-                                        updateScheduleStatus();
-                                    }
-                                }
-                            }
-                        }, 1000);
-                        
-                        addLog(`标签页已打开: ${domain}`);
-                    } else {
-                        addLog(`❌ 无法打开标签页: ${domain} (可能被浏览器阻止)`);
-                        const statusElement = document.getElementById(`status-${index}`);
-                        if (statusElement) {
-                            statusElement.textContent = '失败';
-                            statusElement.className = 'domain-status status-error';
-                        }
-                    }
-                } catch (error) {
-                    addLog(`❌ 打开标签页出错: ${error.message}`);
-                }
-            }
-
-            // 更新进度
-            function updateProgress() {
-                elements.testedCount.textContent = Math.min(currentIndex, domainArray.length);
-                elements.activeCount.textContent = activeTabs;
-                elements.pendingCount.textContent = Math.max(0, domainArray.length - currentIndex);
-                elements.progressText.textContent = `${Math.min(currentIndex, domainArray.length)}/${domainArray.length}`;
-                
-                const progressPercent = (Math.min(currentIndex, domainArray.length) / domainArray.length) * 100;
-                elements.progressBar.style.width = `${progressPercent}%`;
-            }
-
-            // 暂停测试
-            function pauseTest() {
-                if (!isTesting) return;
-                
-                if (isPaused) {
-                    isPaused = false;
-                    elements.pauseBtn.innerHTML = '<i class="fas fa-pause btn-icon"></i> 暂停';
-                    addLog('继续测试');
-                    openNextBatch();
-                } else {
-                    isPaused = true;
-                    elements.pauseBtn.innerHTML = '<i class="fas fa-play btn-icon"></i> 继续';
-                    addLog('测试暂停');
-                }
-            }
-
-            // 停止测试
-            function stopTest() {
-                if (!isTesting && openedTabs.length === 0) return;
-                
-                isTesting = false;
-                isPaused = false;
-                
-                // 关闭所有打开的标签页
-                openedTabs.forEach(item => {
-                    try {
-                        if (item.tab && !item.tab.closed) {
-                            item.tab.close();
-                        }
-                    } catch (e) {
-                        console.log('关闭标签页失败:', e);
-                    }
-                });
-                
-                openedTabs = [];
-                activeTabs = 0;
-                
-                addLog('测试已停止');
-                
-                // 重置状态显示
-                for (let i = 0; i < domainArray.length; i++) {
-                    const statusElement = document.getElementById(`status-${i}`);
-                    if (statusElement) {
-                        statusElement.textContent = '已取消';
-                        statusElement.className = 'domain-status status-pending';
-                    }
-                }
-            }
-
-            // 手动测试一次
-            function manualTest() {
-                const domains = elements.domains.value.trim();
-                if (!domains) {
-                    alert('请先设置要测试的网站列表');
-                    return;
-                }
-                
-                if (isTesting) {
-                    alert('当前正在测试中，请稍后再试');
-                    return;
-                }
-                
-                startBatchTest();
-            }
-
-            // 运行诊断
-            function runDiagnostic() {
-                addLog('🔍 开始诊断Tampermonkey脚本...');
-                
-                const diagnosticItems = elements.diagnosticList.querySelectorAll('.diagnostic-item');
-                
-                // 重置诊断状态
-                diagnosticItems.forEach(item => {
-                    const icon = item.querySelector('.diagnostic-icon');
-                    icon.className = 'diagnostic-icon icon-info';
-                    item.querySelector('.diagnostic-details').textContent = '等待检测...';
-                });
-                
-                // 诊断步骤1: 检查Tampermonkey
-                setTimeout(() => {
-                    const item = diagnosticItems[0];
-                    const icon = item.querySelector('.diagnostic-icon');
-                    const details = item.querySelector('.diagnostic-details');
-                    
-                    if (typeof GM_info !== 'undefined') {
-                        icon.className = 'diagnostic-icon icon-success';
-                        details.textContent = `✅ Tampermonkey已安装 (v${GM_info.scriptHandler})`;
-                        addLog('✅ Tampermonkey扩展已安装');
-                    } else {
-                        icon.className = 'diagnostic-icon icon-error';
-                        details.textContent = '❌ Tampermonkey未安装或未启用';
-                        addLog('❌ Tampermonkey扩展未检测到，请安装Tampermonkey扩展');
-                    }
-                }, 500);
-                
-                // 诊断步骤2: 检查脚本
-                setTimeout(() => {
-                    const item = diagnosticItems[1];
-                    const icon = item.querySelector('.diagnostic-icon');
-                    const details = item.querySelector('.diagnostic-details');
-                    
-                    // 检查是否在ITDOG页面上
-                    if (window.location.hostname.includes('itdog.cn')) {
-                        icon.className = 'diagnostic-icon icon-success';
-                        details.textContent = '✅ 脚本已在ITDOG页面上运行';
-                        addLog('✅ 脚本检测成功，在ITDOG页面上运行正常');
-                    } else {
-                        icon.className = 'diagnostic-icon icon-warning';
-                        details.textContent = '⚠️ 脚本未在ITDOG页面运行';
-                        addLog('⚠️ 脚本需要在ITDOG页面运行，请点击"开始测试"按钮');
-                    }
-                }, 1500);
-                
-                // 诊断步骤3: 检查配置
-                setTimeout(() => {
-                    const item = diagnosticItems[2];
-                    const icon = item.querySelector('.diagnostic-icon');
-                    const details = item.querySelector('.diagnostic-details');
-                    
-                    if (telegramConfig && telegramConfig.botToken && telegramConfig.chatId) {
-                        icon.className = 'diagnostic-icon icon-success';
-                        details.textContent = '✅ Telegram配置完整';
-                        addLog('✅ Telegram配置完整');
-                    } else {
-                        icon.className = 'diagnostic-icon icon-warning';
-                        details.textContent = '⚠️ Telegram配置不完整';
-                        addLog('⚠️ Telegram配置不完整，请先配置Telegram信息');
-                    }
-                }, 2500);
-                
-                // 诊断步骤4: 测试通信
-                setTimeout(() => {
-                    const item = diagnosticItems[3];
-                    const icon = item.querySelector('.diagnostic-icon');
-                    const details = item.querySelector('.diagnostic-details');
-                    
-                    // 尝试发送测试消息
-                    try {
-                        window.postMessage({ type: 'DIAGNOSTIC_TEST' }, '*');
-                        icon.className = 'diagnostic-icon icon-success';
-                        details.textContent = '✅ 消息通信正常';
-                        addLog('✅ 消息通信测试正常');
-                    } catch (error) {
-                        icon.className = 'diagnostic-icon icon-warning';
-                        details.textContent = '⚠️ 消息通信测试中';
-                        addLog('⚠️ 消息通信测试中...');
-                    }
-                }, 3500);
-            }
-
-            // 启动定时测试
-            function startSchedule() {
-                const domains = elements.domains.value.trim();
-                if (!domains) {
-                    alert('请先设置要测试的网站列表');
-                    return;
-                }
-                
-                if (scheduleRunning) {
-                    alert('定时测试已经在运行中');
-                    return;
-                }
-                
-                if (!telegramConfig) {
-                    alert('请先配置Telegram信息');
-                    return;
-                }
-                
-                // 获取选中的间隔
-                const activeBtn = document.querySelector('.schedule-btn.active');
-                let minutes = activeBtn ? parseInt(activeBtn.dataset.minutes) : 60;
-                
-                // 检查自定义输入
-                const customInput = document.getElementById('custom-interval');
-                if (customInput.value) {
-                    minutes = parseInt(customInput.value) || minutes;
-                }
-                
-                scheduleInterval = minutes * 60 * 1000;
-                
-                scheduleRunning = true;
-                elements.startScheduleBtn.style.display = 'none';
-                elements.stopScheduleBtn.style.display = 'flex';
-                document.querySelector('.timer-status').style.display = 'block';
-                
-                // 保存定时配置
-                saveScheduleConfig();
-                
-                addLog(`🚀 启动定时测试，每 ${minutes} 分钟测试一次`);
-                
-                // 立即执行一次测试
-                startBatchTest();
-                
-                // 设置定时器
-                scheduleTimer = setInterval(() => {
-                    if (scheduleRunning) {
-                        testCycleCount++;
-                        addLog(`⏰ 定时时间到，开始第 ${testCycleCount + 1} 次测试`);
-                        startBatchTest();
-                        updateScheduleStatus();
-                        saveScheduleConfig();
-                    }
-                }, scheduleInterval);
-                
-                updateScheduleStatus();
-            }
-
-            // 停止定时测试
-            function stopSchedule() {
-                if (!scheduleRunning) return;
-                
-                scheduleRunning = false;
-                
-                if (scheduleTimer) {
-                    clearInterval(scheduleTimer);
-                    scheduleTimer = null;
-                }
-                
-                elements.startScheduleBtn.style.display = 'flex';
-                elements.stopScheduleBtn.style.display = 'none';
-                
-                addLog('定时测试已停止');
-                
-                // 停止当前正在进行的测试
-                if (isTesting) {
-                    stopTest();
-                }
-                
-                // 保存配置
-                saveScheduleConfig();
-            }
-
-            // 更新定时状态
-            function updateScheduleStatus() {
-                if (!scheduleRunning) return;
-                
-                elements.scheduleStatus.textContent = '运行中';
-                elements.testCount.textContent = testCycleCount + 1;
-                
-                // 计算下次测试时间
-                const nextTime = new Date(Date.now() + scheduleInterval);
-                elements.nextTestTime.textContent = nextTime.toLocaleTimeString('zh-CN', { 
-                    hour: '2-digit', 
-                    minute: '2-digit',
-                    hour12: false 
-                });
-            }
-
-            // 保存定时配置
-            function saveScheduleConfig() {
-                const scheduleConfig = {
-                    interval: scheduleInterval,
-                    cycleCount: testCycleCount,
-                    running: scheduleRunning,
-                    lastUpdated: new Date().toISOString()
-                };
-                localStorage.setItem('schedule_config', JSON.stringify(scheduleConfig));
-            }
-
-            // 复制脚本
-            function copyScript() {
-                const scriptText = elements.scriptCode.textContent;
-                
-                navigator.clipboard.writeText(scriptText)
-                    .then(() => {
-                        const originalText = elements.copyScriptBtn.innerHTML;
-                        elements.copyScriptBtn.innerHTML = '<i class="fas fa-check"></i> 已复制到剪贴板';
-                        elements.copyScriptBtn.style.background = '#2ecc71';
-                        
-                        setTimeout(() => {
-                            elements.copyScriptBtn.innerHTML = originalText;
-                            elements.copyScriptBtn.style.background = '';
-                        }, 2000);
-                        
-                        showStatus('脚本已复制到剪贴板，请在Tampermonkey中安装', 'success');
-                        addLog('✅ 脚本已复制到剪贴板');
-                    })
-                    .catch(err => {
-                        showStatus('复制失败: ' + err.message, 'error');
-                        addLog('❌ 复制脚本失败: ' + err.message);
-                    });
-            }
-
-            // 切换脚本显示/隐藏
-            function toggleScript() {
-                const scriptCode = elements.scriptCode;
-                const toggleBtn = elements.scriptToggle;
-                
-                if (scriptCode.style.display === 'none') {
-                    scriptCode.style.display = 'block';
-                    toggleBtn.innerHTML = '<i class="fas fa-eye-slash"></i> 隐藏脚本';
-                    toggleBtn.title = '点击隐藏脚本代码';
-                } else {
-                    scriptCode.style.display = 'none';
-                    toggleBtn.innerHTML = '<i class="fas fa-eye"></i> 显示脚本';
-                    toggleBtn.title = '点击显示脚本代码';
-                }
-            }
-
-            // 监听来自Tampermonkey脚本的消息
+            // 监听来自ITDOG页面的消息
             window.addEventListener('message', function(event) {
                 console.log('收到消息:', event.data);
                 
-                // 处理配置请求
-                if (event.data.type === 'REQUEST_TELEGRAM_CONFIG') {
-                    if (telegramConfig) {
-                        event.source.postMessage({
-                            type: 'TELEGRAM_CONFIG',
-                            config: telegramConfig
-                        }, event.origin);
-                        addLog('发送Telegram配置给脚本');
-                    }
-                    return;
-                }
-                
-                // 处理测试结果
-                if (event.data.type === 'ITDOG_TEST_RESULT') {
-                    const { domain, rate, data, timestamp } = event.data;
-                    
-                    const time = new Date(timestamp).toLocaleTimeString();
+                if (event.data && event.data.type === 'ITDOG_TEST_RESULT') {
+                    const data = event.data;
+                    const domain = data.domain;
+                    const rate = data.connectivityRate || 0;
+                    const isLowRate = data.isLowRate;
                     
                     // 查找域名索引
-                    const domainIndex = domainArray.findIndex(d => d.includes(domain.replace(/^https?:\/\//, '')));
-                    
-                    if (domainIndex !== -1) {
-                        const statusElement = document.getElementById(`status-${domainIndex}`);
-                        if (statusElement) {
-                            // 根据连通率设置状态
-                            if (rate < 90) {
-                                statusElement.textContent = '连通率低';
-                                statusElement.className = 'domain-status status-warning';
-                                addLog(`⚠️ ${domain} - 连通率: ${rate}% (低于90%)`);
-                            } else {
-                                statusElement.textContent = '测试完成';
-                                statusElement.className = 'domain-status status-success';
-                                addLog(`✅ ${domain} - 连通率: ${rate}%`);
-                            }
+                    let domainIndex = -1;
+                    for (let i = 0; i < domainArray.length; i++) {
+                        if (domainArray[i] === domain || domain.includes(domainArray[i])) {
+                            domainIndex = i;
+                            break;
                         }
                     }
-                }
-                
-                // 处理诊断测试
-                if (event.data.type === 'DIAGNOSTIC_TEST') {
-                    addLog('收到诊断测试消息，脚本通信正常');
+                    
+                    if (domainIndex !== -1) {
+                        // 更新域名状态
+                        const status = isLowRate ? 'lowrate' : 'success';
+                        updateDomainStatus(domainIndex, status, rate);
+                        
+                        // 从活跃标签页中移除
+                        activeTabs.delete(domainIndex);
+                        
+                        // 更新进度
+                        updateProgress();
+                        
+                        // 记录日志
+                        if (isLowRate) {
+                            addLog(`⚠️ ${domain} - 连通率: ${rate}% (低于90%)`, 'warning');
+                            
+                            // 发送Telegram通知
+                            sendLowRateNotification(domain, data)
+                                .then(success => {
+                                    if (success) {
+                                        addLog(`📤 Telegram通知已发送: ${domain}`, 'success');
+                                    }
+                                });
+                        } else {
+                            addLog(`✅ ${domain} - 连通率: ${rate}%`, 'success');
+                        }
+                        
+                        // 检查测试是否完成
+                        checkTestCompletion();
+                    }
                 }
             });
 
@@ -2449,36 +1512,33 @@
             elements.startTestBtn.addEventListener('click', startBatchTest);
             elements.clearDomainsBtn.addEventListener('click', () => {
                 elements.domains.value = '';
+                localStorage.removeItem('domains_config');
+                showStatus('域名列表已清空', 'info');
+                addLog('域名列表已清空', 'info');
             });
-            elements.manualTestBtn.addEventListener('click', manualTest);
+            elements.testSelectedBtn.addEventListener('click', startBatchTest);
             elements.pauseBtn.addEventListener('click', pauseTest);
             elements.stopBtn.addEventListener('click', stopTest);
-            elements.copyScriptBtn.addEventListener('click', copyScript);
-            elements.scriptToggle.addEventListener('click', toggleScript);
-            elements.startScheduleBtn.addEventListener('click', startSchedule);
-            elements.stopScheduleBtn.addEventListener('click', stopSchedule);
-            elements.runDiagnosticBtn.addEventListener('click', runDiagnostic);
 
-            // 定时频率选择
-            document.querySelectorAll('.schedule-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    document.querySelectorAll('.schedule-btn').forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-                });
-            });
+            // 设置示例域名
+            elements.domains.value = `alibabacloud.com
+dynadot.com
+itdog.cn
+baidu.com
+google.com
+github.com
+cloudflare.com
+akamai.com`;
 
             // 初始化
             loadConfig();
+            checkDailyReset();
             
-            // 设置示例域名
-            elements.domains.value = `https://www.alibabacloud.com
-www.dynadot.com
-itdog.cn
-godaddy.com
-github.com
-google.com`;
+            // 添加欢迎日志
+            addLog('ITDOG监控系统已启动 v6.0', 'success');
+            addLog('请先配置Telegram信息，然后开始批量测试', 'info');
             
-            console.log('GitHub Pages配置中心已加载 - 完整功能版');
+            console.log('ITDOG监控系统已加载 - 完整功能版 v6.0');
         });
     </script>
 </body>
