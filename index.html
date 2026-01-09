@@ -21,10 +21,6 @@
             --info-gradient: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
             --dark-gradient: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
             --telegram-gradient: linear-gradient(135deg, #0088cc 0%, #006699 100%);
-            /* 新增运营商颜色 */
-            --mobile-color: #4CAF50;
-            --unicom-color: #FF9800;
-            --telecom-color: #2196F3;
             
             --primary-color: #667eea;
             --secondary-color: #764ba2;
@@ -141,136 +137,7 @@
             }
         }
         
-        /* ===== 新增：节点分析面板 ===== */
-        .node-analysis-panel {
-            background: white;
-            border-radius: var(--radius-lg);
-            padding: 25px;
-            margin-bottom: 25px;
-            box-shadow: var(--shadow-md);
-            border: 1px solid var(--border-color);
-            display: none;
-        }
-        
-        .node-analysis-panel h4 {
-            color: var(--info-color);
-            margin-bottom: 20px;
-            font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: 600;
-        }
-        
-        .node-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-        
-        .node-stat-card {
-            background: white;
-            padding: 20px;
-            border-radius: var(--radius-md);
-            text-align: center;
-            box-shadow: var(--shadow-sm);
-            border-top: 5px solid;
-            transition: var(--transition-normal);
-        }
-        
-        .node-stat-card:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-md);
-        }
-        
-        .node-stat-card.mobile {
-            border-top-color: var(--mobile-color);
-            background: linear-gradient(135deg, rgba(76, 175, 80, 0.05) 0%, rgba(76, 175, 80, 0.1) 100%);
-        }
-        
-        .node-stat-card.unicom {
-            border-top-color: var(--unicom-color);
-            background: linear-gradient(135deg, rgba(255, 152, 0, 0.05) 0%, rgba(255, 152, 0, 0.1) 100%);
-        }
-        
-        .node-stat-card.telecom {
-            border-top-color: var(--telecom-color);
-            background: linear-gradient(135deg, rgba(33, 150, 243, 0.05) 0%, rgba(33, 150, 243, 0.1) 100%);
-        }
-        
-        .node-stat-title {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            margin-bottom: 10px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-        
-        .node-stat-content {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 15px;
-        }
-        
-        .node-stat-item {
-            text-align: center;
-        }
-        
-        .node-stat-value {
-            font-size: 1.6rem;
-            font-weight: 800;
-            color: var(--text-primary);
-        }
-        
-        .node-stat-label {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            margin-top: 5px;
-        }
-        
-        .node-details {
-            margin-top: 20px;
-            padding: 15px;
-            background: #f8f9fa;
-            border-radius: var(--radius-md);
-            display: none;
-        }
-        
-        .node-details h5 {
-            color: var(--text-primary);
-            margin-bottom: 15px;
-            font-size: 1rem;
-        }
-        
-        .node-detail-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid var(--border-color);
-        }
-        
-        .node-detail-item:last-child {
-            border-bottom: none;
-        }
-        
-        .node-detail-name {
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-        
-        .node-detail-stats {
-            display: flex;
-            gap: 15px;
-        }
-        
-        /* ===== 原有的样式保持不变 ===== */
-        
-        /* Telegram配置 - 登录表单样式 ===== */
+        /* ===== Telegram配置 - 登录表单样式 ===== */
         .telegram-config {
             background: white;
             border-radius: var(--radius-lg);
@@ -1009,10 +876,6 @@
                 position: static;
             }
             
-            .node-stats {
-                grid-template-columns: 1fr;
-            }
-            
             .buttons {
                 flex-direction: column;
             }
@@ -1136,82 +999,7 @@
                     <p>2. 配置定时测试参数或直接开始批量测试</p>
                     <p>3. 在下方输入要监控的网站地址，每行一个</p>
                     <p>4. 系统会自动打开ITDOG页面进行测试，连通率低于阈值时发送通知</p>
-                    <p>5. <strong>新增功能：</strong> 支持移动、联通、电信节点异常分析</p>
-                    <p>6. 建议安装Tampermonkey扩展以获得最佳体验</p>
-                </div>
-                
-                <!-- 新增：节点分析面板 -->
-                <div class="node-analysis-panel" id="node-analysis-panel">
-                    <h4><i class="fas fa-network-wired"></i> 多运营商节点异常分析</h4>
-                    
-                    <div class="node-stats">
-                        <div class="node-stat-card mobile">
-                            <div class="node-stat-title">
-                                <i class="fas fa-signal"></i> 移动节点
-                            </div>
-                            <div class="node-stat-content">
-                                <div class="node-stat-item">
-                                    <div class="node-stat-value" id="mobile-total">0</div>
-                                    <div class="node-stat-label">总节点</div>
-                                </div>
-                                <div class="node-stat-item">
-                                    <div class="node-stat-value" id="mobile-error">0</div>
-                                    <div class="node-stat-label">异常</div>
-                                </div>
-                                <div class="node-stat-item">
-                                    <div class="node-stat-value" id="mobile-rate">0%</div>
-                                    <div class="node-stat-label">连通率</div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="node-stat-card unicom">
-                            <div class="node-stat-title">
-                                <i class="fas fa-broadcast-tower"></i> 联通节点
-                            </div>
-                            <div class="node-stat-content">
-                                <div class="node-stat-item">
-                                    <div class="node-stat-value" id="unicom-total">0</div>
-                                    <div class="node-stat-label">总节点</div>
-                                </div>
-                                <div class="node-stat-item">
-                                    <div class="node-stat-value" id="unicom-error">0</div>
-                                    <div class="node-stat-label">异常</div>
-                                </div>
-                                <div class="node-stat-item">
-                                    <div class="node-stat-value" id="unicom-rate">0%</div>
-                                    <div class="node-stat-label">连通率</div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="node-stat-card telecom">
-                            <div class="node-stat-title">
-                                <i class="fas fa-satellite-dish"></i> 电信节点
-                            </div>
-                            <div class="node-stat-content">
-                                <div class="node-stat-item">
-                                    <div class="node-stat-value" id="telecom-total">0</div>
-                                    <div class="node-stat-label">总节点</div>
-                                </div>
-                                <div class="node-stat-item">
-                                    <div class="node-stat-value" id="telecom-error">0</div>
-                                    <div class="node-stat-label">异常</div>
-                                </div>
-                                <div class="node-stat-item">
-                                    <div class="node-stat-value" id="telecom-rate">0%</div>
-                                    <div class="node-stat-label">连通率</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="node-details" id="node-details">
-                        <h5><i class="fas fa-chart-bar"></i> 节点详细分析</h5>
-                        <div id="node-details-content">
-                            <!-- 节点详情将通过JS动态生成 -->
-                        </div>
-                    </div>
+                    <p>5. 建议安装Tampermonkey扩展以获得最佳体验</p>
                 </div>
                 
                 <!-- 定时测试配置 -->
@@ -1254,9 +1042,6 @@
                         </button>
                         <button class="btn btn-secondary" id="test-now-btn">
                             <i class="fas fa-bolt"></i> 立即测试
-                        </button>
-                        <button class="btn btn-info" id="show-node-analysis-btn" style="display: none;">
-                            <i class="fas fa-chart-bar"></i> 节点分析
                         </button>
                     </div>
                     
@@ -1432,40 +1217,27 @@
 
     <script>
         // ============================================
-        // ITDOG监控系统 v8.0 - 增加节点分析功能
+        // ITDOG监控系统 v8.0 - 修复重复通知和定时器问题
         // ============================================
         document.addEventListener('DOMContentLoaded', function() {
-            // 元素引用 - 新增节点分析元素
+            // 元素引用
             const elements = {
-                // 节点分析元素
-                nodeAnalysisPanel: document.getElementById('node-analysis-panel'),
-                nodeDetails: document.getElementById('node-details'),
-                nodeDetailsContent: document.getElementById('node-details-content'),
-                showNodeAnalysisBtn: document.getElementById('show-node-analysis-btn'),
-                
-                // 运营商节点统计元素
-                mobileTotal: document.getElementById('mobile-total'),
-                mobileError: document.getElementById('mobile-error'),
-                mobileRate: document.getElementById('mobile-rate'),
-                unicomTotal: document.getElementById('unicom-total'),
-                unicomError: document.getElementById('unicom-error'),
-                unicomRate: document.getElementById('unicom-rate'),
-                telecomTotal: document.getElementById('telecom-total'),
-                telecomError: document.getElementById('telecom-error'),
-                telecomRate: document.getElementById('telecom-rate'),
-                
-                // 原有的元素引用保持不变
+                // Telegram配置元素
                 botToken: document.getElementById('bot-token'),
                 chatId: document.getElementById('chat-id'),
                 saveConfigBtn: document.getElementById('save-config-btn'),
                 testConfigBtn: document.getElementById('test-config-btn'),
                 configStatus: document.getElementById('config-status'),
+                
+                // 设置面板元素
                 settingsToggle: document.getElementById('settings-toggle'),
                 settingsPanel: document.getElementById('settings-panel'),
                 connectivityThreshold: document.getElementById('connectivity-threshold'),
                 batchSizeInput: document.getElementById('batch-size'),
                 testDelayInput: document.getElementById('test-delay'),
                 saveSettingsBtn: document.getElementById('save-settings-btn'),
+                
+                // 定时器配置元素
                 timerInterval: document.getElementById('timer-interval'),
                 timerStartTime: document.getElementById('timer-start-time'),
                 timerEndTime: document.getElementById('timer-end-time'),
@@ -1480,6 +1252,8 @@
                 timerControlStart: document.getElementById('timer-control-start'),
                 timerControlStop: document.getElementById('timer-control-stop'),
                 timerControlReset: document.getElementById('timer-control-reset'),
+                
+                // 批量测试元素
                 domains: document.getElementById('domains'),
                 startTestBtn: document.getElementById('start-test-btn'),
                 clearDomainsBtn: document.getElementById('clear-domains-btn'),
@@ -1496,22 +1270,18 @@
                 errorCount: document.getElementById('error-count'),
                 progressText: document.getElementById('progress-text'),
                 progressBar: document.getElementById('progress-bar'),
+                
+                // 监控日志元素
                 monitorLog: document.getElementById('monitor-log'),
+                
+                // 统计元素
                 todayTests: document.getElementById('today-tests'),
                 errorSites: document.getElementById('error-sites'),
                 successSites: document.getElementById('success-sites'),
                 sentNotifications: document.getElementById('sent-notifications')
             };
 
-            // 状态变量 - 新增节点分析数据
-            let nodeAnalysisData = {
-                mobile: { total: 0, success: 0, error: 0, rate: 0, details: [] },
-                unicom: { total: 0, success: 0, error: 0, rate: 0, details: [] },
-                telecom: { total: 0, success: 0, error: 0, rate: 0, details: [] },
-                other: { total: 0, success: 0, error: 0, rate: 0, details: [] }
-            };
-            
-            // 原有的状态变量保持不变
+            // 状态变量
             let telegramConfig = null;
             let domainArray = [];
             let domainStatus = {};
@@ -1520,15 +1290,15 @@
             let isPaused = false;
             let activeTabs = new Map();
             
-            // 配置变量保持不变
+            // 配置变量
             let CONFIG = {
                 connectivityThreshold: 90,
                 batchSize: 6,
                 testDelay: 3000
             };
             
-            // 定时器相关变量保持不变
-            let timerIntervalMs = 120 * 60 * 1000;
+            // 定时器相关变量 - 修复的关键
+            let timerIntervalMs = 120 * 60 * 1000; // 默认120分钟
             let timerActive = false;
             let timerPaused = false;
             let nextTestTime = null;
@@ -1541,7 +1311,7 @@
             let elapsedSeconds = 0;
             let lastTestTime = null;
             
-            // 统计变量保持不变
+            // 统计变量
             let stats = {
                 todayTests: 0,
                 errorSites: 0,
@@ -1554,229 +1324,271 @@
             let sentNotificationsCache = new Set();
             let lastNotificationTime = {};
             
-            // =============== 新增节点分析函数 ===============
-            
-            // 初始化节点分析
-            function initNodeAnalysis() {
-                resetNodeAnalysis();
+            // 初始化
+            function init() {
+                loadConfig();
+                loadSettings();
+                loadTimerConfig();
+                checkDailyReset();
+                setupEventListeners();
                 
-                // 添加节点分析按钮事件
-                elements.showNodeAnalysisBtn.addEventListener('click', function() {
-                    if (elements.nodeAnalysisPanel.style.display === 'none') {
-                        elements.nodeAnalysisPanel.style.display = 'block';
-                        addLog('📊 节点分析面板已显示', 'info');
-                    } else {
-                        elements.nodeAnalysisPanel.style.display = 'none';
-                        addLog('📊 节点分析面板已隐藏', 'info');
+                // 添加欢迎日志
+                addLog('🎉 ITDOG监控系统 v8.0 已启动', 'success');
+                addLog(`⚙️ 连通率阈值: ${CONFIG.connectivityThreshold}%`, 'info');
+                addLog(`⚙️ 批量打开数量: ${CONFIG.batchSize}`, 'info');
+                addLog('💡 请在右侧配置Telegram通知信息', 'info');
+                
+                // 检查定时器状态
+                checkTimerStatus();
+                
+                // 加载已发送通知的缓存
+                loadNotificationCache();
+                
+                console.log('ITDOG监控系统 v8.0 已加载 - 修复定时器和重复通知问题版');
+            }
+
+            // 检查定时器状态
+            function checkTimerStatus() {
+                const timerActiveStr = localStorage.getItem('timer_active');
+                if (timerActiveStr === 'true') {
+                    startTimer();
+                }
+            }
+
+            // 加载配置
+            function loadConfig() {
+                try {
+                    // 加载Telegram配置
+                    const configStr = localStorage.getItem('telegram_config');
+                    if (configStr) {
+                        telegramConfig = JSON.parse(configStr);
+                        elements.botToken.value = telegramConfig.botToken || '';
+                        elements.chatId.value = telegramConfig.chatId || '';
+                    }
+                    
+                    // 加载域名列表
+                    const domainsConfig = localStorage.getItem('domains_config');
+                    if (domainsConfig) {
+                        elements.domains.value = domainsConfig;
+                    }
+                    
+                    // 加载统计信息
+                    const statsConfig = localStorage.getItem('monitor_stats');
+                    if (statsConfig) {
+                        const savedStats = JSON.parse(statsConfig);
+                        if (savedStats.lastReset === new Date().toDateString()) {
+                            stats = savedStats;
+                            updateStatsDisplay();
+                        } else {
+                            resetDailyStats();
+                        }
+                    }
+                    
+                } catch (error) {
+                    console.error('加载配置失败:', error);
+                }
+            }
+
+            // 加载已发送通知的缓存
+            function loadNotificationCache() {
+                try {
+                    const cacheStr = localStorage.getItem('notification_cache');
+                    if (cacheStr) {
+                        const cache = JSON.parse(cacheStr);
+                        sentNotificationsCache = new Set(cache.sentNotifications || []);
+                        lastNotificationTime = cache.lastNotificationTime || {};
+                        
+                        // 清理过期的缓存（超过1小时的）
+                        const now = Date.now();
+                        const oneHourAgo = now - 3600000;
+                        
+                        for (const domain in lastNotificationTime) {
+                            if (lastNotificationTime[domain] < oneHourAgo) {
+                                delete lastNotificationTime[domain];
+                                sentNotificationsCache.delete(domain);
+                            }
+                        }
+                    }
+                } catch (error) {
+                    console.error('加载通知缓存失败:', error);
+                }
+            }
+
+            // 保存通知缓存
+            function saveNotificationCache() {
+                try {
+                    const cache = {
+                        sentNotifications: Array.from(sentNotificationsCache),
+                        lastNotificationTime: lastNotificationTime,
+                        lastUpdated: Date.now()
+                    };
+                    localStorage.setItem('notification_cache', JSON.stringify(cache));
+                } catch (error) {
+                    console.error('保存通知缓存失败:', error);
+                }
+            }
+
+            // 加载设置
+            function loadSettings() {
+                try {
+                    const settingsStr = localStorage.getItem('system_settings');
+                    if (settingsStr) {
+                        const settings = JSON.parse(settingsStr);
+                        CONFIG.connectivityThreshold = settings.connectivityThreshold || 90;
+                        CONFIG.batchSize = Math.min(6, Math.max(1, settings.batchSize || 6));
+                        CONFIG.testDelay = settings.testDelay || 3000;
+                        
+                        elements.connectivityThreshold.value = CONFIG.connectivityThreshold;
+                        elements.batchSizeInput.value = CONFIG.batchSize;
+                        elements.testDelayInput.value = CONFIG.testDelay;
+                    }
+                } catch (error) {
+                    console.error('加载设置失败:', error);
+                }
+            }
+
+            // 保存设置
+            function saveSettings() {
+                try {
+                    CONFIG.connectivityThreshold = parseInt(elements.connectivityThreshold.value) || 90;
+                    CONFIG.batchSize = Math.min(6, Math.max(1, parseInt(elements.batchSizeInput.value) || 6));
+                    CONFIG.testDelay = parseInt(elements.testDelayInput.value) || 3000;
+                    
+                    const settings = {
+                        connectivityThreshold: CONFIG.connectivityThreshold,
+                        batchSize: CONFIG.batchSize,
+                        testDelay: CONFIG.testDelay
+                    };
+                    
+                    localStorage.setItem('system_settings', JSON.stringify(settings));
+                    
+                    addLog(`✅ 设置已保存: 阈值=${CONFIG.connectivityThreshold}%, 批量=${CONFIG.batchSize}, 延迟=${CONFIG.testDelay}ms`, 'success');
+                    
+                    // 关闭设置面板
+                    elements.settingsPanel.style.display = 'none';
+                    
+                } catch (error) {
+                    console.error('保存设置失败:', error);
+                    addLog('❌ 保存设置失败', 'error');
+                }
+            }
+
+            // 加载定时器配置
+            function loadTimerConfig() {
+                try {
+                    const timerConfigStr = localStorage.getItem('timer_config');
+                    if (timerConfigStr) {
+                        const config = JSON.parse(timerConfigStr);
+                        elements.timerInterval.value = config.interval || 120;
+                        elements.timerStartTime.value = config.startTime || '08:00';
+                        elements.timerEndTime.value = config.endTime || '22:00';
+                        elements.timerMode.value = config.mode || 'continuous';
+                        
+                        timerIntervalMs = (config.interval || 120) * 60 * 1000;
+                        timerStartTime = config.startTime || '08:00';
+                        timerEndTime = config.endTime || '22:00';
+                        timerMode = config.mode || 'continuous';
+                    }
+                } catch (error) {
+                    console.error('加载定时器配置失败:', error);
+                }
+            }
+
+            // 保存定时器配置
+            function saveTimerConfig() {
+                try {
+                    const intervalMinutes = parseInt(elements.timerInterval.value) || 120;
+                    const config = {
+                        interval: intervalMinutes,
+                        startTime: elements.timerStartTime.value,
+                        endTime: elements.timerEndTime.value,
+                        mode: elements.timerMode.value
+                    };
+                    
+                    localStorage.setItem('timer_config', JSON.stringify(config));
+                    
+                    timerIntervalMs = config.interval * 60 * 1000;
+                    timerStartTime = config.startTime;
+                    timerEndTime = config.endTime;
+                    timerMode = config.mode;
+                    
+                    addLog(`📅 定时器配置已保存: 间隔=${intervalMinutes}分钟, 时间=${timerStartTime}-${timerEndTime}, 模式=${timerMode}`, 'info');
+                    
+                    if (timerActive) {
+                        restartTimer();
+                    }
+                } catch (error) {
+                    console.error('保存定时器配置失败:', error);
+                    addLog('❌ 保存定时器配置失败', 'error');
+                }
+            }
+
+            // 设置事件监听器
+            function setupEventListeners() {
+                // 设置面板切换
+                elements.settingsToggle.addEventListener('click', () => {
+                    elements.settingsPanel.style.display = 
+                        elements.settingsPanel.style.display === 'none' ? 'block' : 'none';
+                });
+                
+                // 保存设置
+                elements.saveSettingsBtn.addEventListener('click', saveSettings);
+                
+                // Telegram配置事件
+                elements.saveConfigBtn.addEventListener('click', saveConfig);
+                elements.testConfigBtn.addEventListener('click', testConfig);
+                
+                // 定时器配置事件
+                elements.timerInterval.addEventListener('change', saveTimerConfig);
+                elements.timerStartTime.addEventListener('change', saveTimerConfig);
+                elements.timerEndTime.addEventListener('change', saveTimerConfig);
+                elements.timerMode.addEventListener('change', saveTimerConfig);
+                
+                elements.startTimerBtn.addEventListener('click', startTimer);
+                elements.stopTimerBtn.addEventListener('click', stopTimer);
+                elements.testNowBtn.addEventListener('click', () => {
+                    if (!telegramConfig) {
+                        showStatus('请先配置Telegram信息', 'error');
+                        return;
+                    }
+                    startBatchTest();
+                });
+                
+                elements.timerControlStart.addEventListener('click', () => {
+                    if (timerActive && timerPaused) {
+                        resumeTimer();
+                    } else if (!timerActive) {
+                        startTimer();
                     }
                 });
-            }
-            
-            // 重置节点分析数据
-            function resetNodeAnalysis() {
-                nodeAnalysisData = {
-                    mobile: { total: 0, success: 0, error: 0, rate: 0, details: [] },
-                    unicom: { total: 0, success: 0, error: 0, rate: 0, details: [] },
-                    telecom: { total: 0, success: 0, error: 0, rate: 0, details: [] },
-                    other: { total: 0, success: 0, error: 0, rate: 0, details: [] }
-                };
-                updateNodeAnalysisDisplay();
-            }
-            
-            // 分析节点数据
-            function analyzeNodeData(itdogData) {
-                if (!itdogData || !itdogData.nodeResults) {
-                    console.warn('ITDOG数据不完整，无法进行节点分析');
-                    return;
-                }
                 
-                resetNodeAnalysis();
-                
-                const nodeResults = itdogData.nodeResults;
-                const success200Tests = itdogData.success200Tests || 0;
-                const totalTests = itdogData.totalTests || 0;
-                
-                // 模拟节点数据（因为实际ITDOG数据可能不包含节点类型）
-                // 这里根据连通率来模拟各运营商的节点表现
-                const simulatedNodeTypes = ['移动', '联通', '电信', '其他'];
-                const successRate = success200Tests / totalTests;
-                
-                // 模拟各运营商节点的表现
-                simulatedNodeTypes.forEach(type => {
-                    const baseCount = Math.floor(totalTests / 4);
-                    const baseSuccess = Math.floor(baseCount * successRate);
-                    const baseError = baseCount - baseSuccess;
-                    
-                    // 添加一些随机性，让数据更真实
-                    const randomFactor = 0.8 + Math.random() * 0.4; // 0.8-1.2的随机因子
-                    const adjustedSuccess = Math.floor(baseSuccess * randomFactor);
-                    const adjustedError = baseCount - adjustedSuccess;
-                    
-                    // 确保数据合理性
-                    const finalSuccess = Math.max(0, Math.min(baseCount, adjustedSuccess));
-                    const finalError = baseCount - finalSuccess;
-                    
-                    if (type === '移动') {
-                        nodeAnalysisData.mobile.total = baseCount;
-                        nodeAnalysisData.mobile.success = finalSuccess;
-                        nodeAnalysisData.mobile.error = finalError;
-                        nodeAnalysisData.mobile.rate = Math.round((finalSuccess / baseCount) * 100);
-                        
-                        // 模拟移动节点详情
-                        nodeAnalysisData.mobile.details = [
-                            { name: '北京移动', success: Math.floor(finalSuccess * 0.3), error: Math.floor(finalError * 0.3) },
-                            { name: '上海移动', success: Math.floor(finalSuccess * 0.25), error: Math.floor(finalError * 0.25) },
-                            { name: '广州移动', success: Math.floor(finalSuccess * 0.2), error: Math.floor(finalError * 0.2) },
-                            { name: '其他移动', success: finalSuccess - Math.floor(finalSuccess * 0.75), error: finalError - Math.floor(finalError * 0.75) }
-                        ];
-                    } else if (type === '联通') {
-                        nodeAnalysisData.unicom.total = baseCount;
-                        nodeAnalysisData.unicom.success = finalSuccess;
-                        nodeAnalysisData.unicom.error = finalError;
-                        nodeAnalysisData.unicom.rate = Math.round((finalSuccess / baseCount) * 100);
-                        
-                        // 模拟联通节点详情
-                        nodeAnalysisData.unicom.details = [
-                            { name: '北京联通', success: Math.floor(finalSuccess * 0.3), error: Math.floor(finalError * 0.3) },
-                            { name: '上海联通', success: Math.floor(finalSuccess * 0.25), error: Math.floor(finalError * 0.25) },
-                            { name: '广州联通', success: Math.floor(finalSuccess * 0.2), error: Math.floor(finalError * 0.2) },
-                            { name: '其他联通', success: finalSuccess - Math.floor(finalSuccess * 0.75), error: finalError - Math.floor(finalError * 0.75) }
-                        ];
-                    } else if (type === '电信') {
-                        nodeAnalysisData.telecom.total = baseCount;
-                        nodeAnalysisData.telecom.success = finalSuccess;
-                        nodeAnalysisData.telecom.error = finalError;
-                        nodeAnalysisData.telecom.rate = Math.round((finalSuccess / baseCount) * 100);
-                        
-                        // 模拟电信节点详情
-                        nodeAnalysisData.telecom.details = [
-                            { name: '北京电信', success: Math.floor(finalSuccess * 0.3), error: Math.floor(finalError * 0.3) },
-                            { name: '上海电信', success: Math.floor(finalSuccess * 0.25), error: Math.floor(finalError * 0.25) },
-                            { name: '广州电信', success: Math.floor(finalSuccess * 0.2), error: Math.floor(finalError * 0.2) },
-                            { name: '其他电信', success: finalSuccess - Math.floor(finalSuccess * 0.75), error: finalError - Math.floor(finalError * 0.75) }
-                        ];
-                    } else {
-                        nodeAnalysisData.other.total = baseCount;
-                        nodeAnalysisData.other.success = finalSuccess;
-                        nodeAnalysisData.other.error = finalError;
-                        nodeAnalysisData.other.rate = Math.round((finalSuccess / baseCount) * 100);
+                elements.timerControlStop.addEventListener('click', () => {
+                    if (timerActive && !timerPaused) {
+                        pauseTimer();
                     }
                 });
                 
-                updateNodeAnalysisDisplay();
+                elements.timerControlReset.addEventListener('click', resetTimer);
                 
-                // 显示节点分析面板
-                elements.nodeAnalysisPanel.style.display = 'block';
-                elements.showNodeAnalysisBtn.style.display = 'flex';
-                addLog('📊 节点分析数据已更新', 'info');
+                // 批量测试事件
+                elements.startTestBtn.addEventListener('click', startBatchTest);
+                elements.clearDomainsBtn.addEventListener('click', () => {
+                    elements.domains.value = '';
+                    localStorage.removeItem('domains_config');
+                    showStatus('域名列表已清空', 'info');
+                    addLog('🗑️ 域名列表已清空', 'info');
+                });
+                
+                elements.loadExampleBtn.addEventListener('click', loadExampleDomains);
+                elements.pauseBtn.addEventListener('click', pauseTest);
+                elements.stopBtn.addEventListener('click', stopTest);
+                elements.exportResultsBtn.addEventListener('click', exportResults);
+                
+                // 监听来自ITDOG页面的消息
+                window.addEventListener('message', handleITDOGMessage);
             }
-            
-            // 更新节点分析显示
-            function updateNodeAnalysisDisplay() {
-                // 更新运营商统计
-                elements.mobileTotal.textContent = nodeAnalysisData.mobile.total;
-                elements.mobileError.textContent = nodeAnalysisData.mobile.error;
-                elements.mobileRate.textContent = nodeAnalysisData.mobile.rate + '%';
-                
-                elements.unicomTotal.textContent = nodeAnalysisData.unicom.total;
-                elements.unicomError.textContent = nodeAnalysisData.unicom.error;
-                elements.unicomRate.textContent = nodeAnalysisData.unicom.rate + '%';
-                
-                elements.telecomTotal.textContent = nodeAnalysisData.telecom.total;
-                elements.telecomError.textContent = nodeAnalysisData.telecom.error;
-                elements.telecomRate.textContent = nodeAnalysisData.telecom.rate + '%';
-                
-                // 更新节点详情
-                updateNodeDetails();
-            }
-            
-            // 更新节点详情
-            function updateNodeDetails() {
-                elements.nodeDetailsContent.innerHTML = '';
-                
-                // 显示移动节点详情
-                if (nodeAnalysisData.mobile.details && nodeAnalysisData.mobile.details.length > 0) {
-                    const mobileSection = document.createElement('div');
-                    mobileSection.innerHTML = '<div style="margin: 15px 0 10px 0; font-weight: 600; color: var(--mobile-color);"><i class="fas fa-signal"></i> 移动节点详情</div>';
-                    elements.nodeDetailsContent.appendChild(mobileSection);
-                    
-                    nodeAnalysisData.mobile.details.forEach(detail => {
-                        const total = detail.success + detail.error;
-                        const errorRate = total > 0 ? Math.round((detail.error / total) * 100) : 0;
-                        
-                        const detailItem = document.createElement('div');
-                        detailItem.className = 'node-detail-item';
-                        detailItem.innerHTML = `
-                            <div class="node-detail-name">${detail.name}</div>
-                            <div class="node-detail-stats">
-                                <span>正常: ${detail.success}</span>
-                                <span>异常: ${detail.error}</span>
-                                <span>异常率: ${errorRate}%</span>
-                            </div>
-                        `;
-                        elements.nodeDetailsContent.appendChild(detailItem);
-                    });
-                }
-                
-                // 显示联通节点详情
-                if (nodeAnalysisData.unicom.details && nodeAnalysisData.unicom.details.length > 0) {
-                    const unicomSection = document.createElement('div');
-                    unicomSection.innerHTML = '<div style="margin: 15px 0 10px 0; font-weight: 600; color: var(--unicom-color);"><i class="fas fa-broadcast-tower"></i> 联通节点详情</div>';
-                    elements.nodeDetailsContent.appendChild(unicomSection);
-                    
-                    nodeAnalysisData.unicom.details.forEach(detail => {
-                        const total = detail.success + detail.error;
-                        const errorRate = total > 0 ? Math.round((detail.error / total) * 100) : 0;
-                        
-                        const detailItem = document.createElement('div');
-                        detailItem.className = 'node-detail-item';
-                        detailItem.innerHTML = `
-                            <div class="node-detail-name">${detail.name}</div>
-                            <div class="node-detail-stats">
-                                <span>正常: ${detail.success}</span>
-                                <span>异常: ${detail.error}</span>
-                                <span>异常率: ${errorRate}%</span>
-                            </div>
-                        `;
-                        elements.nodeDetailsContent.appendChild(detailItem);
-                    });
-                }
-                
-                // 显示电信节点详情
-                if (nodeAnalysisData.telecom.details && nodeAnalysisData.telecom.details.length > 0) {
-                    const telecomSection = document.createElement('div');
-                    telecomSection.innerHTML = '<div style="margin: 15px 0 10px 0; font-weight: 600; color: var(--telecom-color);"><i class="fas fa-satellite-dish"></i> 电信节点详情</div>';
-                    elements.nodeDetailsContent.appendChild(telecomSection);
-                    
-                    nodeAnalysisData.telecom.details.forEach(detail => {
-                        const total = detail.success + detail.error;
-                        const errorRate = total > 0 ? Math.round((detail.error / total) * 100) : 0;
-                        
-                        const detailItem = document.createElement('div');
-                        detailItem.className = 'node-detail-item';
-                        detailItem.innerHTML = `
-                            <div class="node-detail-name">${detail.name}</div>
-                            <div class="node-detail-stats">
-                                <span>正常: ${detail.success}</span>
-                                <span>异常: ${detail.error}</span>
-                                <span>异常率: ${errorRate}%</span>
-                            </div>
-                        `;
-                        elements.nodeDetailsContent.appendChild(detailItem);
-                    });
-                }
-                
-                // 如果有节点详情，显示详情区域
-                if (nodeAnalysisData.mobile.details.length > 0 || 
-                    nodeAnalysisData.unicom.details.length > 0 || 
-                    nodeAnalysisData.telecom.details.length > 0) {
-                    elements.nodeDetails.style.display = 'block';
-                }
-            }
-            
-            // =============== 修改原有的消息处理函数 ===============
-            
-            // 处理ITDOG消息 - 增强版
+
+            // 处理ITDOG消息 - 修复重复通知的关键
             function handleITDOGMessage(event) {
                 if (event.data && event.data.type === 'ITDOG_TEST_RESULT') {
                     const data = event.data;
@@ -1802,15 +1614,12 @@
                         activeTabs.delete(domainIndex);
                         updateProgress();
                         
-                        // 分析节点数据
-                        analyzeNodeData(data);
-                        
                         if (isLowRate) {
                             addLog(`⚠️ ${domain} - 连通率: ${rate}% (低于${CONFIG.connectivityThreshold}%)`, 'warning');
                             
                             // 检查是否应该发送通知
                             if (shouldSendNotification(domain)) {
-                                sendEnhancedNotification(domain, data)
+                                sendLowRateNotification(domain, data)
                                     .then(success => {
                                         if (success) {
                                             addLog(`📤 Telegram通知已发送: ${domain}`, 'success');
@@ -1834,11 +1643,785 @@
                     }
                 }
             }
+
+            // =============== 修复重复通知的核心函数 ===============
             
-            // =============== 修改原有的通知函数 ===============
+            // 检查是否应该发送通知
+            function shouldSendNotification(domain) {
+                const now = Date.now();
+                const lastTime = lastNotificationTime[domain];
+                
+                // 如果这个域名已经发送过通知
+                if (sentNotificationsCache.has(domain)) {
+                    // 检查是否超过30分钟（1800000毫秒）
+                    if (lastTime && (now - lastTime < 1800000)) {
+                        return false; // 30分钟内不重复发送
+                    }
+                }
+                
+                return true;
+            }
             
-            // 发送增强的通知（包含节点分析）
-            function sendEnhancedNotification(domain, results) {
+            // 标记通知已发送
+            function markNotificationSent(domain) {
+                sentNotificationsCache.add(domain);
+                lastNotificationTime[domain] = Date.now();
+                saveNotificationCache();
+            }
+            
+            // 清空通知缓存（在开始新的测试批次时调用）
+            function clearNotificationCacheForNewTest() {
+                // 不清空整个缓存，只清空与当前测试批次相关的域名
+                for (const domain of domainArray) {
+                    sentNotificationsCache.delete(domain);
+                    delete lastNotificationTime[domain];
+                }
+                saveNotificationCache();
+            }
+
+            // 保存配置
+            function saveConfig() {
+                const botToken = elements.botToken.value.trim();
+                const chatId = elements.chatId.value.trim();
+                
+                if (!botToken) {
+                    showStatus('请输入Bot Token', 'error');
+                    return;
+                }
+                
+                if (!chatId) {
+                    showStatus('请输入Chat ID', 'error');
+                    return;
+                }
+                
+                if (!botToken.match(/^\d+:[A-Za-z0-9_-]+$/)) {
+                    showStatus('Bot Token格式不正确', 'error');
+                    return;
+                }
+                
+                try {
+                    telegramConfig = {
+                        botToken: botToken,
+                        chatId: chatId,
+                        lastUpdated: new Date().toISOString()
+                    };
+                    
+                    localStorage.setItem('telegram_config', JSON.stringify(telegramConfig));
+                    showStatus('Telegram配置保存成功', 'success');
+                    addLog('✅ Telegram配置已保存', 'info');
+                } catch (error) {
+                    showStatus('保存失败: ' + error.message, 'error');
+                    addLog('❌ 保存配置失败: ' + error.message, 'error');
+                }
+            }
+
+            // 测试配置
+            function testConfig() {
+                if (!telegramConfig) {
+                    showStatus('请先保存配置', 'error');
+                    return;
+                }
+                
+                const { botToken, chatId } = telegramConfig;
+                
+                showStatus('正在测试Telegram连接...', 'info');
+                addLog('🔗 测试Telegram连接...', 'info');
+                
+                const now = new Date();
+                const currentTime = now.toLocaleString('zh-CN', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit',
+                    hour12: false
+                }).replace(/\//g, '-');
+                
+                const testMessage = `📱 *ITDOG监控系统 v8.0 - 连接测试*\n\n` +
+                    `✅ *测试状态:* 连接成功\n` +
+                    `🕐 *测试时间:* ${currentTime}\n` +
+                    `📊 *系统版本:* v8.0\n` +
+                    `🔧 *配置状态:* 已验证\n\n` +
+                    `系统已准备就绪，可以开始网站监控任务。`;
+                
+                sendTelegramMessage(testMessage)
+                    .then(response => {
+                        if (response.ok) {
+                            showStatus('✅ Telegram连接测试成功，请检查Telegram消息', 'success');
+                            addLog('✅ Telegram连接测试成功', 'success');
+                        } else {
+                            showStatus('❌ Telegram连接失败: ' + (response.description || '未知错误'), 'error');
+                            addLog('❌ Telegram连接失败: ' + response.description, 'error');
+                        }
+                    })
+                    .catch(error => {
+                        showStatus('❌ 网络错误: ' + error.message, 'error');
+                        addLog('❌ 网络错误: ' + error.message, 'error');
+                    });
+            }
+
+            // 开始定时器 - 修复的关键函数
+            function startTimer() {
+                if (timerActive) {
+                    showStatus('定时器已经在运行', 'info');
+                    return;
+                }
+                
+                saveTimerConfig();
+                timerActive = true;
+                timerPaused = false;
+                startTime = Date.now();
+                elapsedSeconds = 0;
+                lastTestTime = null;
+                
+                localStorage.setItem('timer_active', 'true');
+                
+                elements.timerStatus.style.display = 'block';
+                elements.timerStatus.className = 'timer-status timer-active';
+                elements.timerState.textContent = '运行中';
+                
+                updateTimerDisplay();
+                scheduleNextTest();
+                startElapsedTimer();
+                
+                addLog('⏰ 定时测试已启动', 'success');
+                addLog(`📅 测试间隔: ${elements.timerInterval.value}分钟 (${timerIntervalMs/60000}分钟)`, 'info');
+                addLog(`⏰ 时间范围: ${timerStartTime} - ${timerEndTime}`, 'info');
+                showStatus('定时测试已启动', 'success');
+            }
+
+            // 停止定时器
+            function stopTimer() {
+                if (!timerActive) {
+                    showStatus('定时器未运行', 'info');
+                    return;
+                }
+                
+                timerActive = false;
+                timerPaused = false;
+                
+                localStorage.setItem('timer_active', 'false');
+                
+                if (timerIntervalId) {
+                    clearTimeout(timerIntervalId);
+                    timerIntervalId = null;
+                }
+                
+                if (elapsedTimerId) {
+                    clearInterval(elapsedTimerId);
+                    elapsedTimerId = null;
+                }
+                
+                elements.timerStatus.className = 'timer-status timer-stopped';
+                elements.timerState.textContent = '已停止';
+                elements.nextTestTime.textContent = '--:--';
+                
+                addLog('⏰ 定时测试已停止', 'warning');
+                showStatus('定时测试已停止', 'info');
+            }
+
+            // 暂停定时器
+            function pauseTimer() {
+                if (!timerActive || timerPaused) return;
+                
+                timerPaused = true;
+                
+                if (timerIntervalId) {
+                    clearTimeout(timerIntervalId);
+                    timerIntervalId = null;
+                }
+                
+                if (elapsedTimerId) {
+                    clearInterval(elapsedTimerId);
+                    elapsedTimerId = null;
+                }
+                
+                elements.timerState.textContent = '已暂停';
+                elements.timerStatus.className = 'timer-status';
+                
+                addLog('⏰ 定时测试已暂停', 'warning');
+            }
+
+            // 恢复定时器
+            function resumeTimer() {
+                if (!timerActive || !timerPaused) return;
+                
+                timerPaused = false;
+                startTime = Date.now() - (elapsedSeconds * 1000);
+                
+                elements.timerState.textContent = '运行中';
+                elements.timerStatus.className = 'timer-status timer-active';
+                
+                scheduleNextTest();
+                startElapsedTimer();
+                
+                addLog('⏰ 定时测试已恢复', 'success');
+            }
+
+            // 重置定时器
+            function resetTimer() {
+                stopTimer();
+                startTimer();
+            }
+
+            // 重启定时器
+            function restartTimer() {
+                if (timerActive) {
+                    stopTimer();
+                    startTimer();
+                }
+            }
+
+            // 计划下一次测试 - 修复的关键函数
+            function scheduleNextTest() {
+                if (timerIntervalId) {
+                    clearTimeout(timerIntervalId);
+                }
+                
+                if (!timerActive || timerPaused) return;
+                
+                const now = new Date();
+                const currentTime = now.getTime();
+                
+                // 解析开始和结束时间
+                const [startHour, startMinute] = timerStartTime.split(':').map(Number);
+                const [endHour, endMinute] = timerEndTime.split(':').map(Number);
+                
+                const startTimeToday = new Date(now);
+                startTimeToday.setHours(startHour, startMinute, 0, 0);
+                
+                const endTimeToday = new Date(now);
+                endTimeToday.setHours(endHour, endMinute, 0, 0);
+                
+                // 检查当前时间是否在允许测试的时间范围内
+                const isWithinTimeRange = currentTime >= startTimeToday.getTime() && 
+                                        currentTime <= endTimeToday.getTime();
+                
+                // 检查是否为允许的日期
+                const dayOfWeek = now.getDay(); // 0=周日, 1=周一, ..., 6=周六
+                let isAllowedDay = true;
+                
+                if (timerMode === 'workday') {
+                    isAllowedDay = dayOfWeek >= 1 && dayOfWeek <= 5; // 周一至周五
+                } else if (timerMode === 'weekend') {
+                    isAllowedDay = dayOfWeek === 0 || dayOfWeek === 6; // 周六和周日
+                } else if (timerMode === 'daily') {
+                    // 每日模式，只执行一次
+                    if (lastTestTime && lastTestTime.toDateString() === now.toDateString()) {
+                        // 今天已经测试过，安排明天的测试
+                        startTimeToday.setDate(startTimeToday.getDate() + 1);
+                        nextTestTime = startTimeToday;
+                        const delay = nextTestTime.getTime() - currentTime;
+                        
+                        timerIntervalId = setTimeout(() => {
+                            if (timerActive && !timerPaused) {
+                                startBatchTest();
+                                scheduleNextTest();
+                            }
+                        }, delay);
+                        
+                        updateTimerDisplay();
+                        addLog(`📅 每日模式：下次测试安排到明天 ${timerStartTime}`, 'info');
+                        return;
+                    }
+                }
+                
+                if (isWithinTimeRange && isAllowedDay) {
+                    // 在允许的时间和日期范围内
+                    if (!lastTestTime) {
+                        // 第一次运行，立即执行（加上随机延迟）
+                        const randomDelay = Math.floor(Math.random() * 10000); // 0-10秒随机延迟
+                        nextTestTime = new Date(currentTime + randomDelay);
+                        
+                        timerIntervalId = setTimeout(() => {
+                            if (timerActive && !timerPaused) {
+                                startBatchTest();
+                                scheduleNextTest();
+                            }
+                        }, randomDelay);
+                        
+                        addLog(`⏰ 立即执行第一次测试（随机延迟${randomDelay/1000}秒）`, 'info');
+                    } else {
+                        const timeSinceLastTest = currentTime - lastTestTime.getTime();
+                        
+                        if (timeSinceLastTest >= timerIntervalMs) {
+                            // 已经超过间隔时间，立即执行
+                            const randomDelay = Math.floor(Math.random() * 5000); // 0-5秒随机延迟
+                            nextTestTime = new Date(currentTime + randomDelay);
+                            
+                            timerIntervalId = setTimeout(() => {
+                                if (timerActive && !timerPaused) {
+                                    startBatchTest();
+                                    scheduleNextTest();
+                                }
+                            }, randomDelay);
+                            
+                            addLog(`⏰ 已超过间隔时间，立即执行测试（随机延迟${randomDelay/1000}秒）`, 'info');
+                        } else {
+                            // 等待到下一次测试时间
+                            const timeUntilNextTest = timerIntervalMs - timeSinceLastTest;
+                            nextTestTime = new Date(currentTime + timeUntilNextTest);
+                            
+                            timerIntervalId = setTimeout(() => {
+                                if (timerActive && !timerPaused) {
+                                    startBatchTest();
+                                    scheduleNextTest();
+                                }
+                            }, timeUntilNextTest);
+                            
+                            const nextMinutes = Math.floor(timeUntilNextTest / 60000);
+                            const nextSeconds = Math.floor((timeUntilNextTest % 60000) / 1000);
+                            addLog(`⏰ 下一次测试在 ${nextMinutes}分${nextSeconds}秒后`, 'info');
+                        }
+                    }
+                } else {
+                    // 不在允许的时间范围内，安排到下一个允许的时间
+                    let nextStartTime = new Date(startTimeToday);
+                    
+                    // 如果当前时间已超过今天的结束时间，则安排到明天
+                    if (currentTime > endTimeToday.getTime()) {
+                        nextStartTime.setDate(nextStartTime.getDate() + 1);
+                    }
+                    
+                    // 如果是工作日/周末模式，需要找到下一个允许的日期
+                    if (timerMode === 'workday' || timerMode === 'weekend') {
+                        while (true) {
+                            const nextDayOfWeek = nextStartTime.getDay();
+                            const isNextDayAllowed = (timerMode === 'workday' && nextDayOfWeek >= 1 && nextDayOfWeek <= 5) ||
+                                                    (timerMode === 'weekend' && (nextDayOfWeek === 0 || nextDayOfWeek === 6));
+                            
+                            if (isNextDayAllowed) break;
+                            nextStartTime.setDate(nextStartTime.getDate() + 1);
+                        }
+                    }
+                    
+                    nextTestTime = nextStartTime;
+                    const delay = nextTestTime.getTime() - currentTime;
+                    
+                    timerIntervalId = setTimeout(() => {
+                        if (timerActive && !timerPaused) {
+                            startBatchTest();
+                            scheduleNextTest();
+                        }
+                    }, delay);
+                    
+                    const delayHours = Math.floor(delay / 3600000);
+                    const delayMinutes = Math.floor((delay % 3600000) / 60000);
+                    addLog(`📅 不在允许时间范围内，下次测试安排到 ${nextStartTime.getHours().toString().padStart(2, '0')}:${nextStartTime.getMinutes().toString().padStart(2, '0')} (${delayHours}小时${delayMinutes}分钟后)`, 'info');
+                }
+                
+                updateTimerDisplay();
+            }
+
+            // 启动耗时计时器
+            function startElapsedTimer() {
+                if (elapsedTimerId) {
+                    clearInterval(elapsedTimerId);
+                }
+                
+                elapsedTimerId = setInterval(() => {
+                    if (timerActive && !timerPaused) {
+                        elapsedSeconds++;
+                        updateTimerDisplay();
+                    }
+                }, 1000);
+            }
+
+            // 更新定时器显示
+            function updateTimerDisplay() {
+                if (nextTestTime) {
+                    const hours = nextTestTime.getHours().toString().padStart(2, '0');
+                    const minutes = nextTestTime.getMinutes().toString().padStart(2, '0');
+                    elements.nextTestTime.textContent = `${hours}:${minutes}`;
+                }
+                
+                const hours = Math.floor(elapsedSeconds / 3600);
+                const minutes = Math.floor((elapsedSeconds % 3600) / 60);
+                const seconds = elapsedSeconds % 60;
+                elements.elapsedTime.textContent = 
+                    `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }
+
+            // 开始批量测试
+            function startBatchTest() {
+                const domains = elements.domains.value.trim();
+                if (!domains) {
+                    showStatus('请输入要测试的网站地址', 'error');
+                    return;
+                }
+                
+                if (!telegramConfig) {
+                    showStatus('请先配置Telegram信息', 'error');
+                    return;
+                }
+                
+                localStorage.setItem('domains_config', domains);
+                
+                domainArray = domains.split('\n')
+                    .map(domain => domain.trim())
+                    .filter(domain => domain.length > 0);
+                
+                if (domainArray.length === 0) return;
+                
+                // 清空当前批次的通知缓存
+                clearNotificationCacheForNewTest();
+                
+                elements.domainsContainer.innerHTML = '';
+                domainStatus = {};
+                
+                domainArray.forEach((domain, index) => {
+                    domainStatus[index] = { status: 'pending', rate: 0 };
+                    
+                    const item = document.createElement('div');
+                    item.className = 'domain-item';
+                    item.dataset.index = index;
+                    item.innerHTML = `
+                        <div class="domain-name">${index + 1}. ${domain}</div>
+                        <div class="domain-status status-pending" id="status-${index}">等待测试</div>
+                    `;
+                    elements.domainsContainer.appendChild(item);
+                });
+                
+                elements.domainList.style.display = 'block';
+                elements.testControls.style.display = 'block';
+                
+                currentIndex = 0;
+                isTesting = true;
+                isPaused = false;
+                activeTabs.clear();
+                
+                elements.testedCount.textContent = '0';
+                elements.activeCount.textContent = '0';
+                elements.pendingCount.textContent = domainArray.length;
+                elements.errorCount.textContent = '0';
+                elements.progressText.textContent = `0/${domainArray.length}`;
+                elements.progressBar.style.width = '0%';
+                
+                addLog(`🚀 开始批量测试，共 ${domainArray.length} 个域名`, 'info');
+                stats.todayTests += domainArray.length;
+                updateStatsDisplay();
+                saveStats();
+                
+                // 记录定时测试时间
+                if (timerActive) {
+                    lastTestTime = new Date();
+                    addLog(`⏰ 定时测试执行中... 下一次将在${Math.floor(timerIntervalMs/60000)}分钟后`, 'info');
+                }
+                
+                openNextBatch();
+            }
+
+            // 打开下一批标签页
+            function openNextBatch() {
+                if (!isTesting || isPaused || currentIndex >= domainArray.length) {
+                    checkTestCompletion();
+                    return;
+                }
+                
+                // 计算当前可以打开的标签页数量
+                const availableSlots = Math.max(0, CONFIG.batchSize - activeTabs.size);
+                if (availableSlots <= 0) {
+                    // 没有可用槽位，等待一段时间再试
+                    setTimeout(() => openNextBatch(), 1000);
+                    return;
+                }
+                
+                const batchCount = Math.min(availableSlots, domainArray.length - currentIndex);
+                addLog(`📂 打开批次 ${Math.floor(currentIndex / CONFIG.batchSize) + 1}，共 ${batchCount} 个域名`, 'info');
+                
+                for (let i = 0; i < batchCount; i++) {
+                    const domainIndex = currentIndex + i;
+                    const domain = domainArray[domainIndex];
+                    
+                    updateDomainStatus(domainIndex, 'testing', 0);
+                    
+                    setTimeout(() => {
+                        openITDOGTab(domain, domainIndex);
+                    }, i * 1000);
+                }
+                
+                currentIndex += batchCount;
+                updateProgress();
+                
+                // 如果还有域名未处理，安排下一批次（延迟打开）
+                if (currentIndex < domainArray.length && !isPaused) {
+                    setTimeout(() => openNextBatch(), CONFIG.testDelay);
+                }
+            }
+
+            // 打开ITDOG标签页
+            function openITDOGTab(originalDomain, index) {
+                try {
+                    // 直接使用原始域名，不进行额外处理
+                    const domainForQuery = encodeURIComponent(originalDomain);
+                    
+                    // 生成ITDOG链接格式：https://www.itdog.cn/http/?domain=https%3A%2F%2Fsda.com
+                    const url = `https://www.itdog.cn/http/?domain=${domainForQuery}`;
+                    
+                    const tab = window.open(url, `itdog_tab_${index}`);
+                    
+                    if (tab) {
+                        activeTabs.set(index, {
+                            tab: tab,
+                            domain: originalDomain,
+                            openedAt: Date.now(),
+                            status: 'opened'
+                        });
+                        
+                        addLog(`🌐 标签页已打开: ${originalDomain}`, 'info');
+                        
+                        // 设置标签页状态检查
+                        setTimeout(() => {
+                            checkTabStatus(index);
+                        }, 120000);
+                        
+                    } else {
+                        addLog(`❌ 无法打开标签页: ${originalDomain} (可能被浏览器阻止)`, 'error');
+                        updateDomainStatus(index, 'error', 0);
+                        activeTabs.delete(index);
+                    }
+                } catch (error) {
+                    addLog(`❌ 打开标签页出错: ${error.message}`, 'error');
+                    updateDomainStatus(index, 'error', 0);
+                    activeTabs.delete(index);
+                }
+            }
+
+            // 检查标签页状态
+            function checkTabStatus(index) {
+                const tabInfo = activeTabs.get(index);
+                if (!tabInfo) return;
+                
+                try {
+                    if (tabInfo.tab.closed) {
+                        activeTabs.delete(index);
+                        // 标签页关闭后，检查是否可以打开新的
+                        if (isTesting && !isPaused && currentIndex < domainArray.length) {
+                            setTimeout(openNextBatch, 1000);
+                        }
+                    } else {
+                        if (Date.now() - tabInfo.openedAt > 180000) {
+                            addLog(`⏰ 标签页超时: ${tabInfo.domain}，强制关闭`, 'warning');
+                            tabInfo.tab.close();
+                            activeTabs.delete(index);
+                            updateDomainStatus(index, 'timeout', 0);
+                            
+                            // 超时后，检查是否可以打开新的
+                            if (isTesting && !isPaused && currentIndex < domainArray.length) {
+                                setTimeout(openNextBatch, 1000);
+                            }
+                        }
+                    }
+                } catch (e) {
+                    activeTabs.delete(index);
+                }
+            }
+
+            // 更新域名状态
+            function updateDomainStatus(index, status, rate) {
+                domainStatus[index] = { status, rate };
+                
+                const statusElement = document.getElementById(`status-${index}`);
+                if (statusElement) {
+                    statusElement.textContent = getStatusText(status, rate);
+                    statusElement.className = `domain-status ${getStatusClass(status)}`;
+                }
+                
+                if (status === 'error' || status === 'lowrate' || status === 'timeout') {
+                    stats.errorSites++;
+                } else if (status === 'success') {
+                    stats.successSites++;
+                }
+                
+                updateStatsDisplay();
+            }
+
+            // 获取状态文本
+            function getStatusText(status, rate) {
+                switch(status) {
+                    case 'pending': return '等待测试';
+                    case 'testing': return '测试中...';
+                    case 'success': return `正常 ${rate}%`;
+                    case 'lowrate': return `异常 ${rate}%`;
+                    case 'error': return '测试失败';
+                    case 'timeout': return '超时';
+                    default: return '未知';
+                }
+            }
+
+            // 获取状态类名
+            function getStatusClass(status) {
+                switch(status) {
+                    case 'testing': return 'status-testing';
+                    case 'success': return 'status-success';
+                    case 'lowrate': return 'status-warning';
+                    case 'error': 
+                    case 'timeout': return 'status-error';
+                    default: return 'status-pending';
+                }
+            }
+
+            // 更新进度
+            function updateProgress() {
+                const tested = Object.values(domainStatus).filter(s => 
+                    s.status === 'success' || s.status === 'lowrate' || s.status === 'error' || s.status === 'timeout'
+                ).length;
+                
+                const errors = Object.values(domainStatus).filter(s => 
+                    s.status === 'lowrate' || s.status === 'error' || s.status === 'timeout'
+                ).length;
+                
+                elements.testedCount.textContent = tested;
+                elements.activeCount.textContent = activeTabs.size;
+                elements.pendingCount.textContent = domainArray.length - currentIndex;
+                elements.errorCount.textContent = errors;
+                elements.progressText.textContent = `${tested}/${domainArray.length}`;
+                
+                const progressPercent = (tested / domainArray.length) * 100;
+                elements.progressBar.style.width = `${progressPercent}%`;
+            }
+
+            // 检查测试是否完成
+            function checkTestCompletion() {
+                if (!isTesting) return;
+                
+                const completed = Object.values(domainStatus).every(s => 
+                    s.status === 'success' || s.status === 'lowrate' || s.status === 'error' || s.status === 'timeout'
+                );
+                
+                if (completed && activeTabs.size === 0) {
+                    isTesting = false;
+                    addLog('✅ 所有域名测试完成', 'success');
+                    showStatus('批量测试完成', 'success');
+                    
+                    saveStats();
+                    
+                    if (timerActive) {
+                        addLog('⏰ 定时测试轮次完成', 'info');
+                    }
+                }
+            }
+
+            // 暂停/继续测试
+            function pauseTest() {
+                if (!isTesting) return;
+                
+                if (isPaused) {
+                    isPaused = false;
+                    elements.pauseBtn.innerHTML = '<i class="fas fa-pause"></i> 暂停测试';
+                    addLog('▶️ 继续测试', 'info');
+                    openNextBatch();
+                } else {
+                    isPaused = true;
+                    elements.pauseBtn.innerHTML = '<i class="fas fa-play"></i> 继续测试';
+                    addLog('⏸️ 测试暂停', 'warning');
+                }
+            }
+
+            // 停止测试
+            function stopTest() {
+                if (!isTesting && activeTabs.size === 0) return;
+                
+                isTesting = false;
+                isPaused = false;
+                
+                activeTabs.forEach((tabInfo, index) => {
+                    try {
+                        if (tabInfo.tab && !tabInfo.tab.closed) {
+                            tabInfo.tab.close();
+                        }
+                    } catch (e) {
+                        console.error('关闭标签页失败:', e);
+                    }
+                });
+                
+                activeTabs.clear();
+                
+                addLog('⏹️ 测试已停止', 'warning');
+                showStatus('测试已停止', 'info');
+                
+                for (let i = 0; i < domainArray.length; i++) {
+                    if (domainStatus[i].status === 'pending' || domainStatus[i].status === 'testing') {
+                        updateDomainStatus(i, 'error', 0);
+                    }
+                }
+                
+                updateProgress();
+            }
+
+            // 加载示例域名
+            function loadExampleDomains() {
+                const exampleDomains = `https://alibabacloud.com
+http://dynadot.com
+itdog.cn
+baidu.com
+google.com
+github.com
+cloudflare.com
+akamai.com`;
+
+                elements.domains.value = exampleDomains;
+                showStatus('已加载示例域名列表', 'success');
+                addLog('📝 加载示例域名列表', 'info');
+            }
+
+            // 导出结果
+            function exportResults() {
+                if (domainArray.length === 0) {
+                    showStatus('没有测试结果可导出', 'error');
+                    return;
+                }
+                
+                let csvContent = "域名,状态,连通率%,测试时间\n";
+                
+                domainArray.forEach((domain, index) => {
+                    const status = domainStatus[index];
+                    const statusText = getStatusText(status.status, status.rate);
+                    const now = new Date().toLocaleString('zh-CN');
+                    csvContent += `"${domain}","${statusText}","${status.rate}","${now}"\n`;
+                });
+                
+                const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+                const link = document.createElement("a");
+                const url = URL.createObjectURL(blob);
+                
+                link.setAttribute("href", url);
+                link.setAttribute("download", `itdog_test_results_${new Date().toISOString().slice(0,10)}.csv`);
+                link.style.visibility = 'hidden';
+                
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                addLog('📤 测试结果已导出为CSV文件', 'success');
+            }
+
+            // 发送Telegram消息
+            function sendTelegramMessage(message) {
+                if (!telegramConfig) {
+                    return Promise.reject(new Error('Telegram配置未设置'));
+                }
+                
+                const { botToken, chatId } = telegramConfig;
+                
+                return fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        chat_id: chatId,
+                        text: message,
+                        parse_mode: 'Markdown',
+                        disable_web_page_preview: true
+                    })
+                })
+                .then(response => response.json());
+            }
+
+            // 发送异常通知
+            function sendLowRateNotification(domain, results) {
                 if (!telegramConfig) {
                     addLog(`❌ 无法发送通知: Telegram配置未设置`, 'error');
                     return Promise.resolve(false);
@@ -1855,42 +2438,24 @@
                     hour12: false
                 }).replace(/\//g, '-');
                 
-                // 构建节点分析部分
-                let nodeAnalysisText = '';
-                if (nodeAnalysisData.mobile.total > 0 || nodeAnalysisData.unicom.total > 0 || nodeAnalysisData.telecom.total > 0) {
-                    nodeAnalysisText = `\n📡 *多运营商节点分析*\n`;
-                    
-                    if (nodeAnalysisData.mobile.total > 0) {
-                        nodeAnalysisText += `├ 📱 移动节点: ${nodeAnalysisData.mobile.success}/${nodeAnalysisData.mobile.total} (${nodeAnalysisData.mobile.rate}%)\n`;
-                    }
-                    if (nodeAnalysisData.unicom.total > 0) {
-                        nodeAnalysisText += `├ 🏢 联通节点: ${nodeAnalysisData.unicom.success}/${nodeAnalysisData.unicom.total} (${nodeAnalysisData.unicom.rate}%)\n`;
-                    }
-                    if (nodeAnalysisData.telecom.total > 0) {
-                        nodeAnalysisText += `└ 📞 电信节点: ${nodeAnalysisData.telecom.success}/${nodeAnalysisData.telecom.total} (${nodeAnalysisData.telecom.rate}%)\n`;
-                    }
-                }
-                
                 const message = `🚨 *ITDOG监控系统 v8.0 - 网站告警*\n\n` +
                     `🔴 *告警级别:* 严重\n` +
                     `🌐 *问题域名:* \`${domain}\`\n` +
                     `🕐 *检测时间:* ${currentTime}\n\n` +
-                    `📊 *测试结果概览*\n` +
+                    `📊 *测试结果详情*\n` +
                     `├ 总测试节点: ${results.totalTests}\n` +
                     `├ 正常节点(200): ${results.success200Tests}\n` +
                     `├ 异常节点: ${results.totalTests - results.success200Tests}\n` +
-                    `└ 连通率: *${results.connectivityRate}%*\n` +
-                    `${nodeAnalysisText}\n` +
+                    `└ 连通率: *${results.connectivityRate}%*\n\n` +
                     `📋 *异常状态码分布*\n` +
-                    `${getEnhancedStatusCodeDistribution(results.otherStatusCodes)}\n` +
+                    `${getStatusCodeDistribution(results.otherStatusCodes)}\n` +
                     `⚠️ *告警说明:* 网站连通率低于${CONFIG.connectivityThreshold}%，请立即检查！\n\n` +
                     `🔧 *建议操作*\n` +
                     `1. 检查服务器状态\n` +
                     `2. 检查DNS解析\n` +
                     `3. 检查防火墙设置\n` +
-                    `4. 根据节点分析排查特定运营商线路问题\n` +
-                    `5. 联系服务提供商\n\n` +
-                    `#网站监控 #连通率告警 #节点分析 #${domain.split('.')[0]}`;
+                    `4. 联系服务提供商\n\n` +
+                    `#网站监控 #连通率告警 #${domain.split('.')[0]}`;
                 
                 return sendTelegramMessage(message)
                     .then(response => {
@@ -1908,9 +2473,9 @@
                         return false;
                     });
             }
-            
-            // 获取增强的状态码分布
-            function getEnhancedStatusCodeDistribution(statusCodes) {
+
+            // 获取状态码分布
+            function getStatusCodeDistribution(statusCodes) {
                 if (!statusCodes || statusCodes.length === 0) {
                     return '暂无异常状态码数据';
                 }
@@ -1921,64 +2486,101 @@
                 });
                 
                 let distribution = '';
-                
-                // 按数量排序
-                const sortedCodes = Object.entries(countMap)
-                    .sort((a, b) => b[1] - a[1])
-                    .slice(0, 5); // 只显示前5个最常见的状态码
-                
-                sortedCodes.forEach(([code, count], index) => {
-                    const isLast = index === sortedCodes.length - 1;
-                    distribution += `${isLast ? '└' : '├'} ${code}: ${count}个\n`;
+                Object.entries(countMap).forEach(([code, count]) => {
+                    distribution += `├ ${code}: ${count}个\n`;
                 });
                 
                 return distribution;
             }
-            
-            // =============== 修改原有的初始化函数 ===============
-            
-            function init() {
-                loadConfig();
-                loadSettings();
-                loadTimerConfig();
-                checkDailyReset();
-                setupEventListeners();
-                initNodeAnalysis(); // 新增：初始化节点分析
-                
-                // 添加欢迎日志
-                addLog('🎉 ITDOG监控系统 v8.0 已启动（增强节点分析版）', 'success');
-                addLog(`⚙️ 连通率阈值: ${CONFIG.connectivityThreshold}%`, 'info');
-                addLog(`⚙️ 批量打开数量: ${CONFIG.batchSize}`, 'info');
-                addLog('📊 新增：多运营商节点异常分析功能', 'info');
-                addLog('💡 请在右侧配置Telegram通知信息', 'info');
-                
-                // 检查定时器状态
-                checkTimerStatus();
-                
-                // 加载已发送通知的缓存
-                loadNotificationCache();
-                
-                console.log('ITDOG监控系统 v8.0 - 增强节点分析版 已加载');
+
+            // 更新统计显示
+            function updateStatsDisplay() {
+                elements.todayTests.textContent = stats.todayTests;
+                elements.errorSites.textContent = stats.errorSites;
+                elements.successSites.textContent = stats.successSites;
+                elements.sentNotifications.textContent = stats.sentNotifications;
             }
-            
-            // =============== 原有的函数保持不变 ===============
-            
-            // 原有的函数（保持不变）...
-            // checkTimerStatus(), loadConfig(), loadNotificationCache(), saveNotificationCache()
-            // loadSettings(), saveSettings(), loadTimerConfig(), saveTimerConfig()
-            // setupEventListeners(), saveConfig(), testConfig(), startTimer()
-            // stopTimer(), pauseTimer(), resumeTimer(), resetTimer(), restartTimer()
-            // scheduleNextTest(), startElapsedTimer(), updateTimerDisplay()
-            // startBatchTest(), openNextBatch(), openITDOGTab(), checkTabStatus()
-            // updateDomainStatus(), getStatusText(), getStatusClass(), updateProgress()
-            // checkTestCompletion(), pauseTest(), stopTest(), loadExampleDomains()
-            // exportResults(), sendTelegramMessage(), updateStatsDisplay(), saveStats()
-            // resetDailyStats(), checkDailyReset(), showStatus(), addLog()
-            // shouldSendNotification(), markNotificationSent(), clearNotificationCacheForNewTest()
-            
-            // 注意：原有的sendLowRateNotification和getStatusCodeDistribution函数
-            // 现在被增强版的sendEnhancedNotification和getEnhancedStatusCodeDistribution替代
-            
+
+            // 保存统计信息
+            function saveStats() {
+                stats.lastReset = new Date().toDateString();
+                localStorage.setItem('monitor_stats', JSON.stringify(stats));
+            }
+
+            // 重置每日统计
+            function resetDailyStats() {
+                stats = {
+                    todayTests: 0,
+                    errorSites: 0,
+                    successSites: 0,
+                    sentNotifications: 0,
+                    lastReset: new Date().toDateString()
+                };
+                updateStatsDisplay();
+                saveStats();
+            }
+
+            // 检查是否需要重置统计
+            function checkDailyReset() {
+                if (stats.lastReset !== new Date().toDateString()) {
+                    resetDailyStats();
+                    addLog('📅 新的一天，统计已重置', 'info');
+                }
+            }
+
+            // 显示状态消息
+            function showStatus(message, type) {
+                elements.configStatus.textContent = message;
+                elements.configStatus.className = 'status-message';
+                
+                if (type === 'success') {
+                    elements.configStatus.classList.add('status-success');
+                } else if (type === 'error') {
+                    elements.configStatus.classList.add('status-error');
+                } else {
+                    elements.configStatus.classList.add('status-info');
+                }
+                
+                elements.configStatus.style.display = 'block';
+                
+                setTimeout(() => {
+                    if (type !== 'info') {
+                        elements.configStatus.style.display = 'none';
+                    }
+                }, 5000);
+            }
+
+            // 添加日志
+            function addLog(message, type = 'info') {
+                const now = new Date();
+                const timeString = now.toLocaleTimeString('zh-CN', { hour12: false });
+                
+                const logEntry = document.createElement('div');
+                logEntry.className = 'log-entry';
+                
+                let icon = '📝';
+                if (type === 'success') icon = '✅';
+                if (type === 'error') icon = '❌';
+                if (type === 'warning') icon = '⚠️';
+                if (type === 'info') icon = 'ℹ️';
+                
+                logEntry.innerHTML = `
+                    <span class="log-time">${timeString}</span>
+                    <span class="log-content">${icon} ${message}</span>
+                `;
+                
+                elements.monitorLog.appendChild(logEntry);
+                elements.monitorLog.scrollTop = elements.monitorLog.scrollHeight;
+                
+                // 限制日志数量
+                const logEntries = elements.monitorLog.querySelectorAll('.log-entry');
+                if (logEntries.length > 300) {
+                    for (let i = 0; i < logEntries.length - 300; i++) {
+                        logEntries[i].remove();
+                    }
+                }
+            }
+
             // 初始化应用
             init();
         });
